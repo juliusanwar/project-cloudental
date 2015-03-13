@@ -14,7 +14,7 @@ namespace CloudClinic.Models
         [Index(IsUnique = true)]
         public string UserName { get; set; }
         public string Nama { get; set; }
-        public string Umur { get; set; }
+        public DateTime TglLhr { get; set; }
         public string Gender { get; set; }
         public string GolDarah { get; set; }
         public string Alamat { get; set; }
