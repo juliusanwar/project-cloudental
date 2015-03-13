@@ -16,6 +16,7 @@ namespace CloudClinic.Models
         public string Nama { get; set; }
         public string Alamat { get; set; }
         public string Telp { get; set; }
+        public string Email { get; set; }
 
         public virtual ICollection<BillingJasa> BillingJasas { get; set; }
         public virtual ICollection<BillingObat> BillingObats { get; set; }
