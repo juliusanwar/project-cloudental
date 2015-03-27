@@ -15,7 +15,6 @@ namespace CloudClinic.Models
         public string Diagnosis { get; set; }
         public int TotalHarga { get; set; }
 
-        
         public virtual JenisTindakan JenisTindakan { get; set; }
 
     }

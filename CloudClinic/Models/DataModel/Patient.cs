@@ -11,7 +11,6 @@ namespace CloudClinic.Models
     {
         [Key]
         public string PatientId { get; set; }
-        [Index(IsUnique = true)]
         public string UserName { get; set; }
         public string Nama { get; set; }
         public DateTime TglLhr { get; set; }
