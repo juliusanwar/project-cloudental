@@ -7,13 +7,13 @@ namespace CloudClinic.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class create_all_table : IMigrationMetadata
+    public sealed partial class change1db : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(create_all_table));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(change1db));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503270758295_create_all_table"; }
+            get { return "201503270920121_change1db"; }
         }
         
         string IMigrationMetadata.Source

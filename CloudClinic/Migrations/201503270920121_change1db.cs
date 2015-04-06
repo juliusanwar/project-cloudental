@@ -3,7 +3,7 @@ namespace CloudClinic.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class create_all_table : DbMigration
+    public partial class change1db : DbMigration
     {
         public override void Up()
         {
@@ -33,7 +33,7 @@ namespace CloudClinic.Migrations
                 c => new
                     {
                         DoctorId = c.String(nullable: false, maxLength: 128),
-                        UserName = c.String(),
+                        UserName = c.String(nullable: false),
                         Nama = c.String(),
                         Alamat = c.String(),
                         Telp = c.String(),

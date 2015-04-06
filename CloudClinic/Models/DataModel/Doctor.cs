@@ -11,6 +11,8 @@ namespace CloudClinic.Models
     {
         [Key]
         public string DoctorId { get; set; }
+
+        [Required]
         public string UserName { get; set; }
         public string Nama { get; set; }
         public string Alamat { get; set; }
