@@ -70,6 +70,8 @@ namespace CloudClinic.Controllers
         [HttpPost]
         public ActionResult AddRole(RoleViewModel role)
         {
+            MessageBoxViewModel msgbox = new MessageBoxViewModel();
+           
             if(ModelState.IsValid)
             {
                 var newRole = RoleManager.FindByName(role.RoleName);
@@ -78,12 +80,23 @@ namespace CloudClinic.Controllers
                     newRole = new IdentityRole(role.RoleName);
                     var result = RoleManager.Create(newRole);
                     if (result.Succeeded)
-                        ViewBag.Pesan = "Data Role " + role.RoleName + " berhasil ditambah !";
+                    {
+                        msgbox.AlertClass = "alert alert-info";
+                        msgbox.MessageBody = "Data Role " + role.RoleName + " berhasil ditambah !";
+                    }
                     else
-                        ViewBag.Pesan = "Gagal menambahkan role !";
+                    {
+                        msgbox.AlertClass = "alert alert-warning";
+                        msgbox.MessageBody = "Gagal menambahkan role !";
+                    } 
+                }
+                else
+                {
+                    msgbox.AlertClass = "alert alert-warning";
+                    msgbox.MessageBody = "Role yang anda inputkan sudah ada, masukan yang lain !";
                 }
             }
-            return View();
+            return PartialView("_MessageBox", msgbox);
         }
 
 

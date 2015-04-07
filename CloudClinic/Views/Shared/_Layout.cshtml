@@ -25,19 +25,15 @@
     <link rel="stylesheet" href="~/assets/css/ace-responsive.min.css" />
     <link rel="stylesheet" href="~/assets/css/ace-skins.min.css" />
 
-    
+
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-    	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.common.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.default.min.css")" rel="stylesheet" type="text/css" />
-	<link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jquery.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jszip.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.all.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js")"></script>
-	<script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2014.3.1411/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
     <div class="navbar">
@@ -604,12 +600,12 @@
                 </ul><!--.breadcrumb-->
 
                 <div class="nav-search" id="nav-search">
-                    <form class="form-search" />
+
                     <span class="input-icon">
                         <input type="text" placeholder="Search ..." class="input-small nav-search-input" id="nav-search-input" autocomplete="off" />
                         <i class="icon-search nav-search-icon"></i>
                     </span>
-                    </form>
+
                 </div><!--#nav-search-->
             </div>
 
@@ -623,7 +619,7 @@
                 </div><!--/.row-fluid-->
             </div><!--/.page-content-->
 
-            
+
         </div><!--/.main-content-->
     </div><!--/.main-container-->
 
@@ -632,8 +628,11 @@
     </a>
 
     <!--basic scripts-->
-    <!--[if !IE]>-->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/unobtrusive")
+ 
 
+    <!--[if !IE]>-->
     @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>*@
 
     <!--<![endif]-->
@@ -658,11 +657,15 @@
 
     <!--page specific plugin scripts-->
     <!--ace scripts-->
-
     <script src="~/assets/js/ace-elements.min.js"></script>
-    <script src="~/assets/js/ace.min.js"></script>
+        <script src="~/assets/js/ace.min.js"></script>
 
     <!--inline scripts related to this page-->
+    <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jquery.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/jszip.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.all.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
