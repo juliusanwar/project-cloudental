@@ -1,4 +1,5 @@
 ﻿@model CloudClinic.Models.ViewModel.MessageBoxViewModel
 <div class="@Model.AlertClass">
-    @Model.MessageBody
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>@Model.TitleMessage</strong> @Model.MessageBody
 </div>

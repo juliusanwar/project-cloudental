@@ -1,38 +1,17 @@
 ﻿@model IEnumerable<CloudClinic.Models.ViewModel.RoleViewModel>
 
 @{
-    ViewBag.Title = "ShowAllRole";
+    ViewBag.Title = "Daftar Role";
 }
 
 <h2>Daftar Role</h2>
+<hr />
 
 <p>
     @Html.ActionLink("Create New", "AddRole")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.RoleId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RoleName)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoleName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new {  id=item.RoleId }) |
-            @Html.ActionLink("Delete", "Delete", new {  id=item.RoleId })
-        </td>
-    </tr>
-}
+<div id="targetShow">
+    @Html.Partial("_PartialListRole", Model)
+</div>
 
-</table>

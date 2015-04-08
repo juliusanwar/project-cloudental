@@ -1,0 +1,42 @@
+﻿@model IEnumerable<CloudClinic.Models.ViewModel.RoleViewModel>
+
+@{ var msg = new CloudClinic.Models.ViewModel.MessageBoxViewModel();
+   msg.TitleMessage = ViewBag.TitleMessage;
+   msg.MessageBody = ViewBag.MessageBody;
+   msg.AlertClass = ViewBag.AlertClass; }
+
+@Html.Partial("_MessageBox",msg)
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoleName)
+        </td>
+        <td>
+            @Html.ActionLink("Update", "UpdateRole", new {  id=item.RoleId }) |
+            @Ajax.ActionLink("Delete", "DeleteRole", "ManageUser",
+            new { id = item.RoleId }, new AjaxOptions
+            {
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                UpdateTargetId = "targetShow",
+                Confirm = "Apakah anda yakin akan mendelete role ini?"
+            }, new { title="Konfirmasi Hapus Role"})
+        </td>
+    </tr>
+}
+</table>
