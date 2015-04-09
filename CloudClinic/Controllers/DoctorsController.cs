@@ -20,7 +20,7 @@ namespace CloudClinic.Controllers
 {
     public class DoctorsController : Controller
     {
-        private ClinicContext db = new ClinicContext();
+        /*private ClinicContext db = new ClinicContext();
 
         // GET: Doctorsm 
         public ActionResult Index()
@@ -267,5 +267,6 @@ namespace CloudClinic.Controllers
             }
             base.Dispose(disposing);
         }
+    } */
     }
 }

@@ -10,15 +10,15 @@ namespace CloudClinic.Models
     {
         [Key]
         public int BilJasaId { get; set; }
-        public int DoctorId { get; set; }
-        public int PatientId { get; set; }
-        public string Diagnosa { get; set; }
-        public int TindakanId { get; set; }
-        public int HargaJasa { get; set; }
 
-        public virtual Doctor Doctor { get; set; }
-        public virtual Patient Patient { get; set; }
+        [Required]
+        public int TransactionId { get; set; }
+
+        public int TindakanId { get; set; }
+
         public virtual Tindakan Tindakan { get; set; }
+
+        public virtual Transaction Transaction { get; set; }
         
     }
 }

@@ -10,16 +10,21 @@ namespace CloudClinic.Models
     {
         [Key]
         public int TransactionId { get; set; }
-        public int PatienId { get; set; }
-        public int BilJasaId { get; set; }
-        public int BilObatId { get; set; }
-        public int TotalBayar { get; set; }
-        public int Bayar { get; set; }
-        public int Kembalian { get; set; }
-        public DateTime TglBayar { get; set; }
 
-        public virtual Patient Patient { get; set; }
-        public virtual BillingJasa BillingJasa { get; set; }
-        public virtual BillingObat BillingObat { get; set; }
+        public int PasienId { get; set; }
+
+        public DateTime TanggalDatang { get; set; }
+
+        [Required]
+        public string Amnanesa { get; set; }
+
+        [Required]
+        [Display(Name="Dokter")]
+        public int PenggunaId { get; set; }
+
+        public virtual Pasien Pasien { get; set; }
+
+        public virtual ICollection<BillingJasa> BillingJasa { get; set; }
+        public virtual ICollection<BillingObat> BillingObat { get; set; }
     }
 }

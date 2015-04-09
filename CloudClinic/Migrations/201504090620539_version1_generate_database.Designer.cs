@@ -6,14 +6,14 @@ namespace CloudClinic.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class change1db : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class version1_generate_database : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(change1db));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(version1_generate_database));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503270920121_change1db"; }
+            get { return "201504090620539_version1_generate_database"; }
         }
         
         string IMigrationMetadata.Source

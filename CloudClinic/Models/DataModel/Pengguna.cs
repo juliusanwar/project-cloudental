@@ -7,25 +7,34 @@ using System.Web;
 
 namespace CloudClinic.Models
 {
-    public class Patient
+    public class Pengguna
     {
         [Key]
-        public string PatientId { get; set; }
+        public int PenggunaId { get; set; }
+
+        [Required]
         public string UserName { get; set; }
+
+        [Required]
+        public string Atruan { get; set; }
+
+        [Required]
         public string Nama { get; set; }
-        public DateTime TglLhr { get; set; }
-        public string Gender { get; set; }
-        public string GolDarah { get; set; }
+
+        [Required]
+        public string Kota { get; set; }
+
+        [Required]
         public string Alamat { get; set; }
+
+        [Required]
         public string Telp { get; set; }
-        public DateTime TglRegistrasi { get; set; }
-        public string RiwayatSakit { get; set; }
 
-        public virtual ICollection<BillingJasa> BillingJasas { get; set; }
-        public virtual ICollection<BillingObat> BillingObats { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
+
         public virtual ICollection<Transaction> Transactions { get; set; }
-        public virtual ICollection<RekamMedis> RekamMedisis { get; set; }
+        //public virtual ICollection<RekamMedis> RekamMedisis { get; set; }
         public virtual ICollection<Reservation> Reservations { get; set; }
-
     }
 }

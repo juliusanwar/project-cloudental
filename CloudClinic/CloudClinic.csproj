@@ -173,26 +173,28 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JenisTindakansController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503270920121_change1db.cs" />
-    <Compile Include="Migrations\201503270920121_change1db.Designer.cs">
-      <DependentUpon>201503270920121_change1db.cs</DependentUpon>
+    <Compile Include="Migrations\201504090620539_version1_generate_database.cs" />
+    <Compile Include="Migrations\201504090620539_version1_generate_database.Designer.cs">
+      <DependentUpon>201504090620539_version1_generate_database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClinicContext.cs" />
     <Compile Include="Models\DataModel\BillingJasa.cs" />
     <Compile Include="Models\DataModel\BillingObat.cs" />
-    <Compile Include="Models\DataModel\Doctor.cs" />
+    <Compile Include="Models\DataModel\Jadwal.cs" />
+    <Compile Include="Models\DataModel\Pengguna.cs" />
+    <Compile Include="Models\DataModel\JenisObat.cs" />
     <Compile Include="Models\DataModel\JenisTindakan.cs" />
     <Compile Include="Models\DataModel\Obat.cs" />
-    <Compile Include="Models\DataModel\Patient.cs" />
-    <Compile Include="Models\DataModel\RekamMedis.cs" />
+    <Compile Include="Models\DataModel\Pasien.cs" />
     <Compile Include="Models\DataModel\Reservation.cs" />
     <Compile Include="Models\DataModel\Tindakan.cs" />
     <Compile Include="Models\DataModel\Transaction.cs" />
@@ -886,7 +888,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -942,6 +946,11 @@
     <Content Include="Views\Shared\_MessageBox.cshtml" />
     <Content Include="Views\ManageUser\UpdateRole.cshtml" />
     <Content Include="Views\Shared\_PartialListRole.cshtml" />
+    <Content Include="Views\JenisTindakans\Create.cshtml" />
+    <Content Include="Views\JenisTindakans\Delete.cshtml" />
+    <Content Include="Views\JenisTindakans\Details.cshtml" />
+    <Content Include="Views\JenisTindakans\Edit.cshtml" />
+    <Content Include="Views\JenisTindakans\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -956,8 +965,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503270920121_change1db.resx">
-      <DependentUpon>201503270920121_change1db.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504090620539_version1_generate_database.resx">
+      <DependentUpon>201504090620539_version1_generate_database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
