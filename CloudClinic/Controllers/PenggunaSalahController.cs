@@ -7,28 +7,28 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
-using CloudClinic.Models.ViewModel;
-using System.Threading.Tasks;
 
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using CloudClinic.Models.ViewModel;
+using System.Threading.Tasks;
 
 namespace CloudClinic.Controllers
 {
-    public class DoctorsController : Controller
+    public class PenggunaSalahController : Controller
     {
-        /*private ClinicContext db = new ClinicContext();
+        private ClinicContext db = new ClinicContext();
 
-        // GET: Doctorsm 
+        // GET: Penggunas
         public ActionResult Index()
         {
-            IEnumerable<DoctorViewModel> model = from d in db.Doctors
-                                                 select new DoctorViewModel
+            IEnumerable<UserViewModel> model = from d in db.Pengguna 
+                                               select new UserViewModel
                                                  {
-                                                     DoctorId = d.DoctorId,
+                                                     PenggunaId = d.PenggunaId,
                                                      UserName = d.UserName,
                                                      Password = "",
                                                      Repassword = "",
@@ -37,26 +37,26 @@ namespace CloudClinic.Controllers
                                                      Telp = d.Telp,
                                                      Email = d.Email
                                                  };
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return Json(model, JsonRequestBehavior.AllowGet);
             return View();
         }
 
-        // GET: Doctors/Details/5
-        public ActionResult Details(string id)
+        // GET: Penggunas/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            Pengguna pengguna = db.Pengguna.Find(id);
+            if (pengguna == null)
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            return View(pengguna);
         }
 
-        // GET: Doctors/Create
+        // GET: Penggunas/Create
         public ActionResult Create()
         {
             return View();
@@ -75,36 +75,35 @@ namespace CloudClinic.Controllers
             }
         }
 
-
-        // POST: Doctors/Create
+        // POST: Penggunas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(DoctorViewModel doctor)
+        public async Task<ActionResult> Create(UserViewModel user)
         {
             if (ModelState.IsValid)
             {
                 //create new doctor
-                var user = new ApplicationUser { UserName = doctor.UserName, Email = doctor.Email };
-                var result = await UserManager.CreateAsync(user, doctor.Password);
-                if(result.Succeeded)
+                var pengguna = new ApplicationUser { UserName = user.UserName, Email = user.Email };
+                var result = await UserManager.CreateAsync(pengguna, user.Password);
+                if (result.Succeeded)
                 {
                     //insert new dokter
-                    var newDokter = new Doctor
+                    var newPengguna = new Pengguna
                     {
-                        DoctorId = doctor.DoctorId,
+                        PenggunaId = user.PenggunaId,
                         UserName = user.UserName,
-                        Nama = doctor.Nama,
-                        Alamat = doctor.Alamat,
-                        Telp = doctor.Telp,
-                        Email=doctor.Email
+                        Nama = user.Nama,
+                        Alamat = user.Alamat,
+                        Telp = user.Telp,
+                        Email = user.Email
                     };
 
-                    db.Doctors.Add(newDokter);
+                    db.Pengguna.Add(newPengguna);
                     db.SaveChanges();
 
-                    ViewBag.Pesan = "Berhasil menambahkan Dokter baru";
+                    ViewBag.Pesan = "Berhasil menambahkan Dokter/Perawat baru";
                 }
                 else
                 {
@@ -112,46 +111,60 @@ namespace CloudClinic.Controllers
                 }
             }
 
-            return View(doctor);
+            return View(user);
         }
 
-        // GET: Doctors/Edit/5
-        public ActionResult Edit(string id)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "PenggunaId,UserName,Atruan,Nama,Kota,Alamat,Telp,Email")] Pengguna pengguna)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Pengguna.Add(pengguna);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(pengguna);
+        //}
+
+        // GET: Penggunas/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            Pengguna pengguna = db.Pengguna.Find(id);
+            if (pengguna == null)
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            return View(pengguna);
         }
 
-        // POST: Doctors/Edit/5
+        // POST: Penggunas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DoctorId,UserName,Nama,Alamat,Telp,Email")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "PenggunaId,UserName,Atruan,Nama,Kota,Alamat,Telp,Email")] Pengguna pengguna)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(doctor).State = EntityState.Modified;
+                db.Entry(pengguna).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(doctor);
+            return View(pengguna);
         }
 
         public ActionResult EditingPopup_Read([DataSourceRequest] DataSourceRequest request)
         {
-            IEnumerable<DoctorViewModel> model = from d in db.Doctors
-                                                 select new DoctorViewModel
+            IEnumerable<UserViewModel> model = from d in db.Pengguna
+                                               select new UserViewModel
                                                  {
-                                                     DoctorId = d.DoctorId,
+                                                     PenggunaId = d.PenggunaId,
                                                      UserName = d.UserName,
                                                      Password = "default",
                                                      Repassword = "default",
@@ -166,27 +179,27 @@ namespace CloudClinic.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditingPopup_Create([DataSourceRequest] DataSourceRequest request, DoctorViewModel doctor)
+        public ActionResult EditingPopup_Create([DataSourceRequest] DataSourceRequest request, UserViewModel user)
         {
-            if (doctor != null && ModelState.IsValid)
+            if (user != null && ModelState.IsValid)
             {
                 //create new doctor
-                var user = new ApplicationUser { UserName = doctor.UserName, Email = doctor.Email };
-                var result = UserManager.Create(user, doctor.Password);
+                var pengguna = new ApplicationUser { UserName = user.UserName, Email = user.Email };
+                var result = UserManager.Create(pengguna, user.Password);
                 if (result.Succeeded)
                 {
                     //insert new dokter
-                    var newDokter = new Doctor
+                    var newPengguna = new Pengguna
                     {
-                        DoctorId = doctor.DoctorId,
+                        PenggunaId = user.PenggunaId,
                         UserName = user.UserName,
-                        Nama = doctor.Nama,
-                        Alamat = doctor.Alamat,
-                        Telp = doctor.Telp,
-                        Email = doctor.Email
+                        Nama = user.Nama,
+                        Alamat = user.Alamat,
+                        Telp = user.Telp,
+                        Email = user.Email
                     };
 
-                    db.Doctors.Add(newDokter);
+                    db.Pengguna.Add(newPengguna);
                     db.SaveChanges();
 
                     ViewBag.Pesan = "Berhasil menambahkan Dokter baru";
@@ -196,65 +209,64 @@ namespace CloudClinic.Controllers
                     ViewBag.Error = result.Errors;
                 }
             }
-            return Json(new[] { doctor }.ToDataSourceResult(request, ModelState));
+            return Json(new[] { user }.ToDataSourceResult(request, ModelState));
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditingPopup_Update([DataSourceRequest] DataSourceRequest request, DoctorViewModel doctor)
+        public ActionResult EditingPopup_Update([DataSourceRequest] DataSourceRequest request, UserViewModel user)
         {
             if (ModelState.IsValid)
             {
-               
-                var editDoctor = db.Doctors.Where(d => d.DoctorId == doctor.DoctorId).SingleOrDefault();
-                if(editDoctor!=null)
+
+                var editDoctor = db.Pengguna.Where(d => d.PenggunaId == user.PenggunaId).SingleOrDefault();
+                if (editDoctor != null)
                 {
-                    editDoctor.UserName = doctor.UserName;
-                    editDoctor.Nama = doctor.Nama;
-                    editDoctor.Alamat = doctor.Alamat;
-                    editDoctor.Telp = doctor.Telp;
-                    editDoctor.Email = doctor.Email;
+                    editDoctor.UserName = user.UserName;
+                    editDoctor.Nama = user.Nama;
+                    editDoctor.Alamat = user.Alamat;
+                    editDoctor.Telp = user.Telp;
+                    editDoctor.Email = user.Email;
 
                     db.SaveChanges();
                 }
             }
 
-            return Json(new[] { doctor }.ToDataSourceResult(request, ModelState));
+            return Json(new[] { user }.ToDataSourceResult(request, ModelState));
         }
 
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult EditingPopup_Destroy([DataSourceRequest] DataSourceRequest request, DoctorViewModel dokter)
-        //{
-        //    if (dokter != null)
-        //    {
-                
-        //    }
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditingPopup_Destroy([DataSourceRequest] DataSourceRequest request, UserViewModel user)
+        {
+            if (user != null)
+            {
 
-        //    return Json(new[] { dokter }.ToDataSourceResult(request, ModelState));
-        //}
+            }
 
+            return Json(new[] { user }.ToDataSourceResult(request, ModelState));
+        }
 
-        // GET: Doctors/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Penggunas/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
+            Pengguna pengguna = db.Pengguna.Find(id);
+            if (pengguna == null)
             {
                 return HttpNotFound();
             }
-            return View(doctor);
+            return View(pengguna);
         }
 
-        // POST: Doctors/Delete/5
+        // POST: Penggunas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            Doctor doctor = db.Doctors.Find(id);
-            db.Doctors.Remove(doctor);
+            Pengguna pengguna = db.Pengguna.Find(id);
+            db.Pengguna.Remove(pengguna);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -267,6 +279,5 @@ namespace CloudClinic.Controllers
             }
             base.Dispose(disposing);
         }
-    } */
     }
 }

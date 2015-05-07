@@ -1,0 +1,50 @@
+﻿@model CloudClinic.Models.Reservation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Jadwal.PilihanJadwal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jadwal.PilihanJadwal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pasien.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pasien.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pengguna.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pengguna.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TglReservasi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TglReservasi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ReservationId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using CloudClinic.Models.DataModel;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace CloudClinic.Models
@@ -8,6 +9,7 @@ namespace CloudClinic.Models
         public DbSet<Pengguna> Pengguna { get; set; }
         public DbSet<Pasien> Pasien { get; set; }
         public DbSet<Obat> Obat { get; set; }
+        public DbSet<Jadwal> Jadwal { get; set; }
         public DbSet<Transaction> Transaction { get; set; }
         //public DbSet<RekamMedis> RekamMedis { get; set; }
         public DbSet<Reservation> Reservation { get; set; }
@@ -23,5 +25,9 @@ namespace CloudClinic.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             //base.OnModelCreating(modelBuilder);
         }
+
+        //public System.Data.Entity.DbSet<CloudClinic.Models.ViewModel.TransactionViewModel> TransactionViewModels { get; set; }
+
+        //public System.Data.Entity.DbSet<CloudClinic.Models.Jadwal> Jadwals { get; set; }
     }
 }

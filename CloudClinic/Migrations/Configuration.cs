@@ -9,7 +9,7 @@ namespace CloudClinic.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(CloudClinic.Models.ClinicContext context)

@@ -10,109 +10,108 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    public class JenisTindakansController : Controller
+    public class JadwalController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-        // GET: JenisTindakans
+        // GET: Jadwal
         public ActionResult Index()
         {
-            return View(db.JenisTindakans.ToList());
+            return View(db.Jadwal.ToList());
         }
 
-        // GET: JenisTindakans/Details/5
+        // GET: Jadwal/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JenisTindakan jenisTindakan = db.JenisTindakans.Find(id);
-            if (jenisTindakan == null)
+            Jadwal jadwal = db.Jadwal.Find(id);
+            if (jadwal == null)
             {
                 return HttpNotFound();
             }
-            return View(jenisTindakan);
+            return View(jadwal);
         }
 
-        // GET: JenisTindakans/Create
+        // GET: Jadwal/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: JenisTindakans/Create
+        // POST: Jadwal/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "JenisTindakanId,NamaTindakan")] JenisTindakan jenisTindakan)
+        public ActionResult Create([Bind(Include = "JadwalId,PilihanJadwal")] Jadwal jadwal)
         {
             if (ModelState.IsValid)
             {
-                db.JenisTindakans.Add(jenisTindakan);
+                db.Jadwal.Add(jadwal);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(jenisTindakan);
+            return View(jadwal);
         }
 
-        // GET: JenisTindakans/Edit/5
+        // GET: Jadwal/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JenisTindakan jenisTindakan = db.JenisTindakans.Find(id);
-            if (jenisTindakan == null)
+            Jadwal jadwal = db.Jadwal.Find(id);
+            if (jadwal == null)
             {
                 return HttpNotFound();
             }
-            return View(jenisTindakan);
+            return View(jadwal);
         }
 
-        // POST: JenisTindakans/Edit/5
+        // POST: Jadwal/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JenisTindakanId,NamaTindakan")] JenisTindakan jenisTindakan)
+        public ActionResult Edit([Bind(Include = "JadwalId,PilihanJadwal")] Jadwal jadwal)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(jenisTindakan).State = EntityState.Modified;
+                db.Entry(jadwal).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(jenisTindakan);
+            return View(jadwal);
         }
 
-        // GET: JenisTindakans/Delete/5
+        // GET: Jadwal/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            JenisTindakan jenisTindakan = db.JenisTindakans.Find(id);
-            if (jenisTindakan == null)
-            {
-                return HttpNotFound();
-            }
-            return View(jenisTindakan);
-        }
-
-        // POST: JenisTindakans/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            JenisTindakan jenisTindakan = db.JenisTindakans.Find(id);
-            db.JenisTindakans.Remove(jenisTindakan);
+            Jadwal jadwal = db.Jadwal.Find(id);
+            db.Jadwal.Remove(jadwal);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // POST: Jadwal/Delete/5
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         protected override void Dispose(bool disposing)

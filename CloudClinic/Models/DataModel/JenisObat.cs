@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 using System.ComponentModel.DataAnnotations;
+using CloudClinic.Models.DataModel;
 
 namespace CloudClinic.Models
 {
@@ -15,6 +16,5 @@ namespace CloudClinic.Models
         public string NamaJenis { get; set; }
 
         public virtual ICollection<Obat> Obat { get; set; }
-
     }
 }

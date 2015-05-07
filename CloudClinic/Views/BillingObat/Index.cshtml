@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CloudClinic.Models.BillingObat>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Daftar Billing Obat di CloudClinic</h2>
+
+<p>
+    @Html.ActionLink("Tambah Billing", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Obat.Nama)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Transaction.Amnanesa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Qty)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Obat.Nama)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Transaction.Amnanesa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Qty)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BilObatId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BilObatId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+        </td>
+    </tr>
+}
+
+</table>

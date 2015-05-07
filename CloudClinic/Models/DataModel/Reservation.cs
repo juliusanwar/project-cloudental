@@ -16,6 +16,8 @@ namespace CloudClinic.Models
 
         public DateTime TglReservasi { get; set; }
 
+        public int JadwalId { get; set; }
+
         [Required]
         [Display(Name = "Dokter")]
         public int PenggunaId { get; set; }

@@ -22,8 +22,9 @@ namespace CloudClinic.Models
         [Display(Name="Dokter")]
         public int PenggunaId { get; set; }
 
-        public virtual Pasien Pasien { get; set; }
 
+        public virtual Pasien Pasien { get; set; }
+        public virtual Pengguna Pengguna { get; set; }
         public virtual ICollection<BillingJasa> BillingJasa { get; set; }
         public virtual ICollection<BillingObat> BillingObat { get; set; }
     }

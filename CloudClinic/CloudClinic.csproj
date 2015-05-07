@@ -171,18 +171,25 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BillingJasaController.cs" />
+    <Compile Include="Controllers\BillingObatController.cs" />
     <Compile Include="Controllers\DoctorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\JenisTindakansController.cs" />
+    <Compile Include="Controllers\JadwalController.cs" />
+    <Compile Include="Controllers\JenisObatController.cs" />
+    <Compile Include="Controllers\JenisTindakanController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ManageUserController.cs" />
+    <Compile Include="Controllers\ObatController.cs" />
+    <Compile Include="Controllers\PasienController.cs" />
+    <Compile Include="Controllers\PenggunaController.cs" />
+    <Compile Include="Controllers\PenggunaSalahController.cs" />
+    <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
+    <Compile Include="Controllers\TindakanController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504090620539_version1_generate_database.cs" />
-    <Compile Include="Migrations\201504090620539_version1_generate_database.Designer.cs">
-      <DependentUpon>201504090620539_version1_generate_database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -190,17 +197,18 @@
     <Compile Include="Models\DataModel\BillingJasa.cs" />
     <Compile Include="Models\DataModel\BillingObat.cs" />
     <Compile Include="Models\DataModel\Jadwal.cs" />
+    <Compile Include="Models\DataModel\Obat.cs" />
     <Compile Include="Models\DataModel\Pengguna.cs" />
     <Compile Include="Models\DataModel\JenisObat.cs" />
     <Compile Include="Models\DataModel\JenisTindakan.cs" />
-    <Compile Include="Models\DataModel\Obat.cs" />
     <Compile Include="Models\DataModel\Pasien.cs" />
     <Compile Include="Models\DataModel\Reservation.cs" />
     <Compile Include="Models\DataModel\Tindakan.cs" />
     <Compile Include="Models\DataModel\Transaction.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ViewModel\DoctorViewModel.cs" />
+    <Compile Include="Models\ViewModel\TransactionViewModel.cs" />
+    <Compile Include="Models\ViewModel\UserViewModel.cs" />
     <Compile Include="Models\ViewModel\MessageBoxViewModel.cs" />
     <Compile Include="Models\ViewModel\RoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -946,11 +954,46 @@
     <Content Include="Views\Shared\_MessageBox.cshtml" />
     <Content Include="Views\ManageUser\UpdateRole.cshtml" />
     <Content Include="Views\Shared\_PartialListRole.cshtml" />
-    <Content Include="Views\JenisTindakans\Create.cshtml" />
-    <Content Include="Views\JenisTindakans\Delete.cshtml" />
-    <Content Include="Views\JenisTindakans\Details.cshtml" />
-    <Content Include="Views\JenisTindakans\Edit.cshtml" />
-    <Content Include="Views\JenisTindakans\Index.cshtml" />
+    <Content Include="Views\JenisTindakan\Create.cshtml" />
+    <Content Include="Views\JenisTindakan\Edit.cshtml" />
+    <Content Include="Views\JenisTindakan\Index.cshtml" />
+    <Content Include="Views\Tindakan\Create.cshtml" />
+    <Content Include="Views\Tindakan\Details.cshtml" />
+    <Content Include="Views\Tindakan\Edit.cshtml" />
+    <Content Include="Views\Tindakan\Index.cshtml" />
+    <Content Include="Views\Pasien\Create.cshtml" />
+    <Content Include="Views\Pasien\Edit.cshtml" />
+    <Content Include="Views\Pasien\Index.cshtml" />
+    <Content Include="Views\JenisObat\Create.cshtml" />
+    <Content Include="Views\JenisObat\Edit.cshtml" />
+    <Content Include="Views\JenisObat\Index.cshtml" />
+    <Content Include="Views\Transaction\Create.cshtml" />
+    <Content Include="Views\Transaction\Details.cshtml" />
+    <Content Include="Views\Transaction\Edit.cshtml" />
+    <Content Include="Views\BillingJasa\Create.cshtml" />
+    <Content Include="Views\BillingJasa\Details.cshtml" />
+    <Content Include="Views\BillingJasa\Edit.cshtml" />
+    <Content Include="Views\BillingJasa\Index.cshtml" />
+    <Content Include="Views\Obat\Index.cshtml" />
+    <Content Include="Views\Obat\Create.cshtml" />
+    <Content Include="Views\Obat\Edit.cshtml" />
+    <Content Include="Views\BillingObat\Create.cshtml" />
+    <Content Include="Views\BillingObat\Details.cshtml" />
+    <Content Include="Views\BillingObat\Edit.cshtml" />
+    <Content Include="Views\BillingObat\Index.cshtml" />
+    <Content Include="Views\Jadwal\Create.cshtml" />
+    <Content Include="Views\Jadwal\Edit.cshtml" />
+    <Content Include="Views\Jadwal\Index.cshtml" />
+    <Content Include="Views\Reservation\Create.cshtml" />
+    <Content Include="Views\Reservation\Details.cshtml" />
+    <Content Include="Views\Reservation\Edit.cshtml" />
+    <Content Include="Views\Reservation\Index.cshtml" />
+    <Content Include="Views\Pengguna\Create.cshtml" />
+    <Content Include="Views\Pengguna\Edit.cshtml" />
+    <Content Include="Views\Pengguna\Index.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialCloudClinic.cshtml" />
+    <Content Include="Views\Shared\_CloudClinicMenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -961,13 +1004,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201504090620539_version1_generate_database.resx">
-      <DependentUpon>201504090620539_version1_generate_database.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -983,7 +1023,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>7251</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CloudClinic.Models.Tindakan>
+
+@{
+    ViewBag.Title = "Daftar Tindakan";
+}
+
+<h2>Daftar Tindakan</h2>
+
+<p>
+    @Html.ActionLink("Tambah Tindakan", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JenisTindakan.NamaTindakan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nama)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Harga)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Diagnosa)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.JenisTindakan.NamaTindakan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nama)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Harga)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Diagnosa)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TindakanId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.TindakanId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -12,11 +12,11 @@ namespace CloudClinic.Models
         public int TindakanId { get; set; }
         [Required]
         public string Nama { get; set; }
-
+        [Required]
         public int JenisTindakanId { get; set; }
         [Required]
         [DataType(DataType.Currency)]
-        public int Harga { get; set; }
+        public decimal? Harga { get; set; }
 
         public string Diagnosa { get; set; }
 

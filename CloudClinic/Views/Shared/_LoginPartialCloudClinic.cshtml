@@ -1,0 +1,67 @@
+﻿@using Microsoft.AspNet.Identity
+
+<li class="light-blue">
+
+    @if (Request.IsAuthenticated)
+    {
+        <a data-toggle="dropdown" href="@Url.Action("Index","Manage")" class="dropdown-toggle">
+            <img class="nav-user-photo" src="~/Content/assets/avatars/user.jpg" alt="Jason's Photo" />
+            <span class="user-info">
+                <small>@User.Identity.GetUserName()</small>
+            </span>
+            <i class="ace-icon fa fa-caret-down"></i>
+        </a>
+        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+            <li>
+                <a href="#">
+                    <i class="ace-icon fa fa-cog"></i>
+                    Settings
+                </a>
+            </li>
+
+            <li>
+                <a href="profile.html">
+                    <i class="ace-icon fa fa-user"></i>
+                    Profile
+                </a>
+            </li>
+
+            <li class="divider"></li>
+
+            <li>
+                @*@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {*@
+
+                <a href="@Url.Action("LogOff","Account")">
+                    <i class="ace-icon fa fa-power-off"></i>
+                    Log off
+                </a>
+                @*}*@
+            </li>
+        </ul>
+    }
+    else
+    {
+        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+            <span class="user-info">
+                Anonymous
+            </span>
+
+            <i class="ace-icon fa fa-caret-down"></i>
+        </a>
+        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+            <li>
+                <a href="@Url.Action("Login", "Account")">
+                    <i class="ace-icon fa fa-cog"></i>
+                    Login
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Register", "Account")">
+                    <i class="ace-icon fa fa-cog"></i>
+                    Register
+                </a>
+            </li>
+        </ul>
+    }
+</li>

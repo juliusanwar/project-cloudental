@@ -15,8 +15,7 @@ namespace CloudClinic.Models
         [Required]
         public string UserName { get; set; }
 
-        [Required]
-        public string Atruan { get; set; }
+        public string Aturan { get; set; }
 
         [Required]
         public string Nama { get; set; }

@@ -7,11 +7,11 @@ using System.Web;
 
 namespace CloudClinic.Models.ViewModel
 {
-    public class DoctorViewModel
+    public class UserViewModel
     {
         [ScaffoldColumn(false)]
         [Required]
-        public string DoctorId { get; set; }
+        public int PenggunaId { get; set; }
 
         [Required]
         public string UserName { get; set; }
