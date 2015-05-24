@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TglLhr, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TglLhr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.TglLhr, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TglLhr, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -76,7 +76,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TglRegistrasi, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.TglRegistrasi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DisplayFor(model => model.TglRegistrasi, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TglRegistrasi, "", new { @class = "text-danger" })
             </div>
         </div>

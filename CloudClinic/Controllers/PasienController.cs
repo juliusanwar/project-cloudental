@@ -8,8 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
 
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
+
 namespace CloudClinic.Controllers
 {
+    
     public class PasienController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -35,6 +39,7 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Pasiens/Create
         public ActionResult Create()
         {
@@ -58,6 +63,7 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
+        [Authorize(Users="jul@jul.com")]
         // GET: Pasiens/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -72,6 +78,7 @@ namespace CloudClinic.Controllers
             }
             return View(pasien);
         }
+
 
         // POST: Pasiens/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -89,6 +96,7 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Pasiens/Delete/5
         public ActionResult Delete(int? id)
         {

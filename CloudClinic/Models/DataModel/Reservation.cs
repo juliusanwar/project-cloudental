@@ -14,8 +14,12 @@ namespace CloudClinic.Models
         [Required]
         public int PasienId { get; set; }
 
-        public DateTime TglReservasi { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DataType(DataType.DateTime)]
+        public DateTime? TglReservasi { get; set; }
+        
 
+        [Display(Name = "Jadwal")]
         public int JadwalId { get; set; }
 
         [Required]

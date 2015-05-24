@@ -36,6 +36,7 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: BillingJasa/Create
         public ActionResult Create()
         {
@@ -63,6 +64,7 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: BillingJasa/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -98,6 +100,7 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: BillingJasa/Delete/5
         public ActionResult Delete(int? id)
         {

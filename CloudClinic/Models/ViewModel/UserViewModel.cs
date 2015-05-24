@@ -28,7 +28,14 @@ namespace CloudClinic.Models.ViewModel
         public string Repassword { get; set; }
 
         [Required]
+        public string Aturan { get; set; }
+
+        [Required]
         public string Nama { get; set; }
+
+        [Required]
+        public string Kota { get; set; }
+
         [Required]
         public string Alamat { get; set; }
         [Required]

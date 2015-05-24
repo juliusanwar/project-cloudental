@@ -11,6 +11,7 @@ using CloudClinic.Models.ViewModel;
 
 namespace CloudClinic.Controllers
 {
+    //[Authorize(Users = "jul@jul.com")]
     public class BillingObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -37,6 +38,7 @@ namespace CloudClinic.Controllers
             return View(billingObat);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: BillingObat/Create
         public ActionResult Create()
         {
@@ -50,7 +52,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BilObatId,TransactionId,ObatId,Qty")] BillingObat billingObat)
+        public ActionResult Create([Bind(Include = "BilObatId,TransactionId,ObatId,Qty,Total")] BillingObat billingObat)
         {
             if (ModelState.IsValid)
             {
@@ -58,6 +60,11 @@ namespace CloudClinic.Controllers
                             where o.ObatId == billingObat.ObatId
                             select o).SingleOrDefault();
                             obat.Stok = obat.Stok - billingObat.Qty;
+
+                var total = (from t in db.Obat
+                             where t.ObatId == billingObat.ObatId
+                             select t).SingleOrDefault();
+                             billingObat.Total = obat.Harga * billingObat.Qty;
 
                 db.BillingObat.Add(billingObat);
                 db.SaveChanges();
@@ -69,6 +76,7 @@ namespace CloudClinic.Controllers
             return View(billingObat);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: BillingObat/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -91,10 +99,20 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BilObatId,TransactionId,ObatId,Qty")] BillingObat billingObat)
+        public ActionResult Edit([Bind(Include = "BilObatId,TransactionId,ObatId,Qty,Total")] BillingObat billingObat)
         {
             if (ModelState.IsValid)
             {
+                var obat = (from o in db.Obat
+                            where o.ObatId == billingObat.ObatId
+                            select o).SingleOrDefault();
+                obat.Stok = obat.Stok - billingObat.Qty;
+
+                var total = (from t in db.Obat
+                             where t.ObatId == billingObat.ObatId
+                             select t).SingleOrDefault();
+
+                billingObat.Total = obat.Harga * billingObat.Qty;
                 db.Entry(billingObat).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -104,6 +122,7 @@ namespace CloudClinic.Controllers
             return View(billingObat);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: BillingObat/Delete/5
         public ActionResult Delete(int? id)
         {

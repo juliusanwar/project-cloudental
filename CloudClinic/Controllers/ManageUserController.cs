@@ -13,6 +13,7 @@ using CloudClinic.Models.ViewModel;
 
 namespace CloudClinic.Controllers
 {
+    [Authorize(Users = "jul@jul.com")]
     public class ManageUserController : Controller
     {
         private ApplicationUserManager _userManager;

@@ -10,14 +10,19 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
+    [Authorize]
     public class ReservationController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
+        
+
         // GET: Reservation
         public ActionResult Index()
         {
+            
             var reservation = db.Reservation.Include(r => r.Jadwal).Include(r => r.Pasien).Include(r => r.Pengguna);
+            
             return View(reservation.ToList());
         }
 

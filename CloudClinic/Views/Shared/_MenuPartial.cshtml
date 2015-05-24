@@ -16,7 +16,7 @@
                 </a>
                 <b class="arrow"></b>
                 <ul class="submenu">
-                    @*@User.Identity.Name=="jul@jul.com"*@
+                    @*User.Identity.Name=="joko@gmail.com"*@
                     @if (Request.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
@@ -24,7 +24,6 @@
                     }
                     else
                     {
-                        <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
                         <li>@Html.ActionLink("Dokter", "Index", "Pengguna")</li>
                     }
                 </ul>
@@ -36,7 +35,6 @@
         <a href="#" class="dropdown-toggle">
             <i class="menu-icon fa fa-ambulance"></i>
             <span class="menu-text"> List CloudClinic </span>
-
             <b class="arrow fa fa-angle-down"></b>
         </a>
         <b class="arrow"></b>
@@ -84,7 +82,6 @@
         <a href="#" class="dropdown-toggle">
             <i class="menu-icon fa fa-caret-right"></i>
             <span class="menu-text"> Setup Transaction </span>
-
             <b class="arrow fa fa-angle-down"></b>
         </a>
         <b class="arrow"></b>
@@ -101,7 +98,6 @@
         <a href="#" class="dropdown-toggle">
             <i class="menu-icon fa fa-list-alt"></i>
             <span class="menu-text"> Setup Billing </span>
-
             <b class="arrow fa fa-angle-down"></b>
         </a>
         <b class="arrow"></b>
@@ -117,119 +113,6 @@
 
 
 
-    @*@if (User.IsInRole("Admin"))
-    {
-        <li class="">
-            <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-android"></i>
-                <span class="menu-text"> Administrator </span>
-
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-            <b class="arrow"></b>
-            <ul class="submenu">
-
-
-                <li class="">
-                    <a href="@Url.Action("Index","Category")">
-                        <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Setup Category </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Books")">
-                        <i class="menu-icon fa fa-picture-o"></i>
-                        <span class="menu-text"> Setup Book </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Admin")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup User </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("GetAllRole", "Admin")">
-                        <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Setup Role </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("AddUserToRole", "Admin")">
-                        <i class="menu-icon fa fa-adn"></i>
-                        <span class="menu-text"> User In Role </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("ShowUserWithRole", "Admin")">
-                        <i class="menu-icon fa fa-adn"></i>
-                        <span class="menu-text"> User With Role </span>
-                    </a>
-                </li>
-
-            </ul>
-
-
-        </li>
-    }
-
-    @if (User.IsInRole("Pasien"))
-    {
-        <li class="">
-            <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-android"></i>
-                <span class="menu-text"> Pasien </span>
-
-                <b class="arrow fa fa-angle-down"></b>
-            </a>
-            <b class="arrow"></b>
-            <ul class="submenu">
-
-
-                <li class="">
-                    <a href="@Url.Action("Index","BillingObat")">
-                        <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Setup Billing Obat </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","BillingJasa")">
-                        <i class="menu-icon fa fa-picture-o"></i>
-                        <span class="menu-text"> Setup Billing Jasa </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Jadwal")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Jadwal </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Reservation")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Reservasi </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Pasien")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup User </span>
-                    </a>
-                </li>
-
-            </ul>
-
-
-        </li>
-    }*@
 
 </ul>
+

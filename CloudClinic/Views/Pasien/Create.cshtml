@@ -10,7 +10,7 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+   
     <div class="form-horizontal">
         <h4>Pasien</h4>
         <hr />
@@ -34,7 +34,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TglLhr, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
             <div class="col-sm-9">
-                @Html.EditorFor(model => model.TglLhr, new { htmlAttributes = new { @class = "col-xs-10 col-sm-5" } })
+                @Html.Kendo().DatePickerFor(model => model.TglLhr)
                 @Html.ValidationMessageFor(model => model.TglLhr, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -74,7 +74,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TglRegistrasi, htmlAttributes: new { @class = "col-sm-3 control-label no-padding-right" })
             <div class="col-sm-9">
-                @Html.EditorFor(model => model.TglRegistrasi, new { htmlAttributes = new { @class = "col-xs-10 col-sm-5" } })
+                @Html.Kendo().DatePickerFor(model => model.TglRegistrasi)
                 @Html.ValidationMessageFor(model => model.TglRegistrasi, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -104,4 +104,5 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    
 }

@@ -18,8 +18,10 @@ namespace CloudClinic.Controllers
         // GET: Obat
         public ActionResult Index()
         {
-            var obat = db.Obat.Include(o => o.JenisObat).Include(o => o.BillingObats);
-            return View(db.Obat.ToList());
+            var jenis = db.Obat.Include(o => o.JenisObat).Include(o => o.BillingObats);
+            //var obats = db.Obat.Include("JenisObat").Include("BillingObat")
+            //    .OrderBy(o => o.Nama).Select(o => o);
+            return View(jenis.ToList());
         }
 
         // GET: Obat/Details/5
@@ -37,6 +39,7 @@ namespace CloudClinic.Controllers
             return View(obat);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Obat/Create
         public ActionResult Create()
         {
@@ -61,6 +64,7 @@ namespace CloudClinic.Controllers
             return View(obat);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Obat/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -92,6 +96,7 @@ namespace CloudClinic.Controllers
             return View(obat);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Obat/Delete/5
         public ActionResult Delete(int? id)
         {

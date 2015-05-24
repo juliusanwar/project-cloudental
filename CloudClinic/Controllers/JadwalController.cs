@@ -35,6 +35,7 @@ namespace CloudClinic.Controllers
             return View(jadwal);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Jadwal/Create
         public ActionResult Create()
         {
@@ -58,6 +59,7 @@ namespace CloudClinic.Controllers
             return View(jadwal);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Jadwal/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -89,6 +91,7 @@ namespace CloudClinic.Controllers
             return View(jadwal);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Jadwal/Delete/5
         public ActionResult Delete(int? id)
         {

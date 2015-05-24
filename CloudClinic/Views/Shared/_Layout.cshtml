@@ -66,11 +66,13 @@
             <!-- /section:basics/sidebar.mobile.toggle -->
             <div class="navbar-header pull-left">
                 <!-- #section:basics/navbar.layout.brand -->
-                <a href="#" class="navbar-brand">
+                <a href="~/Home" class="navbar-brand">
                     <small>
                         <i class="fa fa-leaf"></i>
                         CloudClinic (Klinik Bersama Praktek Dokter)
                     </small>
+
+
                 </a>
 
                 <!-- /section:basics/navbar.layout.brand -->
@@ -327,8 +329,10 @@
                             </li>
                         </ul>
                     </li>
-
                     <!-- #section:basics/navbar.user_menu -->
+
+                    
+                    
                     @Html.Partial("_LoginPartialCloudClinic")
                     <!-- /section:basics/navbar.user_menu -->
                 </ul>
@@ -528,7 +532,7 @@
                 <div class="footer-content">
                     <span class="bigger-120">
                         <span class="blue bolder">CloudClinic</span>
-                        Application &copy; 2015
+                        Application &copy; @DateTime.Now.Year
                     </span>
 
                     &nbsp; &nbsp;

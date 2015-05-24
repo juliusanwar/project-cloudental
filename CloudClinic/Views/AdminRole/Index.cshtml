@@ -1,0 +1,45 @@
+﻿@model IEnumerable<CloudClinic.Models.ViewModel.UserViewModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Daftar User</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateUser")
+</p>
+<table class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                <div class="hidden-sm hidden-xs btn-group">
+                    <button onclick="location.href='@Url.Action("Edit", "Edit", new { id=item.UserName })';return false;" class="btn btn-xs btn-info">
+                        <i class="ace-icon fa fa-pencil bigger-120"></i>
+                    </button>
+                    <button onclick="location.href='@Url.Action("Delete", "Delete", new { id = item.Email })';return false;" class="btn btn-xs btn-danger">
+                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+

@@ -10,8 +10,10 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
+    
     public class PenggunaController : Controller
     {
+        
         private ClinicContext db = new ClinicContext();
 
         // GET: Pengguna
@@ -35,6 +37,7 @@ namespace CloudClinic.Controllers
             return View(pengguna);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Pengguna/Create
         public ActionResult Create()
         {
@@ -58,6 +61,7 @@ namespace CloudClinic.Controllers
             return View(pengguna);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Pengguna/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -89,29 +93,31 @@ namespace CloudClinic.Controllers
             return View(pengguna);
         }
 
+        [Authorize(Users = "jul@jul.com")]
         // GET: Pengguna/Delete/5
         public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Pengguna pengguna = db.Pengguna.Find(id);
+            if (pengguna == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pengguna);
+        }
+
+        // POST: Pengguna/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
             Pengguna pengguna = db.Pengguna.Find(id);
             db.Pengguna.Remove(pengguna);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        // POST: Pengguna/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         protected override void Dispose(bool disposing)

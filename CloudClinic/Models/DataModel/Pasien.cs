@@ -18,13 +18,15 @@ namespace CloudClinic.Models
 
         //Inputan harus NOMOR BPJS. Jika tidak ada input sendiri sesuai email.
         [Required]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public string UserName { get; set; }
 
         [Required]
         public string Nama { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.DateTime)]
-        public DateTime TglLhr { get; set; }
+        public DateTime? TglLhr { get; set; }
 
 
         public string Gender { get; set; }
@@ -37,6 +39,7 @@ namespace CloudClinic.Models
         [Required]
         public string Telp { get; set; }
 
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime TglRegistrasi { get; set; }
 

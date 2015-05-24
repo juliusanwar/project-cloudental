@@ -60,8 +60,8 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PenggunaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.PenggunaId },
-            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+            @Html.ActionLink("Details", "Details", new { id=item.PenggunaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.PenggunaId })
         </td>
     </tr>
 }

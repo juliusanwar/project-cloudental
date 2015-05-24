@@ -10,7 +10,7 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize]
+    [Authorize(Users = "jul@jul.com")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -329,7 +329,7 @@ namespace CloudClinic.Controllers
             }
 
             base.Dispose(disposing);
-        }
+        }   
 
 #region Helpers
         // Used for XSRF protection when adding external logins

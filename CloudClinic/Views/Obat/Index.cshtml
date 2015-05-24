@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.Nama)
         </th>
         <th>
-            Jenis Obat
+            @Html.DisplayNameFor(model => model.JenisObat.NamaJenis)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Kategori)
@@ -35,7 +35,7 @@
             @Html.DisplayFor(modelItem => item.Nama)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.JenisObatId)
+            @Html.DisplayFor(modelItem => item.JenisObat.NamaJenis)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Kategori)
