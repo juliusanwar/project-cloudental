@@ -16,7 +16,7 @@ namespace CloudClinic.Controllers
         private ClinicContext db = new ClinicContext();
 
 
-
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Reservation
         public ActionResult Index()
         {
@@ -26,7 +26,7 @@ namespace CloudClinic.Controllers
             return View(reservation.ToList());
         }
 
-
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Reservation/Details/5
         public ActionResult Details(int? id)
         {
@@ -42,7 +42,7 @@ namespace CloudClinic.Controllers
             return View(reservation);
         }
 
-
+        [Authorize(Roles = "Admin,Pasien")]
         // GET: Reservation/Create
         public ActionResult Create()
         {

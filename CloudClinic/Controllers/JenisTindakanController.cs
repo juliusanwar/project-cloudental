@@ -15,13 +15,14 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
-
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: JenisTindakans
         public ActionResult Index()
         {
             return View(db.JenisTindakans.ToList());
         }
 
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: JenisTindakans/Details/5
         public ActionResult Details(int? id)
         {

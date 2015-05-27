@@ -11,21 +11,24 @@ using CloudClinic.Models.DataModel;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Dokter")]
     public class ObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Obat
         public ActionResult Index()
         {
-            var jenis = db.Obat.Include(o => o.JenisObat).Include(o => o.BillingObats);
+            //var jenis = db.Obat.Include(o => o.JenisObat).Include(o => o.BillingObats);
             //var obats = db.Obat.Include("JenisObat").Include("BillingObat")
             //    .OrderBy(o => o.Nama).Select(o => o);
+
+            var jenis = db.Obat.Include(j => j.JenisObat);
             return View(jenis.ToList());
         }
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Obat/Details/5
         public ActionResult Details(int? id)
         {

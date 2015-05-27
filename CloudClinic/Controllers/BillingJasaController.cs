@@ -10,20 +10,23 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles="Admin")]
+    
     public class BillingJasaController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-
+        
         // GET: BillingJasa
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         public ActionResult Index()
         {
             var billingJasa = db.BillingJasa.Include(b => b.Tindakan).Include(b => b.Transaction);
             return View(billingJasa.ToList());
         }
 
+        
         // GET: BillingJasa/Details/5
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,6 +43,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: BillingJasa/Create
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
             ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "Nama");
@@ -68,6 +72,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: BillingJasa/Edit/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -104,6 +109,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: BillingJasa/Delete/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Delete(int? id)
         {
             BillingJasa billingJasa = db.BillingJasa.Find(id);

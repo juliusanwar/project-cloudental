@@ -11,11 +11,12 @@ using CloudClinic.Models.ViewModel;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Dokter")]
     public class BillingObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: BillingObat
         public ActionResult Index()
         {
@@ -23,6 +24,7 @@ namespace CloudClinic.Controllers
             return View(billingObat.ToList());
         }
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: BillingObat/Details/5
         public ActionResult Details(int? id)
         {

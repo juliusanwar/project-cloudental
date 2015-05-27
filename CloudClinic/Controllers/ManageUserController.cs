@@ -15,7 +15,7 @@ using System.Text;
 
 namespace CloudClinic.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Dokter")]
     public class ManageUserController : Controller
     {
         private ApplicationUserManager _userManager;

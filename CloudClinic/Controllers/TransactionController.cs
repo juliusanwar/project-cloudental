@@ -11,12 +11,12 @@ using CloudClinic.Models.ViewModel;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles="Admin,Dokter")]
     public class TransactionController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Transaction
         public ActionResult Index()
         {
@@ -36,6 +36,7 @@ namespace CloudClinic.Controllers
             return View(transaction.ToList());
         }
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Transaction/Details/5
         public ActionResult Details(int? id)
         {

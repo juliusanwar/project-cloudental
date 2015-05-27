@@ -10,17 +10,19 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles="Admin")]
+    [Authorize(Roles="Admin,Dokter")]
     public class JadwalController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Jadwal
         public ActionResult Index()
         {
             return View(db.Jadwal.ToList());
         }
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Jadwal/Details/5
         public ActionResult Details(int? id)
         {

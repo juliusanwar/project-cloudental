@@ -15,7 +15,7 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
-
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Tindakans
         public ActionResult Index()
         {
@@ -23,6 +23,7 @@ namespace CloudClinic.Controllers
             return View(tindakan.ToList());
         }
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Tindakans/Details/5
         public ActionResult Details(int? id)
         {
