@@ -10,7 +10,7 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles="Admin,Dokter")]
+    
     public class JadwalController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -40,6 +40,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Jadwal/Create
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
             return View();
@@ -64,6 +65,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Jadwal/Edit/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,6 +98,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Jadwal/Delete/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Delete(int? id)
         {
             Jadwal jadwal = db.Jadwal.Find(id);

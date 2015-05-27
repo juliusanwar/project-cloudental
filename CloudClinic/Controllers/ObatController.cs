@@ -11,7 +11,7 @@ using CloudClinic.Models.DataModel;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles = "Admin,Dokter")]
+    
     public class ObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -46,6 +46,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Obat/Create
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
             ViewBag.JenisObatId = new SelectList(db.JenisObat, "JenisObatId", "NamaJenis");
@@ -70,6 +71,7 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Obat/Edit/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,6 +104,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Obat/Delete/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Delete(int? id)
         {
             Obat obat = db.Obat.Find(id);

@@ -10,7 +10,7 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles = "Admin")]    
+        
     public class JenisObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -41,6 +41,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: JenisObat/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -65,6 +66,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: JenisObat/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -97,6 +99,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: JenisObat/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             JenisObat jenisObat = db.JenisObat.Find(id);

@@ -10,7 +10,7 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    
     public class PenggunaController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -39,6 +39,7 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Pengguna/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -62,6 +63,7 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Pengguna/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,29 +95,29 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Pengguna/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pengguna pengguna = db.Pengguna.Find(id);
-            if (pengguna == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pengguna);
-        }
-
-        // POST: Pengguna/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
         {
             Pengguna pengguna = db.Pengguna.Find(id);
             db.Pengguna.Remove(pengguna);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // POST: Pengguna/Delete/5
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -73,7 +73,8 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PasienId }) |
             @Html.ActionLink("Details", "Details", new { id=item.PasienId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.PasienId })
+            @Html.ActionLink("Delete", "Delete", new { id = item.PasienId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
     </tr>
 }

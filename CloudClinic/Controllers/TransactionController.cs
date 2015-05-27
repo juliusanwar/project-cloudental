@@ -11,7 +11,7 @@ using CloudClinic.Models.ViewModel;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles="Admin,Dokter")]
+    
     public class TransactionController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -54,6 +54,7 @@ namespace CloudClinic.Controllers
 
         //[Authorize(Users = "jul@jul.com")]
         // GET: Transaction/Create
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
@@ -82,6 +83,7 @@ namespace CloudClinic.Controllers
 
         //[Authorize(Users = "jul@jul.com")]
         // GET: Transaction/Edit/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -118,6 +120,7 @@ namespace CloudClinic.Controllers
 
         //[Authorize(Users = "jul@jul.com")]
         // GET: Transaction/Delete/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Delete(int? id)
         {
             Transaction transaksi = db.Transaction.Find(id);

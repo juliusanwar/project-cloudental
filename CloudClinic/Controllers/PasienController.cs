@@ -10,7 +10,7 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles = "Admin,Dokter")]
+    
     public class PasienController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -39,6 +39,7 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Pasien/Create
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
             return View();
@@ -62,6 +63,7 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Pasien/Edit/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,29 +95,29 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Pasien/Delete/5
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pasien pasien = db.Pasien.Find(id);
-            if (pasien == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pasien);
-        }
-
-        // POST: Pasien/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
         {
             Pasien pasien = db.Pasien.Find(id);
             db.Pasien.Remove(pasien);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        // POST: Pasien/Delete/5
+        [HttpPost]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
         protected override void Dispose(bool disposing)

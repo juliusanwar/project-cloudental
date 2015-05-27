@@ -10,7 +10,7 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles="Admin")]
+    
     public class ReservationController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -42,8 +42,9 @@ namespace CloudClinic.Controllers
             return View(reservation);
         }
 
-        [Authorize(Roles = "Admin,Pasien")]
+        
         // GET: Reservation/Create
+        [Authorize(Roles = "Admin,Pasien")]
         public ActionResult Create()
         {
             ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "PilihanJadwal");
@@ -73,6 +74,7 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Reservation/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -110,6 +112,7 @@ namespace CloudClinic.Controllers
         }
 
         // GET: Reservation/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             Reservation reservasi = db.Reservation.Find(id);
