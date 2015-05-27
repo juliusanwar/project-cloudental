@@ -1,0 +1,16 @@
+﻿@model IEnumerable<CloudClinic.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Daftar User";
+}
+
+<h2>Daftar User</h2>
+<hr />
+
+<p>
+    @Html.ActionLink("Create New", "Register", "Account")
+</p>
+
+<div id="targetShow">
+    @Html.Partial("_PartialListUser", Model)
+</div>

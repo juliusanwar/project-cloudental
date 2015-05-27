@@ -11,9 +11,11 @@ using CloudClinic.Models.ViewModel;
 
 namespace CloudClinic.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class TransactionController : Controller
     {
         private ClinicContext db = new ClinicContext();
+
 
         // GET: Transaction
         public ActionResult Index()
@@ -49,7 +51,7 @@ namespace CloudClinic.Controllers
             return View(transaction);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+        //[Authorize(Users = "jul@jul.com")]
         // GET: Transaction/Create
         public ActionResult Create()
         {
@@ -77,7 +79,7 @@ namespace CloudClinic.Controllers
             return View(transaction);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+        //[Authorize(Users = "jul@jul.com")]
         // GET: Transaction/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -113,7 +115,7 @@ namespace CloudClinic.Controllers
             return View(transaction);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+        //[Authorize(Users = "jul@jul.com")]
         // GET: Transaction/Delete/5
         public ActionResult Delete(int? id)
         {

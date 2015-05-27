@@ -11,9 +11,11 @@ using CloudClinic.Models.DataModel;
 
 namespace CloudClinic.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
+
 
         // GET: Obat
         public ActionResult Index()
@@ -39,7 +41,7 @@ namespace CloudClinic.Controllers
             return View(obat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: Obat/Create
         public ActionResult Create()
         {
@@ -64,7 +66,6 @@ namespace CloudClinic.Controllers
             return View(obat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
         // GET: Obat/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -96,7 +97,7 @@ namespace CloudClinic.Controllers
             return View(obat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: Obat/Delete/5
         public ActionResult Delete(int? id)
         {

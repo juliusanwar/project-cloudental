@@ -10,12 +10,12 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="Admin")]
     public class ReservationController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-        
+
 
         // GET: Reservation
         public ActionResult Index()
@@ -25,6 +25,7 @@ namespace CloudClinic.Controllers
             
             return View(reservation.ToList());
         }
+
 
         // GET: Reservation/Details/5
         public ActionResult Details(int? id)
@@ -40,6 +41,7 @@ namespace CloudClinic.Controllers
             }
             return View(reservation);
         }
+
 
         // GET: Reservation/Create
         public ActionResult Create()

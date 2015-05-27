@@ -10,14 +10,19 @@ using Microsoft.Owin.Security;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 using CloudClinic.Models.ViewModel;
+using CloudClinic.Models;
+using System.Text;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Users = "jul@jul.com")]
+    //[Authorize(Roles = "Admin")]
     public class ManageUserController : Controller
     {
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
+
+        
+
 
         public ApplicationRoleManager RoleManager
         {
@@ -50,6 +55,21 @@ namespace CloudClinic.Controllers
             return View();
         }
 
+        private IEnumerable<UserViewModel> GetAllUsers()
+        {
+            List<UserViewModel> users = new List<UserViewModel>();
+            foreach (var user in UserManager.Users)
+            {
+                users.Add(new UserViewModel
+                {
+                    UserName = user.Email,
+                    Email = user.Email,
+                    UserId = user.Id
+                });
+            }
+            return users;
+        }
+
         private IEnumerable<RoleViewModel> GetAllRoles()
         {
             var roles = RoleManager.Roles;
@@ -63,14 +83,105 @@ namespace CloudClinic.Controllers
             return model;
         }
 
+        private IEnumerable<UserWithRoleViewModel> GetAllUserInRole()
+        {
+            List<UserWithRoleViewModel> lstUser = new List<UserWithRoleViewModel>();
+
+
+            foreach (var user in UserManager.Users.ToList())
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var role in user.Roles.ToList())
+                {
+                    sb.Append(RoleManager.FindById(role.RoleId).Name + " ");
+                }
+                var newUser = new UserWithRoleViewModel
+                {
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Roles = sb.ToString()
+                };
+                lstUser.Add(newUser);
+            }
+
+            return lstUser;
+        }
+
+        public ActionResult ShowUserWithRole()
+        {
+            var model = GetAllUserInRole();
+
+            return View(model);
+        }
+
+
         public ActionResult ShowAllRole()
         {
             var model = GetAllRoles();
 
+            return View(model);   
+        }
+
+        public ActionResult ShowAllUser()
+        {
+            var model = GetAllUsers();
+
             return View(model);
 
-            
         }
+
+         
+
+        //public IdentityResult userInRole(UserInRoleViewModel userInRole)
+        //{
+        //    var roleForUser = UserManager.GetRoles(userInRole.UserId);
+        //    IdentityResult result = null;
+        //    if (!roleForUser.Contains(userInRole.RoleId))
+        //    {
+        //        result = UserManager.AddToRole(userInRole.UserId,
+        //            RoleManager.FindById(userInRole.RoleId).Name);
+        //    }
+
+        //    return result;
+        //}
+
+        public ActionResult AddUserToRole()
+        {
+            var users = GetAllUsers();
+            var roles = GetAllRoles();
+            ViewBag.UserId = new SelectList(users, "UserId", "Email");
+            ViewBag.RoleId = new SelectList(roles, "RoleId", "RoleName");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddUserToRole(UserInRoleViewModel userInRole)
+        {
+            using (UserInRoleService userinRoleS = new UserInRoleService(UserManager, RoleManager))
+            {
+                var users = GetAllUsers();
+                var roles = GetAllRoles();
+
+                var result = userinRoleS.AddUserToRole(userInRole);
+                if (result.Succeeded)
+                {
+                    ViewBag.Pesan = "Berhasil menambahkan " + UserManager.FindById(userInRole.UserId).Email +
+                        " kedalam role " + RoleManager.FindById(userInRole.RoleId).Name;
+                }
+                else
+                {
+                    ViewBag.Pesan = "Gagal menambah role !";
+                }
+
+                ViewBag.UserId = new SelectList(users, "UserId", "UserName");
+                ViewBag.RoleId = new SelectList(roles, "RoleId", "RoleName");
+            }
+
+            return View(userInRole);
+
+        }
+
+        
 
         public ActionResult AddRole()
         {

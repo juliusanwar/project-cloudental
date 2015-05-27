@@ -10,9 +10,11 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class BillingJasaController : Controller
     {
         private ClinicContext db = new ClinicContext();
+
 
         // GET: BillingJasa
         public ActionResult Index()
@@ -36,7 +38,7 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: BillingJasa/Create
         public ActionResult Create()
         {
@@ -64,7 +66,7 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: BillingJasa/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -100,7 +102,7 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: BillingJasa/Delete/5
         public ActionResult Delete(int? id)
         {

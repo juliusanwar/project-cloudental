@@ -11,7 +11,7 @@ using CloudClinic.Models.ViewModel;
 
 namespace CloudClinic.Controllers
 {
-    //[Authorize(Users = "jul@jul.com")]
+    [Authorize(Roles = "Admin")]
     public class BillingObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
@@ -38,7 +38,7 @@ namespace CloudClinic.Controllers
             return View(billingObat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+        
         // GET: BillingObat/Create
         public ActionResult Create()
         {
@@ -76,7 +76,7 @@ namespace CloudClinic.Controllers
             return View(billingObat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+        
         // GET: BillingObat/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -122,7 +122,7 @@ namespace CloudClinic.Controllers
             return View(billingObat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+        
         // GET: BillingObat/Delete/5
         public ActionResult Delete(int? id)
         {

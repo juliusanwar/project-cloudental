@@ -13,7 +13,7 @@ namespace CloudClinic.Models
         public int PenggunaId { get; set; }
 
         [Required]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public string UserName { get; set; }
 
         public string Aturan { get; set; }

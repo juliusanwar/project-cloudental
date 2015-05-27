@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TglLhr, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.TglLhr, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TglLhr, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TglLhr, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +44,11 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.RadioButtonFor(m => m.Gender, "Pria", new { id = "Pria" })
+                <label for"male">Pria</label>
+                @Html.RadioButtonFor(m => m.Gender, "Wanita", new { id = "Wanita" })
+                <label for"female">Wanita</label>
+                @*@Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +56,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.GolDarah, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.GolDarah, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.RadioButtonFor(m => m.GolDarah, "A", new { id = "A" })
+                <label for"a">A</label>
+                @Html.RadioButtonFor(m => m.GolDarah, "B", new { id = "B" })
+                <label for"b">B</label>
+                @Html.RadioButtonFor(m => m.GolDarah, "AB", new { id = "AB" })
+                <label for"ab">AB</label>
+                @Html.RadioButtonFor(m => m.GolDarah, "O", new { id = "O" })
+                <label for"o">O</label>
+                @*@Html.EditorFor(model => model.GolDarah, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.GolDarah, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -76,7 +88,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.TglRegistrasi, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(model => model.TglRegistrasi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.TglRegistrasi, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TglRegistrasi, "", new { @class = "text-danger" })
             </div>
         </div>

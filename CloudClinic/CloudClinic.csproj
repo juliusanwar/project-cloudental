@@ -183,8 +183,6 @@
     <Compile Include="Controllers\ObatController.cs" />
     <Compile Include="Controllers\PasienController.cs" />
     <Compile Include="Controllers\PenggunaController.cs" />
-    <Compile Include="Controllers\PenggunaSalah2Controller.cs" />
-    <Compile Include="Controllers\PenggunaSalahController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\TindakanController.cs" />
@@ -209,11 +207,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ViewModel\TransactionViewModel.cs" />
-    <Compile Include="Models\ViewModel\UserInRoleViewModel.cs" />
-    <Compile Include="Models\ViewModel\UserViewModel.cs" />
     <Compile Include="Models\ViewModel\MessageBoxViewModel.cs" />
-    <Compile Include="Models\ViewModel\RoleViewModel.cs" />
-    <Compile Include="Models\ViewModel\UserWithRoleViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -964,9 +958,6 @@
     <Content Include="Views\Tindakan\Details.cshtml" />
     <Content Include="Views\Tindakan\Edit.cshtml" />
     <Content Include="Views\Tindakan\Index.cshtml" />
-    <Content Include="Views\Pasien\Create.cshtml" />
-    <Content Include="Views\Pasien\Edit.cshtml" />
-    <Content Include="Views\Pasien\Index.cshtml" />
     <Content Include="Views\JenisObat\Create.cshtml" />
     <Content Include="Views\JenisObat\Edit.cshtml" />
     <Content Include="Views\JenisObat\Index.cshtml" />
@@ -991,31 +982,30 @@
     <Content Include="Views\Reservation\Details.cshtml" />
     <Content Include="Views\Reservation\Edit.cshtml" />
     <Content Include="Views\Reservation\Index.cshtml" />
-    <Content Include="Views\PenggunaSalah2\Create.cshtml" />
-    <Content Include="Views\PenggunaSalah2\Edit.cshtml" />
-    <Content Include="Views\PenggunaSalah2\Index.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartialCloudClinic.cshtml" />
     <Content Include="Views\Shared\_CloudClinicMenuPartial.cshtml" />
-    <Content Include="Views\AdminRole\Index.cshtml" />
-    <Content Include="Views\AdminRole\CreateUser.cshtml" />
-    <Content Include="Views\AdminRole\GetAllRole.cshtml" />
-    <Content Include="Views\AdminRole\CreateRole.cshtml" />
-    <Content Include="Views\AdminRole\UserWithRoleViewModel.cshtml" />
-    <Content Include="Views\AdminRole\AddUserToRole.cshtml" />
-    <Content Include="Views\PenggunaSalah\Index.cshtml" />
-    <Content Include="Views\PenggunaSalah\Create.cshtml" />
     <Content Include="Views\Shared\_LayoutKendo.cshtml" />
+    <Content Include="Views\Account\SucessPage.cshtml" />
+    <Content Include="Views\Shared\_MenuPartial.cshtml" />
+    <Content Include="Views\ManageUser\AddUserToRole.cshtml" />
+    <Content Include="Views\ManageUser\ShowAllUser.cshtml" />
+    <Content Include="Views\Shared\_PartialListUser.cshtml" />
+    <Content Include="Views\ManageUser\ShowUserWithRole.cshtml" />
     <Content Include="Views\Pengguna\Create.cshtml" />
     <Content Include="Views\Pengguna\Delete.cshtml" />
     <Content Include="Views\Pengguna\Details.cshtml" />
     <Content Include="Views\Pengguna\Edit.cshtml" />
     <Content Include="Views\Pengguna\Index.cshtml" />
-    <Content Include="Views\Account\SucessPage.cshtml" />
-    <Content Include="Views\Shared\_MenuPartial.cshtml" />
+    <Content Include="Views\Pasien\Create.cshtml" />
+    <Content Include="Views\Pasien\Delete.cshtml" />
+    <Content Include="Views\Pasien\Details.cshtml" />
+    <Content Include="Views\Pasien\Edit.cshtml" />
+    <Content Include="Views\Pasien\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\PasienBaru\" />
     <Folder Include="Views\Sample\" />
   </ItemGroup>
   <ItemGroup>

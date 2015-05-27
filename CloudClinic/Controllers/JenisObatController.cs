@@ -10,10 +10,11 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    
+    [Authorize(Roles = "Admin")]    
     public class JenisObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
+
 
         // GET: JenisObat
         public ActionResult Index()
@@ -37,7 +38,7 @@ namespace CloudClinic.Controllers
             return View(jenisObat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: JenisObat/Create
         public ActionResult Create()
         {
@@ -61,7 +62,7 @@ namespace CloudClinic.Controllers
             return View(jenisObat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: JenisObat/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -93,7 +94,7 @@ namespace CloudClinic.Controllers
             return View(jenisObat);
         }
 
-        [Authorize(Users = "jul@jul.com")]
+
         // GET: JenisObat/Delete/5
         public ActionResult Delete(int? id)
         {

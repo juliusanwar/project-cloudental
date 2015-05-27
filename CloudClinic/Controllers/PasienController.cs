@@ -8,23 +8,19 @@ using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
 
-using Kendo.Mvc.Extensions;
-using Kendo.Mvc.UI;
-
 namespace CloudClinic.Controllers
 {
-    
     public class PasienController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-        // GET: Pasiens
+        // GET: Pasien
         public ActionResult Index()
         {
             return View(db.Pasien.ToList());
         }
 
-        // GET: Pasiens/Details/5
+        // GET: Pasien/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,14 +35,13 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
-        [Authorize(Users = "jul@jul.com")]
-        // GET: Pasiens/Create
+        // GET: Pasien/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Pasiens/Create
+        // POST: Pasien/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -63,8 +58,7 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
-        [Authorize(Users="jul@jul.com")]
-        // GET: Pasiens/Edit/5
+        // GET: Pasien/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,8 +73,7 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
-
-        // POST: Pasiens/Edit/5
+        // POST: Pasien/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -96,30 +89,30 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
-        [Authorize(Users = "jul@jul.com")]
-        // GET: Pasiens/Delete/5
+        // GET: Pasien/Delete/5
         public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Pasien pasien = db.Pasien.Find(id);
+            if (pasien == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pasien);
+        }
+
+        // POST: Pasien/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
         {
             Pasien pasien = db.Pasien.Find(id);
             db.Pasien.Remove(pasien);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-        // POST: Pasiens/Delete/5
-        [HttpPost]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         protected override void Dispose(bool disposing)
