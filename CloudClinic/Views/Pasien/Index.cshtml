@@ -6,9 +6,14 @@
 
 <h2>Daftar Pasien</h2>
 
-<p>
-    @Html.ActionLink("Tambah Pasien", "Create")
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Tambah Pasien", "Create")
+    </p>
+}
+
+
 <table class="table">
     <tr>
         <th>
@@ -18,25 +23,25 @@
             @Html.DisplayNameFor(model => model.Nama)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TglLhr)
+            Tgl. Lahir
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Gender)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.GolDarah)
+            Gol. Darah
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Alamat)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Telp)
+            Telpon
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TglRegistrasi)
+            Tgl. Registrasi
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RiwayatSakit)
+            Riwayat Sakit
         </th>
         <th></th>
     </tr>
@@ -70,12 +75,16 @@
         <td>
             @Html.DisplayFor(modelItem => item.RiwayatSakit)
         </td>
+
+@if (User.IsInRole("Admin"))
+{
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PasienId }) |
             @Html.ActionLink("Details", "Details", new { id=item.PasienId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.PasienId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
+}
     </tr>
 }
 

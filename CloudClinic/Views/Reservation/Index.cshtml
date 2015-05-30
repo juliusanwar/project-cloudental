@@ -11,16 +11,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Jadwal.PilihanJadwal)
+            Pilihan Jadwal
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pasien.UserName)
+            Pasien
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pengguna.UserName)
+            Dokter
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TglReservasi)
+            Tgl. Reservasi
         </th>
         <th></th>
     </tr>
@@ -39,12 +39,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.TglReservasi)
         </td>
+@if (User.IsInRole("Admin"))
+{
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ReservationId }) |
             @Html.ActionLink("Details", "Details", new { id=item.ReservationId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.ReservationId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
+}
     </tr>
 }
 

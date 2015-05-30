@@ -16,6 +16,10 @@ namespace CloudClinic.Models
 
         public int TindakanId { get; set; }
 
+        
+        [DataType(DataType.Currency)]
+        public decimal? Total { get; set; }  
+
         public virtual Tindakan Tindakan { get; set; }
 
         public virtual Transaction Transaction { get; set; }

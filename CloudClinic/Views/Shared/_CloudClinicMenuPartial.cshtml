@@ -186,27 +186,6 @@
                     </li>
 
                     <li class="">
-                        <a href="@Url.Action("Index","Transaction")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Transaksi </span>
-                        </a>
-                    </li>
-
-                    <li class="">
-                        <a href="@Url.Action("Index","BillingObat")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Billing Obat </span>
-                        </a>
-                    </li>
-
-                    <li class="">
-                        <a href="@Url.Action("Index","BillingJasa")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Billing Jasa </span>
-                        </a>
-                    </li>
-
-                    <li class="">
                         <a href="@Url.Action("Index","Jadwal")">
                             <i class="menu-icon fa fa-tag"></i>
                             <span class="menu-text"> Setup Jadwal Klinik </span>
@@ -243,6 +222,7 @@
 
 
     </li>
+    
         }
 
     @if (User.IsInRole("Pasien"))
@@ -286,7 +266,7 @@
                     </a>
                 </li>
 
-                <li class="">
+                @*<li class="">
                     <a href="@Url.Action("Index","Pasien")">
                         <i class="menu-icon fa fa-tag"></i>
                         <span class="menu-text"> Setup Pasien </span>
@@ -298,7 +278,7 @@
                         <i class="menu-icon fa fa-tag"></i>
                         <span class="menu-text"> Setup Dokter </span>
                     </a>
-                </li>
+                </li>*@
             </ul>
 
 
@@ -337,7 +317,7 @@
                         <span class="menu-text"> Setup Reservasi Online </span>
                     </a>
                 </li>
-                <li class="">
+                @*<li class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-angle-down"></i>
                         <span class="menu-text"> Setup Billing </span>
@@ -350,7 +330,7 @@
                         <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
                         <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
                     </ul>
-                </li>
+                </li>*@
 
                     
                 <li class="">
@@ -397,8 +377,47 @@
                         <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
                     </ul>
                 </li>
+
+                
+
             </ul>
+
         </li>
+    <li class="">
+
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-android"></i>
+            <span class="menu-text"> Setup Transaksi </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+        <b class="arrow"></b>
+        <ul class="submenu">
+
+            <li>@Html.ActionLink("Anamnesa", "Index", "Transaction")</li>
+            <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
+            <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
+
+        </ul>
+
+    </li>
+
+    @*<li class="">
+
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-android"></i>
+            <span class="menu-text"> Amnanesa Pasien </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+        <b class="arrow"></b>
+        <ul class="submenu">
+
+            <li>@Html.ActionLink("Transaksi", "Create", "Transaction")</li>
+
+        </ul>
+    </li>*@
+        
     }
 
 </ul>

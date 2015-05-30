@@ -5,14 +5,16 @@
 }
 
 <h2>Daftar Tindakan</h2>
-
+@if (User.IsInRole("Admin"))
+{
 <p>
     @Html.ActionLink("Tambah Tindakan", "Create")
 </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.JenisTindakan.NamaTindakan)
+            Tindakan
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Nama)
@@ -40,11 +42,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.Diagnosa)
         </td>
+@if (User.IsInRole("Admin"))
+{
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TindakanId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.TindakanId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
+}
     </tr>
 }
 

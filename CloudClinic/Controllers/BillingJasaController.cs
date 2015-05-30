@@ -26,7 +26,7 @@ namespace CloudClinic.Controllers
 
         
         // GET: BillingJasa/Details/5
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -56,10 +56,15 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BilJasaId,TransactionId,TindakanId")] BillingJasa billingJasa)
+        public ActionResult Create([Bind(Include = "BilJasaId,TransactionId,TindakanId,Total")] BillingJasa billingJasa)
         {
             if (ModelState.IsValid)
             {
+                var total = (from t in db.Tindakan
+                             where t.TindakanId == billingJasa.TindakanId
+                             select t).SingleOrDefault();
+                billingJasa.Total = total.Harga;
+
                 db.BillingJasa.Add(billingJasa);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -133,6 +138,8 @@ namespace CloudClinic.Controllers
                 return View();
             }
         }
+
+
 
         protected override void Dispose(bool disposing)
         {

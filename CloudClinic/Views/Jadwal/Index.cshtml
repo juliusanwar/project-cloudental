@@ -5,14 +5,16 @@
 }
 
 <h2>Jadwal CloudClinic</h2>
-
+@if (User.IsInRole("Dokter,Admin"))
+{
 <p>
     @Html.ActionLink("Tambah Jadwal", "Create")
 </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.PilihanJadwal)
+            Pilihan Jadwal
         </th>
         <th></th>
     </tr>
@@ -22,11 +24,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.PilihanJadwal)
         </td>
+@if (User.IsInRole("Dokter,Admin"))
+{
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.JadwalId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.JadwalId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
+}
     </tr>
 }
 

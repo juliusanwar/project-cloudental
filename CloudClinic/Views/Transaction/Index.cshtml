@@ -5,23 +5,29 @@
 }
 
 <h2>Daftar Transaksi CloudClinic</h2>
+@if (User.IsInRole("Dokter"))
+{
+<p>
+    @Html.ActionLink("Checkout Billing Jasa >>", "Create", "BillingJasa", null, new { @class = "btn-btn-warning" })
+</p>
 
 <p>
     @Html.ActionLink("Tambah Transaksi", "Create")
 </p>
+}
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Pasien.UserName)
+            Pasien
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pengguna.UserName)
+            Dokter
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.TanggalDatang)
+            Tanggal Datang
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Amnanesa)
+            Anamnesa
         </th>
         <th></th>
     </tr>
@@ -40,12 +46,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.Amnanesa)
         </td>
+@if (User.IsInRole("Dokter"))
+{
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TransactionId }) |
             @Html.ActionLink("Details", "Details", new { id=item.TransactionId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.TransactionId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
+}
     </tr>
 }
 

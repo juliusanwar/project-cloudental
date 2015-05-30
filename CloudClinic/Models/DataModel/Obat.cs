@@ -14,7 +14,9 @@ namespace CloudClinic.Models.DataModel
         [Required]
         public string JenisObatId { get; set; }
         public string Kategori { get; set; }
-        public int Harga { get; set; }
+        [Required]
+        [DataType(DataType.Currency)]
+        public decimal? Harga { get; set; }
         public int Stok { get; set; }
 
         public virtual JenisObat JenisObat { get; set; }

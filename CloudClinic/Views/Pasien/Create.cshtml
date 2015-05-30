@@ -33,7 +33,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TglLhr, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TglLhr,"Tgl. Lahir", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.EditorFor(model => model.TglLhr, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.Kendo().DatePickerFor(model => model.TglLhr)
@@ -54,7 +54,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.GolDarah, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.GolDarah,"Golongan Darah", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.RadioButtonFor(m => m.GolDarah, "A", new { id = "A" })
                 <label for"a">A</label>
@@ -78,7 +78,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Telp, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Telp,"Telpon", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Telp, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Telp, "", new { @class = "text-danger" })
@@ -86,7 +86,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TglRegistrasi, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TglRegistrasi,"Tgl. Registrasi", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @*@Html.EditorFor(model => model.TglRegistrasi, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.Kendo().DatePickerFor(model => model.TglRegistrasi)
@@ -95,9 +95,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RiwayatSakit, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.RiwayatSakit,"Riwayat Sakit", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.RiwayatSakit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.RiwayatSakit, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.RiwayatSakit, "", new { @class = "text-danger" })
             </div>
         </div>

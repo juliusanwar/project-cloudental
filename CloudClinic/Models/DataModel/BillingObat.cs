@@ -18,7 +18,9 @@ namespace CloudClinic.Models
 
         public int Qty { get; set; }
 
-        public int Total { get; set; }  
+        
+        [DataType(DataType.Currency)]
+        public decimal? Total { get; set; }  
 
 
         public virtual Transaction Transaction { get; set; }

@@ -893,23 +893,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
@@ -920,15 +903,97 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\SucessPage.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\BillingJasa\Create.cshtml" />
+    <Content Include="Views\BillingJasa\Details.cshtml" />
+    <Content Include="Views\BillingJasa\Edit.cshtml" />
+    <Content Include="Views\BillingJasa\Index.cshtml" />
+    <Content Include="Views\BillingObat\Create.cshtml" />
+    <Content Include="Views\BillingObat\Details.cshtml" />
+    <Content Include="Views\BillingObat\Edit.cshtml" />
+    <Content Include="Views\BillingObat\Index.cshtml" />
+    <Content Include="Views\Doctors\Create.cshtml" />
+    <Content Include="Views\Doctors\Delete.cshtml" />
+    <Content Include="Views\Doctors\Details.cshtml" />
+    <Content Include="Views\Doctors\Edit.cshtml" />
+    <Content Include="Views\Doctors\Index.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Jadwal\Create.cshtml" />
+    <Content Include="Views\Jadwal\Edit.cshtml" />
+    <Content Include="Views\Jadwal\Index.cshtml" />
+    <Content Include="Views\JenisObat\Create.cshtml" />
+    <Content Include="Views\JenisObat\Edit.cshtml" />
+    <Content Include="Views\JenisObat\Index.cshtml" />
+    <Content Include="Views\JenisTindakan\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\JenisTindakan\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\JenisTindakan\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\ManageUser\AddRole.cshtml" />
+    <Content Include="Views\ManageUser\AddUserToRole.cshtml" />
+    <Content Include="Views\ManageUser\ShowAllRole.cshtml" />
+    <Content Include="Views\ManageUser\ShowAllUser.cshtml" />
+    <Content Include="Views\ManageUser\ShowUserWithRole.cshtml" />
+    <Content Include="Views\ManageUser\UpdateRole.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\ManageLogins.cshtml" />
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Obat\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Obat\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Obat\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pasien\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pasien\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pasien\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pasien\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pengguna\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pengguna\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pengguna\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Pengguna\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Reservation\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Reservation\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Reservation\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Reservation\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
@@ -941,71 +1006,53 @@
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
-    <Content Include="Views\Doctors\Create.cshtml" />
-    <Content Include="Views\Doctors\Delete.cshtml" />
-    <Content Include="Views\Doctors\Details.cshtml" />
-    <Content Include="Views\Doctors\Edit.cshtml" />
-    <Content Include="Views\Doctors\Index.cshtml" />
-    <Content Include="Views\ManageUser\AddRole.cshtml" />
-    <Content Include="Views\ManageUser\ShowAllRole.cshtml" />
-    <Content Include="Views\Shared\_MessageBox.cshtml" />
-    <Content Include="Views\ManageUser\UpdateRole.cshtml" />
-    <Content Include="Views\Shared\_PartialListRole.cshtml" />
-    <Content Include="Views\JenisTindakan\Create.cshtml" />
-    <Content Include="Views\JenisTindakan\Edit.cshtml" />
-    <Content Include="Views\JenisTindakan\Index.cshtml" />
-    <Content Include="Views\Tindakan\Create.cshtml" />
-    <Content Include="Views\Tindakan\Details.cshtml" />
-    <Content Include="Views\Tindakan\Edit.cshtml" />
-    <Content Include="Views\Tindakan\Index.cshtml" />
-    <Content Include="Views\JenisObat\Create.cshtml" />
-    <Content Include="Views\JenisObat\Edit.cshtml" />
-    <Content Include="Views\JenisObat\Index.cshtml" />
-    <Content Include="Views\Transaction\Create.cshtml" />
-    <Content Include="Views\Transaction\Details.cshtml" />
-    <Content Include="Views\Transaction\Edit.cshtml" />
-    <Content Include="Views\BillingJasa\Create.cshtml" />
-    <Content Include="Views\BillingJasa\Details.cshtml" />
-    <Content Include="Views\BillingJasa\Edit.cshtml" />
-    <Content Include="Views\BillingJasa\Index.cshtml" />
-    <Content Include="Views\Obat\Index.cshtml" />
-    <Content Include="Views\Obat\Create.cshtml" />
-    <Content Include="Views\Obat\Edit.cshtml" />
-    <Content Include="Views\BillingObat\Create.cshtml" />
-    <Content Include="Views\BillingObat\Details.cshtml" />
-    <Content Include="Views\BillingObat\Edit.cshtml" />
-    <Content Include="Views\BillingObat\Index.cshtml" />
-    <Content Include="Views\Jadwal\Create.cshtml" />
-    <Content Include="Views\Jadwal\Edit.cshtml" />
-    <Content Include="Views\Jadwal\Index.cshtml" />
-    <Content Include="Views\Reservation\Create.cshtml" />
-    <Content Include="Views\Reservation\Details.cshtml" />
-    <Content Include="Views\Reservation\Edit.cshtml" />
-    <Content Include="Views\Reservation\Index.cshtml" />
-    <Content Include="Views\Transaction\Index.cshtml" />
-    <Content Include="Views\Shared\_LoginPartialCloudClinic.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_CloudClinicMenuPartial.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_LayoutKendo.cshtml" />
-    <Content Include="Views\Account\SucessPage.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Shared\_LoginPartialCloudClinic.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
-    <Content Include="Views\ManageUser\AddUserToRole.cshtml" />
-    <Content Include="Views\ManageUser\ShowAllUser.cshtml" />
+    <Content Include="Views\Shared\_MessageBox.cshtml" />
+    <Content Include="Views\Shared\_PartialListRole.cshtml" />
     <Content Include="Views\Shared\_PartialListUser.cshtml" />
-    <Content Include="Views\ManageUser\ShowUserWithRole.cshtml" />
-    <Content Include="Views\Pengguna\Create.cshtml" />
-    <Content Include="Views\Pengguna\Delete.cshtml" />
-    <Content Include="Views\Pengguna\Details.cshtml" />
-    <Content Include="Views\Pengguna\Edit.cshtml" />
-    <Content Include="Views\Pengguna\Index.cshtml" />
-    <Content Include="Views\Pasien\Create.cshtml" />
-    <Content Include="Views\Pasien\Delete.cshtml" />
-    <Content Include="Views\Pasien\Details.cshtml" />
-    <Content Include="Views\Pasien\Edit.cshtml" />
-    <Content Include="Views\Pasien\Index.cshtml" />
+    <Content Include="Views\Tindakan\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Tindakan\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Tindakan\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Tindakan\Index.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Transaction\Create.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Transaction\Details.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Transaction\Edit.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PasienBaru\" />
     <Folder Include="Views\Sample\" />
   </ItemGroup>
   <ItemGroup>

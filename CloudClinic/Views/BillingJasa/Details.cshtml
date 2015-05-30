@@ -25,9 +25,19 @@
         <dd>
             @Html.DisplayFor(model => model.Transaction.Amnanesa)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        
 
     </dl>
 </div>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.BilJasaId }) |
     @Html.ActionLink("Back to List", "Index")

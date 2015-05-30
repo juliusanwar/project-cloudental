@@ -23,8 +23,8 @@ namespace CloudClinic.Controllers
             var billingObat = db.BillingObat.Include(b => b.Obat).Include(b => b.Transaction);
             return View(billingObat.ToList());
         }
-
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+        
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: BillingObat/Details/5
         public ActionResult Details(int? id)
         {
@@ -55,7 +55,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BilObatId,TransactionId,ObatId,Qty,Total")] BillingObat billingObat)
+        public ActionResult Create([Bind(Include = "BilObatId,TransactionId,ObatId,Qty")] BillingObat billingObat)
         {
             if (ModelState.IsValid)
             {

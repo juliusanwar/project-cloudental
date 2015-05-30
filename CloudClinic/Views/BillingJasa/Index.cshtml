@@ -5,17 +5,26 @@
 }
 
 <h2>Daftar Billing Jasa</h2>
+@if (User.IsInRole("Dokter"))
+{
+<p>
+    @Html.ActionLink("Checkout Billing Obat >>", "Create", "BillingObat", null, new { @class = "btn-btn-warning" })
+</p>
 
 <p>
     @Html.ActionLink("Tambah Billing", "Create")
 </p>
+}
 <table class="table">
     <tr>
         <th>
             Nama Tindakan
         </th>
         <th>
-            Amnanesa
+            Anamnesa
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
         </th>
         <th></th>
     </tr>
@@ -29,11 +38,17 @@
             @Html.DisplayFor(modelItem => item.Transaction.Amnanesa)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BilJasaId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.BilJasaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.BilJasaId },
-            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+            @Html.DisplayFor(modelItem => item.Total)
         </td>
+@if (User.IsInRole("Dokter"))
+{
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BilJasaId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.BilJasaId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" }) |
+            @Html.ActionLink("Bayar >>", "Details", new { id = item.BilJasaId })
+        </td>
+}
     </tr>
 }
 
