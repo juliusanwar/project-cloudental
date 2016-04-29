@@ -5,86 +5,139 @@
 }
 
 <h2>Details Pasien</h2>
+<input type="button" value="Print" onclick="window.print(); return false;" />
 
 <div>
     <h4>Pasien</h4>
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    <hr />  
+        <dl class="form-horizontal">
+            <dt>
+                User Name :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UserName)
+            </dd>
+
+            <dt>
+                Nama :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nama)
+            </dd>
+
+            <dt>
+                Tgl. Registrasi :
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TglRegistrasi)
+            </dd>
+        
+            <dt>
+                Riwayat Sakit :
+            </dt>
+
+            <dd>
+                @Html.TextAreaFor(model => model.RiwayatSakit, new { @readonly = "readonly" })
+            </dd>
+        </dl>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
+    <dl class="form-horizontal">
         <dd>
-            @Html.DisplayFor(model => model.UserName)
+            <h4>Histori Rekam Diagnosis Pasien</h4>
+            <table class="table">
+                <tr>
+                    <th>Tgl. Datang</th>
+                    <th>Anamnesa</th>
+                </tr>
+                @foreach (var item in Model.Diagnosis)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TglDatang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amnanesa)
+                        </td>
+                    </tr>
+                }
+                
+            </table>
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Nama)
-        </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.Nama)
+            <h4>Histori Rekam Billing Jasa</h4>
+            <table class="table">
+                <tr>
+                    <th>Tgl. Periksa</th>
+                    <th>Anamnesa</th>
+                    <th>Posisi Gigi</th>
+                    <th>Tindakan</th>
+                    <th>Harga</th>
+                </tr>
+                @foreach (var item in Model.BillingJasas)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TglDatang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Diagnosis.Amnanesa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gigi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tindakan.NamaTindakan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Harga)
+                        </td>
+                    </tr>
+                }
+
+            </table>
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TglLhr)
-        </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.TglLhr)
+            <h4>Histori Rekam Billing Obat</h4>
+            <table class="table">
+                <tr>
+                    <th>Tgl. Periksa</th>
+                    <th>Anamnesa</th>
+                    <th>Obat</th>
+                    <th>Harga</th>
+                    <th>Qty</th>
+                    <th>Sub Total</th>
+                </tr>
+                @foreach (var item in Model.BillingObat)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TglDatang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Diagnosis.Amnanesa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Barang.NamaBarang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Harga)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Qty)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SubTotal)
+                        </td>
+                    </tr>
+                }
+            </table>
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GolDarah)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GolDarah)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Alamat)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Alamat)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Telp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Telp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.TglRegistrasi)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.TglRegistrasi)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RiwayatSakit)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RiwayatSakit)
-        </dd>
-
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PasienId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    </div>
+

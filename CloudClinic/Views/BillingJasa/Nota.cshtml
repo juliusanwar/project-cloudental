@@ -1,0 +1,56 @@
+﻿@model CloudClinic.Models.Pasien
+
+@{
+    ViewBag.Title = "Billing Jasa";
+}
+
+<h2>Billing Jasa</h2>
+
+<div>
+    <h4>Pasien</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Kode Pasien
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.namaUnik)
+        </dd>
+        <dt>
+            User Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            Nama Pasien
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nama)
+        </dd>
+
+        <dt>
+            Gender
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            Gol. Darah
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GolDarah)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Tambah Tindakan", "Create", new { id = Model.PasienId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

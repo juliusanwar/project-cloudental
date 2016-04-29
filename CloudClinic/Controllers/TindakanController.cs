@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
+using PagedList;
 
 namespace CloudClinic.Controllers
 {
@@ -15,15 +16,70 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
-        // GET: Tindakans
-        public ActionResult Index()
+        //public ActionResult TindakanByJenis(int id)
+        //{
+        //    IEnumerable<Tindakan> modelList = new List<Tindakan>();
+        //    using (ClinicContext context = new ClinicContext())
+        //    {
+        //        var tindakan = context.Tindakan.Where(x => x.JenisTindakanId == id).ToList();
+        //        modelList = tindakan.Select(x =>
+        //                   new Tindakan()
+        //                   {
+        //                       TindakanId = x.TindakanId,
+        //                       JenisTindakanId = x.JenisTindakanId,
+        //                       NamaTindakan = x.NamaTindakan,
+        //                       Harga = x.Harga,
+        //                       Diagnosa = x.Diagnosa
+        //                   });
+        //    }
+        //    return PartialView(modelList);
+        //}
+
+        [Authorize(Roles = "Admin,Dokter")]
+        // GET: Tindakan
+        public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
         {
-            var tindakan = db.Tindakan.Include(t => t.JenisTindakan);
-            return View(tindakan.ToList());
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "JenisTindakan" : "";
+
+            if (Search_Data != null)
+            {
+                Page_No = 1;
+            }
+            else
+            {
+                Search_Data = Filter_Value;
+            }
+
+            ViewBag.FilterValue = Search_Data;
+
+            var tindakan = from t in db.Tindakan select t;
+
+            if (!String.IsNullOrEmpty(Search_Data))
+            {
+                tindakan = tindakan.Where(t => t.NamaTindakan.ToUpper().Contains(Search_Data.ToUpper()));
+                //|| p.Nama.ToUpper().Contains(Search_Data.ToUpper()));
+            }
+
+            switch (Sorting_Order)
+            {
+                case "JenisTindakan":
+                    tindakan = tindakan.OrderByDescending(t => t.JenisTindakanId);
+                    break;
+                default:
+                    tindakan = tindakan.OrderBy(t => t.JenisTindakanId);
+                    break;
+            }
+
+            int Size_Of_Page = 10;
+            int No_Of_Page = (Page_No ?? 1);
+
+
+
+            return View(tindakan.ToPagedList(No_Of_Page, Size_Of_Page));
         }
 
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: Tindakans/Details/5
         public ActionResult Details(int? id)
         {
@@ -44,7 +100,7 @@ namespace CloudClinic.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakans, "JenisTindakanId", "NamaTindakan");
+            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakan, "JenisTindakanId", "NamaTindakan");
             return View();
         }
 
@@ -53,16 +109,17 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TindakanId,Nama,JenisTindakanId,Harga,Diagnosa")] Tindakan tindakan)
+        public ActionResult Create([Bind(Include = "TindakanId,NamaTindakan,JenisTindakanId,Harga,Diagnosa")] Tindakan tindakan)
         {
             if (ModelState.IsValid)
             {
                 db.Tindakan.Add(tindakan);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                ViewBag.Pesan = "Berhasil menambahkan Tindakan baru!";
             }
 
-            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakans, "JenisTindakanId", "NamaTindakan", tindakan.JenisTindakanId);
+            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakan, "JenisTindakanId", "NamaTindakan", tindakan.JenisTindakanId);
             return View(tindakan);
         }
 
@@ -79,7 +136,7 @@ namespace CloudClinic.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakans, "JenisTindakanId", "NamaTindakan", tindakan.JenisTindakanId);
+            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakan, "JenisTindakanId", "NamaTindakan", tindakan.JenisTindakanId);
             return View(tindakan);
         }
 
@@ -88,7 +145,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TindakanId,Nama,JenisTindakanId,Harga,Diagnosa")] Tindakan tindakan)
+        public ActionResult Edit([Bind(Include = "TindakanId,NamaTindakan,JenisTindakanId,Harga,Diagnosa")] Tindakan tindakan)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +153,7 @@ namespace CloudClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakans, "JenisTindakanId", "NamaTindakan", tindakan.JenisTindakanId);
+            ViewBag.JenisTindakanId = new SelectList(db.JenisTindakan, "JenisTindakanId", "NamaTindakan", tindakan.JenisTindakanId);
             return View(tindakan);
         }
 

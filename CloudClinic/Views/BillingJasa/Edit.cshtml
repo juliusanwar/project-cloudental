@@ -1,10 +1,11 @@
-﻿@model CloudClinic.Models.BillingJasa
+﻿@model CloudClinic.Models.DataModel.BillingJasa
 
 @{
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit</h2>
+
 
 @using (Html.BeginForm())
 {
@@ -15,22 +16,55 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.BilJasaId)
+        @Html.HiddenFor(model => model.PasienId)
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.PasienId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-2">
+                @Html.EditorFor(model => model.PasienId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PasienId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TransactionId, "TransactionId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.DiagnosisId, "DiagnosisId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-2">
+                @Html.DropDownList("DiagnosisId", null, htmlAttributes: new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.DiagnosisId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gigi, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TransactionId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TransactionId, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Gigi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Gigi, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TindakanId, "TindakanId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-xs-2">
                 @Html.DropDownList("TindakanId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TindakanId, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Harga, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-2">
+                @Html.EditorFor(model => model.Harga, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Harga, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.TglDatang)
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.TglDatang, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TglDatang, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TglDatang, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -43,3 +77,7 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

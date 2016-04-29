@@ -1,0 +1,17 @@
+﻿@model CloudClinic.ViewModels.Input.LookupDemoCfgInput
+
+<div class="efield">
+    <div class="elabel">
+        Pick a meal :
+    </div>
+    <div class="einput">
+        @*begin*@
+        @(Html.Awe().LookupFor(o => o.Pasien)
+          .ClearButton(Model.ClearButton)
+          .HighlightChange(Model.HighlightChange)
+          .Height(Model.Height)
+          .Width(Model.Width)
+          .Fullscreen(Model.Fullscreen))
+        @*end*@
+    </div>
+</div>

@@ -1,31 +1,48 @@
-﻿@model IEnumerable<CloudClinic.Models.BillingObat>
+﻿@model PagedList.IPagedList<CloudClinic.Models.DataModel.BillingObat>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 @{
-    ViewBag.Title = "Daftar Billing Obat";
+    ViewBag.Title = "Index";
 }
 
-<h2>Daftar Billing Obat di CloudClinic</h2>
-
-
+<h2>Daftar Pengobatan</h2>
 @if (User.IsInRole("Dokter"))
 {
-<p>
-    @Html.ActionLink("Tambah Billing", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Tambah Baru", "Create")
+    </p>
+    
 }
+@using (Html.BeginForm("Index", "BillingObat", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Cari" />
+    </p>
+}
+
+
 <table class="table">
     <tr>
         <th>
-            Obat
+            @Html.ActionLink("Username", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
         </th>
         <th>
             Anamnesa
         </th>
         <th>
-            Quantity
+            Nama Barang
+        </th>
+        
+        <th>
+            Tgl. Datang
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Total)
+            Qty
+        </th>
+        <th>
+            Harga
         </th>
         <th></th>
     </tr>
@@ -33,27 +50,38 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Obat.Nama)
+            @Html.DisplayFor(modelItem => item.Diagnosis.Pasien.UserName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Transaction.Amnanesa)
+            @Html.DisplayFor(modelItem => item.Diagnosis.Amnanesa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Barang.NamaBarang)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.TglDatang)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Qty)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Total)
+            @Html.DisplayFor(modelItem => item.Harga)
         </td>
 @if (User.IsInRole("Dokter"))
 {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.BilObatId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.BilObatId },
-            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" }) |
-            @Html.ActionLink("Bayar >>", "Details", new { id = item.BilObatId })
+            @Html.ActionLink("Details", "Details", new { id=item.BilObatId }) |
+            @Html.ActionLink("Delete", "DeleteBillObat", new { id = item.BilObatId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
 }
     </tr>
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue })) 

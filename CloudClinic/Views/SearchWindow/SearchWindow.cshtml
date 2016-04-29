@@ -1,0 +1,67 @@
+﻿@using CloudClinic.Models;
+
+@Styles.Render("~/Content/css", "~/Content/kendo/css")
+@Scripts.Render("~/bundles/modernizr", "~/bundles/jquery", "~/bundles/kendo")
+
+<body style="padding: 10px;">
+    <div class="panel panel-body" style="padding: 0; margin-bottom: 0">
+
+        <script>
+            function mySearchBoxInWindow_Select(e) {
+                var dataItem = this.dataItem(e.item.index());
+                $("#hiddenSearchTerm").val(dataItem.UserName);
+                mySearchBoxInWindow_Refresh();
+            }
+            function mySearchBoxInWindow_GetValue() {
+                $("#hiddenSearchTerm").val($("#mySearchBoxInWindow").val());
+            }
+            function mySearchBoxInWindow_GetValueAndRefresh() {
+                mySearchBoxInWindow_GetValue();
+                mySearchBoxInWindow_Refresh();
+            }
+            function mySearchBoxInWindow_Refresh() {
+                $("#searchResultsGrid").data('kendoGrid').dataSource.read();
+                $("#searchResultsGrid").data('kendoGrid').refresh();
+            }
+        </script>
+
+        @Html.Hidden("hiddenSearchTerm")
+        @(Html.Kendo().AutoComplete()
+            .Name("mySearchBoxInWindow")
+            .MinLength(3)
+            .DataTextField("UserName")
+            .DataSource(source =>
+            {
+                source.Read(read =>
+                {
+                    read.Action("AutoComplete", "SearchWindow")
+                        .Data("getAutoCompleteValueInWindow");
+                }).ServerFiltering(true);
+            })
+            .Events(e => e.Select("mySearchBoxInWindow_Select").Change("mySearchBoxInWindow_GetValueAndRefresh"))
+        )
+
+        <script type="text/javascript">
+            function getAutoCompleteValueInWindow() {
+                return { term: $("#mySearchBoxInWindow").val() };
+            }
+            function getHiddenSearchTermValueInWindow() {
+                return { term: $("#hiddenSearchTerm").val() };
+            }
+        </script>
+
+        <div id="searchResultsList" role="grid">
+            <div><h3>Search Results</h3></div>
+
+            @(Html.Kendo()
+                .Grid<Pasien>()
+                .Name("searchResultsGrid")
+                        .DataSource(datasource => datasource.Ajax().Read(read => read.Action("GetSearchResults", "SearchWindow").Data("getHiddenSearchTermValueInWindow")))
+                .Pageable(p => p.ButtonCount(5))
+                .Sortable()
+            )
+
+        </div>
+    </div>
+</body>
+

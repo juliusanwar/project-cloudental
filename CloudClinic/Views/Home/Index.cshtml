@@ -2,10 +2,12 @@
     ViewBag.Title = "Home Page";
 }
 
+
+
 <div class="jumbotron">
-    <h1>Cloud Clinic</h1>
-    <p>Selamat datang di Cloud Clinic</p>
-    <p class="lead">CloudClinic adalah sebuah inovasi teknologi informasi web dari klinik-klinik di Yogyakarta</p>
+    <h1>Cloudental</h1>
+    <p>Selamat datang di Cloudental bersama drg. Andi Setiawan</p>
+    <p class="lead">Cloudental adalah sebuah inovasi teknologi informasi klinik gigi Waluyo berbasis web di Yogyakarta</p>
         @if (Request.IsAuthenticated)
         {
             <div>
@@ -15,11 +17,12 @@
         else
         {
             <div>
-                Silahkan melakukan pendaftaran terlebih dulu dan login kedalam sistem.
+                Silahkan melakukan pendaftaran di klinik terlebih dulu atau <a href="@Url.Action("Login","Account")">login</a> kedalam sistem.
             </div>
         }
-    @*<p>Username : @ViewBag.UserName</p>*@
 </div>
+
+
 
 @*<div class="row">
     <div class="col-md-4">

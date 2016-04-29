@@ -10,7 +10,7 @@ using CloudClinic.Models;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Users = "jul@jul.com")]
+    //[Authorize(Users = "jul@jul.com")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<CloudClinic.Models.JenisBarang>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Daftar Jenis Barang</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+    <table class="table">
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Nama Jenis
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.namaUnik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NamaJenis)
+            </td>
+            @if (User.IsInRole("Admin"))
+            {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.JenisBrgId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.JenisBrgId },
+                new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+            </td>
+            }
+        </tr>
+    }
+
+</table>

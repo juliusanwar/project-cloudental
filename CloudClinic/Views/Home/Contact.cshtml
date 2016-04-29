@@ -1,17 +1,51 @@
-﻿@{
-    ViewBag.Title = "Contact Administrator CloudClinic";
+﻿@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "Contact Administrator Cloudental";
 }
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
+<script>
+    $(document).ready(function () {
+        var validator = $("#UserForm").kendoValidator().data("kendoValidator");
+
+        $("#SearchButton").bind("click", function () {
+
+            if (validator.validate()) {
+                $("#window").data("kendoWindow").open().center(true);
+            }
+        });
+    });
+</script>
+
 <address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
+    Jalan HOS Cokroaminoto<br />
+    Yogyakarta, Daerah Istimewa Yogyakarta 55222<br />
     <abbr title="Phone">P:</abbr>
-    425.555.0100
+    08981000277
 </address>
 
 <address>
-    <strong>Support:</strong>   <a href="mailto:Support@cloudclinic.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@cloudclinic.com">Marketing@example.com</a>
+    <strong>Support:</strong>   <a href="mailto:julius.anwar@live.com">Administrator Cloudental</a>
 </address>
+
+<div id="UserForm">
+    <span id="SearchButton" class="k-button">Search Names</span>
+
+    <div>
+        @(Html.Kendo().Window()
+          .Name("window")
+          .Title("Search Names")
+          .LoadContentFrom("Search", "Home")
+          .Draggable()
+          .Actions(actions => actions.Close())
+          .Modal(true).Visible(false)
+          .HtmlAttributes(new { style = "margin: 10px" })
+          .Events(ev => ev.Close("onClose"))
+        )
+    </div>
+</div>
+
+
+

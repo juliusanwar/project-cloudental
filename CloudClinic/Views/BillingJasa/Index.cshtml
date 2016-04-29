@@ -1,30 +1,38 @@
-﻿@model IEnumerable<CloudClinic.Models.BillingJasa>
+﻿@model IEnumerable<CloudClinic.Models.DataModel.BillingJasa>
 
 @{
-    ViewBag.Title = "Daftar Billing Jasa";
+    ViewBag.Title = "Daftar Pemeriksaan";
 }
 
-<h2>Daftar Billing Jasa</h2>
+<h2>Daftar Pemeriksaan</h2>
 @if (User.IsInRole("Dokter"))
 {
-<p>
-    @Html.ActionLink("Checkout Billing Obat >>", "Create", "BillingObat", null, new { @class = "btn-btn-warning" })
-</p>
-
-<p>
-    @Html.ActionLink("Tambah Billing", "Create")
-</p>
+    <p>
+        @Html.ActionLink("Tambah Baru", "Create")
+    </p>
 }
 <table class="table">
     <tr>
         <th>
-            Nama Tindakan
+            ID
         </th>
         <th>
-            Anamnesa
+            Username
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Total)
+            @Html.DisplayNameFor(model => model.Diagnosis.Amnanesa)
+        </th>
+        <th>
+            Tindakan
+        </th>
+        <th>
+            Posisi Gigi
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Harga)
+        </th>
+        <th>
+            Tgl. Datang
         </th>
         <th></th>
     </tr>
@@ -32,21 +40,33 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Tindakan.Nama)
+            @Html.DisplayFor(modelItem => item.namaUnik)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Transaction.Amnanesa)
+            @Html.DisplayFor(modelItem => item.Pasien.UserName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Total)
+            @Html.DisplayFor(modelItem => item.Diagnosis.Amnanesa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tindakan.NamaTindakan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gigi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Harga)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TglDatang)
         </td>
 @if (User.IsInRole("Dokter"))
 {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.BilJasaId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.BilJasaId },
-            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" }) |
-            @Html.ActionLink("Bayar >>", "Details", new { id = item.BilJasaId })
+            @Html.ActionLink("Details", "Details", new { id=item.BilJasaId }) |
+            @Html.ActionLink("Delete", "DeleteJasa", new { id = item.BilJasaId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
 }
     </tr>

@@ -1,11 +1,31 @@
-﻿@model CloudClinic.Models.Pasien
+﻿@using Kendo.Mvc.UI;
+@model CloudClinic.Models.ViewModel.PasienViewModel
 
 @{
     ViewBag.Title = "Tambah Pasien";
 }
 
 <h2>Tambah Pasien</h2>
+<script type="text/javascript">
+       function resetFields(form) {
+           $(':input', form).each(function() {
+               var type = this.type;
+               var tag = this.tagName.toLowerCase(); // normalize case
+               // to reset the value attr of text inputs,
+               // password inputs, fileUpload and textareas
+               if (type == 'text' || type == 'password' || tag == 'textarea' || type=='file' || type == 'email')
+                   this.value = "";
+               // checkboxes and radios need to have their checked state cleared
+               else if (type == 'checkbox' || type == 'radio')
+                   this.checked = false;
+               // select elements need to have their 'selectedIndex' property set to -1
+               // (this works for both single and multiple select elements)
+               else if (tag == 'select')
+                   this.selectedIndex = 0;
+           });
+       }
 
+</script>
 
 @using (Html.BeginForm()) 
 {
@@ -25,13 +45,29 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Repassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Repassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Repassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Nama, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Nama, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Nama, "", new { @class = "text-danger" })
             </div>
         </div>
-
+                
         <div class="form-group">
             @Html.LabelFor(model => model.TglLhr,"Tgl. Lahir", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -72,8 +108,16 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Alamat, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Alamat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Alamat, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Alamat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Kota, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Kota, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Kota, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -86,14 +130,13 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TglRegistrasi,"Tgl. Registrasi", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.EditorFor(model => model.TglRegistrasi, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.Kendo().DatePickerFor(model => model.TglRegistrasi)
-                @Html.ValidationMessageFor(model => model.TglRegistrasi, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-
+               
         <div class="form-group">
             @Html.LabelFor(model => model.RiwayatSakit,"Riwayat Sakit", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -101,17 +144,36 @@
                 @Html.ValidationMessageFor(model => model.RiwayatSakit, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" /> &nbsp;&nbsp;&nbsp;
+                <input onclick="resetFields(form);" value="Reset" class="btn btn-default" />
             </div>
         </div>
+    </div>
+
+    <div class="form-group">
+        @if (ViewBag.Error == null)
+        {
+            <div class="alert alert-info">@ViewBag.Pesan</div>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <ul>
+                    @foreach (var err in ViewBag.Error)
+                    {
+                        <li>@err</li>
+                    }
+                </ul>
+            </div>
+        }
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("<-- Kembali ke daftar pasien", "Index")
 </div>
 
 @section Scripts {

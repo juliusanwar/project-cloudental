@@ -7,24 +7,78 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
-using CloudClinic.Models.ViewModel;
+using CloudClinic.Models.DataModel;
+
+using PagedList;
 
 namespace CloudClinic.Controllers
 {
-    
     public class BillingObatController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+
+        //public decimal GetTotal()
+        //{
+        //    decimal? total = (from c in db.BillingObat.Include("Diagnosis")
+        //                      where c.BilObatId == ShoppingCartId
+        //                      select (int?)c.Count * c.Book.Price).Sum();
+
+        //    return total ?? decimal.Zero;
+        //}
+
+        [Authorize(Roles = "Dokter")]
         // GET: BillingObat
-        public ActionResult Index()
+        public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
         {
-            var billingObat = db.BillingObat.Include(b => b.Obat).Include(b => b.Transaction);
-            return View(billingObat.ToList());
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "UserName" : "";
+
+            if (Search_Data != null)
+            {
+                Page_No = 1;
+            }
+            else
+            {
+                Search_Data = Filter_Value;
+            }
+
+            ViewBag.FilterValue = Search_Data;
+
+            var bilObat = from b in db.BillingObat select b;
+
+            if (!String.IsNullOrEmpty(Search_Data))
+            {
+                bilObat = bilObat.Where(b => b.Diagnosis.Pasien.UserName.ToUpper().Contains(Search_Data.ToUpper()));
+                //|| p.Nama.ToUpper().Contains(Search_Data.ToUpper()));
+            }
+
+            switch (Sorting_Order)
+            {
+                case "UserName":
+                    bilObat = bilObat.OrderByDescending(b => b.Diagnosis.Pasien.UserName);
+                    break;
+                default:
+                    bilObat = bilObat.OrderBy(b => b.Diagnosis.Pasien.UserName);
+                    break;
+            }
+
+            int Size_Of_Page = 10;
+            int No_Of_Page = (Page_No ?? 1);
+
+
+
+            return View(bilObat.ToPagedList(No_Of_Page, Size_Of_Page));
+
+            //return View(pasien.ToList());
         }
-        
-        [Authorize(Roles = "Admin,Dokter")]
+        //public ActionResult Index()
+        //{
+        //    var billingObat = db.BillingObat.Include(b => b.Barang).Include(b => b.Diagnosis);
+        //    return View(billingObat.ToList());
+        //}
+
+        [Authorize(Roles = "Dokter")]
         // GET: BillingObat/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,13 +94,13 @@ namespace CloudClinic.Controllers
             return View(billingObat);
         }
 
-        
+        [Authorize(Roles = "Dokter")]
         // GET: BillingObat/Create
-        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
-            ViewBag.ObatId = new SelectList(db.Obat, "ObatId", "Nama");
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa");
+            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa");
+            ViewBag.BarangId = new SelectList(db.Barang, "BarangId", "NamaBarang");
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
             return View();
         }
 
@@ -55,33 +109,49 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BilObatId,TransactionId,ObatId,Qty")] BillingObat billingObat)
+        public ActionResult Create([Bind(Include = "BilObatId,TglDatang,DiagnosisId,BarangId,Qty,Harga")] BillingObat billingObat)
         {
             if (ModelState.IsValid)
             {
-                var obat = (from o in db.Obat
-                            where o.ObatId == billingObat.ObatId
+                var obat = (from o in db.Barang
+                            where o.BarangId == billingObat.BarangId
                             select o).SingleOrDefault();
-                            obat.Stok = obat.Stok - billingObat.Qty;
+                if (billingObat.Qty >= obat.Stok)
+                {
+                    ViewBag.Error = "Gagal menambahkan transaksi obat, stok tidak sesuai dengan kuantitas!!!";
+                }
+                else if (obat.Stok <= 5)
+                {
+                    ViewBag.Error = "Gagal melakukan transaksi obat! Silahkan Re-Order / Re-Stock Klinik terlebih dahulu!!!";
+                }
+                else
+                {
+                    obat.Stok = obat.Stok - billingObat.Qty;
+                    var subTotal = (from t in db.Barang
+                                    where t.BarangId == billingObat.BarangId
+                                    select t).SingleOrDefault();
+                    billingObat.SubTotal = billingObat.Harga * billingObat.Qty;
 
-                var total = (from t in db.Obat
-                             where t.ObatId == billingObat.ObatId
-                             select t).SingleOrDefault();
-                             billingObat.Total = obat.Harga * billingObat.Qty;
 
-                db.BillingObat.Add(billingObat);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                    db.BillingObat.Add(billingObat);
+                    db.SaveChanges();
+                    //return RedirectToAction("Index");
+                    ViewBag.Pesan = "Berhasil menambahkan transaksi obat!";
+                }
+                
+
+                
             }
+      
 
-            ViewBag.ObatId = new SelectList(db.Obat, "ObatId", "Nama", billingObat.ObatId);
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa", billingObat.TransactionId);
+            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa", billingObat.DiagnosisId);
+            ViewBag.BarangId = new SelectList(db.Barang, "BarangId", "NamaBarang", billingObat.BarangId);
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", billingObat.PasienId);
             return View(billingObat);
         }
 
-        
+        [Authorize(Roles = "Dokter")]
         // GET: BillingObat/Edit/5
-        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,8 +163,8 @@ namespace CloudClinic.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ObatId = new SelectList(db.Obat, "ObatId", "Nama", billingObat.ObatId);
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa", billingObat.TransactionId);
+            ViewBag.BarangId = new SelectList(db.Barang, "BarangId", "NamaBarang", billingObat.BarangId);
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", billingObat.PasienId);
             return View(billingObat);
         }
 
@@ -103,43 +173,32 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BilObatId,TransactionId,ObatId,Qty,Total")] BillingObat billingObat)
+        public ActionResult Edit([Bind(Include = "BilObatId,TglDatang,DiagnosisId,BarangId,Qty,Harga,Total")] BillingObat billingObat)
         {
             if (ModelState.IsValid)
             {
-                var obat = (from o in db.Obat
-                            where o.ObatId == billingObat.ObatId
-                            select o).SingleOrDefault();
-                obat.Stok = obat.Stok - billingObat.Qty;
-
-                var total = (from t in db.Obat
-                             where t.ObatId == billingObat.ObatId
-                             select t).SingleOrDefault();
-
-                billingObat.Total = obat.Harga * billingObat.Qty;
                 db.Entry(billingObat).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ObatId = new SelectList(db.Obat, "ObatId", "Nama", billingObat.ObatId);
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa", billingObat.TransactionId);
+            ViewBag.BarangId = new SelectList(db.Barang, "BarangId", "NamaBarang", billingObat.BarangId);
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", billingObat.PasienId);
             return View(billingObat);
         }
 
-        
         // GET: BillingObat/Delete/5
-        [Authorize(Roles = "Admin,Dokter")]
-        public ActionResult Delete(int? id)
+        [Authorize(Roles = "Dokter")]
+        public ActionResult DeleteBillObat(int? id)
         {
-            BillingObat billingObat = db.BillingObat.Find(id);
-            db.BillingObat.Remove(billingObat);
+            BillingObat obat = db.BillingObat.Find(id);
+            db.BillingObat.Remove(obat);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        // POST: BillingObat/Delete/5
+        // POST: Barang/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {

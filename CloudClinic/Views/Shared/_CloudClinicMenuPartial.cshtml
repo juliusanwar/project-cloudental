@@ -134,7 +134,7 @@
         {
             <li class="">
                 <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-android"></i>
+                    <i class="menu-icon fa fa-ambulance"></i>
                     <span class="menu-text"> Administrator </span>
 
                     <b class="arrow fa fa-angle-down"></b>
@@ -153,21 +153,21 @@
                     <li class="">
                         <a href="@Url.Action("Index","Pengguna")">
                             <i class="menu-icon fa fa-picture-o"></i>
-                            <span class="menu-text"> Setup Doktor </span>
+                            <span class="menu-text"> Setup Pengguna </span>
                         </a>
                     </li>
 
                     <li class="">
-                        <a href="@Url.Action("Index","JenisObat")">
+                        <a href="@Url.Action("Index","JenisBarang")">
                             <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Jenis Obat </span>
+                            <span class="menu-text"> Setup Jenis Barang </span>
                         </a>
                     </li>
 
                     <li class="">
-                        <a href="@Url.Action("Index","Obat")">
+                        <a href="@Url.Action("Index","Barang")">
                             <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Obat </span>
+                            <span class="menu-text"> Setup Barang </span>
                         </a>
                     </li>
 
@@ -186,19 +186,11 @@
                     </li>
 
                     <li class="">
-                        <a href="@Url.Action("Index","Jadwal")">
+                        <a href="@Url.Action("Index","Pembelian")">
                             <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Jadwal Klinik </span>
+                            <span class="menu-text"> Setup Pembelian </span>
                         </a>
                     </li>
-
-                    <li class="">
-                        <a href="@Url.Action("Index","Reservation")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Reservasi Online </span>
-                        </a>
-                    </li>
-
                 </ul>
 
         </li>
@@ -253,32 +245,12 @@
                 </li>
 
                 <li class="">
-                    <a href="@Url.Action("Index","Jadwal")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Jadwal </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Reservation")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Reservasi Online </span>
-                    </a>
-                </li>
-
-                @*<li class="">
                     <a href="@Url.Action("Index","Pasien")">
                         <i class="menu-icon fa fa-tag"></i>
                         <span class="menu-text"> Setup Pasien </span>
                     </a>
                 </li>
 
-                <li class="">
-                    <a href="@Url.Action("Index","Pengguna")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Dokter </span>
-                    </a>
-                </li>*@
             </ul>
 
 
@@ -289,8 +261,8 @@
     {
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-android"></i>
-                <span class="menu-text"> Dokter </span>
+                <i class="menu-icon fa fa-ambulance"></i>
+                <span class="menu-text"> Klinik </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -298,41 +270,20 @@
             <ul class="submenu">
 
                 <li class="">
-                    <a href="@Url.Action("Index","Transaction")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Transaksi </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Jadwal")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Jadwal </span>
-                    </a>
-                </li>
-
-                <li class="">
-                    <a href="@Url.Action("Index","Reservation")">
-                        <i class="menu-icon fa fa-tag"></i>
-                        <span class="menu-text"> Setup Reservasi Online </span>
-                    </a>
-                </li>
-                @*<li class="">
                     <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-angle-down"></i>
-                        <span class="menu-text"> Setup Billing </span>
+                        <i class="menu-icon fa fa-list-alt"></i>
+                        <span class="menu-text"> Setup List Users </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
 
-                        <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
-                        <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
+                        <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
+                        <li>@Html.ActionLink("Petugas Klinik", "Index", "Pengguna")</li>
                     </ul>
-                </li>*@
+                </li>
 
-                    
                 <li class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-list-alt"></i>
@@ -351,42 +302,24 @@
                 <li class="">
                     <a href="#" class="dropdown-toggle">
                         <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Setup List Obat </span>
+                        <span class="menu-text"> Setup List Barang </span>
 
                         <b class="arrow fa fa-angle-down"></b>
                     </a>
                     <b class="arrow"></b>
                     <ul class="submenu">
 
-                        <li>@Html.ActionLink("Jenis Obat", "Index", "JenisObat")</li>
-                        <li>@Html.ActionLink("Obat", "Index", "Obat")</li>
+                        <li>@Html.ActionLink("Jenis Barang", "Index", "JenisBarang")</li>
+                        <li>@Html.ActionLink("Barang", "Index", "Barang")</li>
                     </ul>
                 </li>
-                    
-                <li class="">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-android"></i>
-                        <span class="menu-text"> Setup List User </span>
-
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-                    <b class="arrow"></b>
-                    <ul class="submenu">
-
-                        <li>@Html.ActionLink("Dokter", "Index", "Pengguna")</li>
-                        <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
-                    </ul>
-                </li>
-
-                
-
             </ul>
 
         </li>
     <li class="">
 
         <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-android"></i>
+            <i class="menu-icon fa fa-dashboard"></i>
             <span class="menu-text"> Setup Transaksi </span>
 
             <b class="arrow fa fa-angle-down"></b>
@@ -394,29 +327,13 @@
         <b class="arrow"></b>
         <ul class="submenu">
 
-            <li>@Html.ActionLink("Anamnesa", "Index", "Transaction")</li>
+            <li>@Html.ActionLink("Diagnosis", "Index", "Diagnosis")</li>
             <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
             <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
 
         </ul>
 
     </li>
-
-    @*<li class="">
-
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-android"></i>
-            <span class="menu-text"> Amnanesa Pasien </span>
-
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-
-            <li>@Html.ActionLink("Transaksi", "Create", "Transaction")</li>
-
-        </ul>
-    </li>*@
         
     }
 

@@ -15,14 +15,14 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+        //[Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Jadwal
         public ActionResult Index()
         {
             return View(db.Jadwal.ToList());
         }
 
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+        //[Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Jadwal/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,9 +40,10 @@ namespace CloudClinic.Controllers
 
 
         // GET: Jadwal/Create
-        [Authorize(Roles = "Admin,Dokter")]
+        //[Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
+            ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama");
             return View();
         }
 
@@ -51,7 +52,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "JadwalId,PilihanJadwal")] Jadwal jadwal)
+        public ActionResult Create([Bind(Include = "JadwalId,PenggunaId,Hari,Ruang,Sesi")] Jadwal jadwal)
         {
             if (ModelState.IsValid)
             {
@@ -59,13 +60,14 @@ namespace CloudClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama", jadwal.PenggunaId);
 
             return View(jadwal);
         }
 
 
         // GET: Jadwal/Edit/5
-        [Authorize(Roles = "Admin,Dokter")]
+        //[Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -85,7 +87,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JadwalId,PilihanJadwal")] Jadwal jadwal)
+        public ActionResult Edit([Bind(Include = "JadwalId,PenggunaId,Hari,Ruang,Sesi")] Jadwal jadwal)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +100,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Jadwal/Delete/5
-        [Authorize(Roles = "Admin,Dokter")]
+        //[Authorize(Roles = "Admin,Dokter")]
         public ActionResult Delete(int? id)
         {
             Jadwal jadwal = db.Jadwal.Find(id);

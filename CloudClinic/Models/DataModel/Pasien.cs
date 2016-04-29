@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CloudClinic.Models.DataModel;
+using CloudClinic.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +9,8 @@ using System.Web;
 
 namespace CloudClinic.Models
 {
+    
+
     public enum Gender { pria, wanita};
 
     public enum GolDarah { A,B,AB,O};
@@ -28,13 +32,16 @@ namespace CloudClinic.Models
         [DataType(DataType.DateTime)]
         public DateTime TglLhr { get; set; }
 
-
+        
         public string Gender { get; set; }
 
         public string GolDarah { get; set; }
 
         [Required]
         public string Alamat { get; set; }
+
+        [Required]
+        public string Kota { get; set; }
 
         [Required]
         public string Telp { get; set; }
@@ -45,9 +52,24 @@ namespace CloudClinic.Models
 
         public string RiwayatSakit { get; set; }
 
-        public virtual ICollection<Transaction> Transactions { get; set; }
-        //public virtual ICollection<RekamMedis> RekamMedisis { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
+        public string namaUnik
+        {
+            get { return "P" + PasienId.ToString("D4"); }
+        }
+
+        public Pasien()
+          {
+            TglRegistrasi = DateTime.Now;
+          }
+
+        
+        public virtual ICollection<BillingObat> BillingObat { get; set; }
+        public virtual ICollection<BillingJasa> BillingJasas { get; set; }
+        public virtual ICollection<Reservation> Reservation { get; set; }
+        public virtual ICollection<Diagnosis> Diagnosis { get; set; }
+        public virtual ICollection<Appointment> Appointment { get; set; }
     }
 }

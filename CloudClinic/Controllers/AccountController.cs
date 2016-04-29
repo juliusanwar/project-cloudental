@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles="Admin")]
+    
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -76,7 +76,7 @@ namespace CloudClinic.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -87,7 +87,7 @@ namespace CloudClinic.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Username atau Password Anda salah!");
                     return View(model);
             }
         }
@@ -137,7 +137,7 @@ namespace CloudClinic.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        //[Authorize(Roles="Admin")]
         public ActionResult Register()
         {
             return View();
@@ -150,35 +150,30 @@ namespace CloudClinic.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+
             if (ModelState.IsValid)
             {
-
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-
+                var user = new ApplicationUser() { UserName = model.UserName, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //var currentUser = UserManager.FindByName(user.UserName);
+                    var currentUser = UserManager.FindByName(user.UserName);
 
                     //var roleresult = UserManager.AddToRole(currentUser.Id, "Pasien");
-
-
-
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link 
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index", "Home");
                 }
-                AddErrors(result);
+                else
+                {
+                    AddErrors(result);
+                }
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+
+            
         }
 
         //

@@ -1,0 +1,80 @@
+﻿@using CloudClinic.Models
+@model CloudClinic.Models.Pasien
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>UserDetails</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nama, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="FindBtn" type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+
+        <div>
+            <div>
+                @(Html.Kendo().Grid<Pasien>()
+              .Name("SearchJsonRequest")
+              .HtmlAttributes(new { style = "max-height: 50px; border:0px" })
+              .Columns(columns =>
+              {
+                  columns.Bound(x => x.UserName);
+                  columns.Bound(x => x.Nama);
+              })
+              .Selectable()
+              .Resizable(resizing => resizing.Columns(true))
+              .DataSource(dataSource => dataSource
+                  .Ajax())
+                )
+
+            </div>
+        </div>
+
+    </div>
+}
+
+
+
+<script>
+    $('#FindBtn').click(function (e) {
+        e.preventDefault();
+        var Pasien =
+        {
+            "UserName": document.getElementById('UserName').value,
+            "Nama": document.getElementById('Nama').value,
+        };
+        $.ajax({
+            url: "SearchJsonRequest",
+            type: 'POST',
+            contentType: "application/json;charset=utf-8",
+            data: JSON.stringify(Pasien),
+            dataType: "json",
+            success: function (data) {
+                var grid = $('#AssociateSearch').getKendoGrid();
+                grid.dataSource.data(data);
+                grid.refresh();
+            }
+        });
+        return false;
+    });
+</script>

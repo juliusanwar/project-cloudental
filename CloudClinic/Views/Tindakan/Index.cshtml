@@ -1,4 +1,6 @@
-﻿@model IEnumerable<CloudClinic.Models.Tindakan>
+﻿@model PagedList.IPagedList<CloudClinic.Models.Tindakan>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "Daftar Tindakan";
@@ -11,46 +13,65 @@
     @Html.ActionLink("Tambah Tindakan", "Create")
 </p>
 }
+
+@using (Html.BeginForm("Index", "Tindakan", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Cari" />
+    </p>
+}
+
 <table class="table">
     <tr>
         <th>
-            Tindakan
+            ID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nama)
+            @Html.ActionLink("Kategori", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Harga)
+            Nama Tindakan
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Diagnosa)
+            Harga
         </th>
+        @*<th>
+            Diagnosa
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.namaUnik)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.JenisTindakan.NamaTindakan)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Nama)
+            @Html.DisplayFor(modelItem => item.NamaTindakan)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Harga)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Diagnosa)
-        </td>
-@if (User.IsInRole("Admin"))
-{
+        </td>*@
+        @if (User.IsInRole("Admin"))
+        {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.TindakanId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.TindakanId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
-}
+        }
     </tr>
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue })) 

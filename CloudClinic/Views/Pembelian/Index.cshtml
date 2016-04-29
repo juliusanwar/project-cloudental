@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<CloudClinic.Models.DataModel.Pembelian>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Daftar Pembelian";
+}
+
+<h2>Daftar Pembelian</h2>
+<p>Fasilitas ini digunakan untuk mencatat data pembelian barang.</p>
+
+@using (Html.BeginForm("Index", "Pembelian", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Cari" />
+    </p>
+}
+
+<hr />
+    <div><a href="@Url.Action("Report",new {id= "PDF"})"> Cetak Laporan via PDF</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Excel"})"> Cetak Laporan via Excel</a></div>
+    <div><a href="@Url.Action("Report",new {id= "Word"})"> Cetak Laporan via Word</a></div>
+<hr />
+
+<p>
+    @Html.ActionLink("Tambah Pembelian", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            @Html.ActionLink("Nama Barang", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+        </th>
+        <th>
+            Tgl. Pembelian
+        </th>
+        <th>
+            Qty
+        </th>
+        <th>
+            Harga
+        </th>
+        <th>
+            Total
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.namaUnik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Barang.NamaBarang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TglBeli)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Qty)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Harga)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            |
+            @Html.ActionLink("Hapus", "DeleteBeli", new { id = item.PembelianId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+ 

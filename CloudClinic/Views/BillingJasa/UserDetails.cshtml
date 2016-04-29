@@ -1,0 +1,42 @@
+﻿
+
+@{
+    ViewBag.Title = "UserDetails";
+}
+
+<h2>UserDetails</h2>
+
+    <div>
+        <fieldset>
+            <legend>User Details</legend>
+            <div>
+                <label for="UserName">User Name:</label>
+                @Html.TextBox("UserName")
+                    <input type="button" id="GetUser" value="Populate User Details" onclick="populateUserDetails()" />
+                <br />
+                <br />
+                <label for="Nama">Nama :</label>
+                @Html.TextBox("Nama")
+                <br />
+                <br />
+                <label for="Gender">Gender :</label>
+                @Html.TextBox("Gender")
+            </div>
+        </fieldset>
+    </div>
+    
+
+
+<script>
+    function populateUserDetails() {
+        var user = {};
+        user.UserName = $("#UserName").val();
+        $.getJSON("PopulateDetails", user, updateFields);
+    };
+
+    updateFields = function (data) {
+        $("#Nama").val(data.Nama);
+        $("#Gender").val(data.Gender);
+        $("#Message").html(data.Message);
+    };
+</script>

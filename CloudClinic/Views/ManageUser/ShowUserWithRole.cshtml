@@ -3,15 +3,16 @@
     ViewBag.Title = "User With Role View Model";
 }
 
-<h2>Show User With Role</h2>
+<h2>Daftar User dengan Roles</h2>
+<p>Halaman ini menunjukan users dengan batasan yang diberikan.</p>
 
 <p>
-    @Html.ActionLink("Create New", "AddUserToRole")
+    @Html.ActionLink("Tambah Baru", "AddUserToRole")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            Username
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
@@ -34,10 +35,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Roles)
             </td>
-            <td>
+            @*<td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
+            </td>*@
         </tr>
     }
 

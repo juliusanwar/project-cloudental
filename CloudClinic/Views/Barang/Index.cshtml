@@ -1,0 +1,86 @@
+﻿@model PagedList.IPagedList<CloudClinic.Models.DataModel.Barang>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Daftar Barang</h2>
+<h4>Halaman ini menunjukan daftar barang di Klinik Gigi Waluyo Yogyakarta.</h4>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Tambah Baru", "Create")
+    </p>
+    <hr />
+    <p>Setup dibawah ini untuk mencetak laporan minimum stok barang :</p>
+    <div><a href="@Url.Action("ReportMin",new {id= "PDF"})"> Cetak Laporan via PDF</a></div>
+    <div><a href="@Url.Action("ReportMin", new { id = "Excel" })"> Cetak Laporan via Excel</a></div>
+    <div><a href="@Url.Action("ReportMin", new { id = "Word" })"> Cetak Laporan via Word</a></div>
+    <hr />
+    <p>Setup dibawah ini untuk mencetak seluruh laporan barang yang terdapat pada daftar.</p>
+    <div><a href="@Url.Action("ReportAll", new { id = "PDF" })"> Cetak Semua Laporan Barang</a></div>
+    <hr />
+}
+@using (Html.BeginForm("Index", "Barang", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Cari" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            @Html.ActionLink("Nama Barang", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+        </th>
+        <th>
+            Jenis Barang
+        </th>
+        <th>
+            @Html.ActionLink("Harga", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+        </th>
+        <th>
+            Stok
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.namaUnik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NamaBarang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.JenisBarang.NamaJenis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Harga)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stok)
+        </td>
+        @if (User.IsInRole("Admin"))
+        {
+        <td>
+            @Html.ActionLink("Ubah", "Edit", new { id=item.BarangId }) |
+            @Html.ActionLink("Hapus", "DeleteBarang", new { id = item.BarangId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+        </td>
+        }
+    </tr>
+}
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue })) 

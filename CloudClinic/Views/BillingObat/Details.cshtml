@@ -1,4 +1,4 @@
-﻿@model CloudClinic.Models.BillingObat
+﻿@model CloudClinic.Models.DataModel.BillingObat
 
 @{
     ViewBag.Title = "Details";
@@ -11,19 +11,27 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Obat.Nama)
+            @Html.DisplayNameFor(model => model.Barang.NamaBarang)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Obat.Nama)
+            @Html.DisplayFor(model => model.Barang.NamaBarang)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Transaction.Amnanesa)
+            @Html.DisplayNameFor(model => model.Pasien.UserName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Transaction.Amnanesa)
+            @Html.DisplayFor(model => model.Pasien.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TglDatang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TglDatang)
         </dd>
 
         <dt>
@@ -33,13 +41,23 @@
         <dd>
             @Html.DisplayFor(model => model.Qty)
         </dd>
+
         <dt>
+            @Html.DisplayNameFor(model => model.Harga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Harga)
+        </dd>
+
+        @*<dt>
             @Html.DisplayNameFor(model => model.Total)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Total)
-        </dd>
+        </dd>*@
+
     </dl>
 </div>
 <p>

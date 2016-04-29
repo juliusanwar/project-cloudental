@@ -2,11 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using CloudClinic.Models.DataModel;
 
 namespace CloudClinic.Models
 {
     public class IndexViewModel
     {
+        public IList<Pasien> Patients { get; set; }
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }
         public string PhoneNumber { get; set; }

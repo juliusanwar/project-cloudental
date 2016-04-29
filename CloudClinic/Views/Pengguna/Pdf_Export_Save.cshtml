@@ -1,0 +1,29 @@
+﻿@(Html.Kendo().Grid((IEnumerable<CloudClinic.Models.Pengguna>)ViewBag.Pengguna)
+    .Name("grid")
+    .HtmlAttributes(new { style = "width: 900px; height: 500px;" })
+    .Columns(columns =>
+    {
+        columns.Bound(d => d.PenggunaId).Width(50).Title("ID");
+        columns.Bound(d => d.UserName).Width(80).Title("User Name");
+        //columns.Bound(d => d.Password).Width(80);
+        columns.Bound(d => d.Nama).Width(100);
+        columns.Bound(d => d.Alamat).Width(120);
+        columns.Bound(d => d.Kota).Width(120);
+        columns.Bound(d => d.Telp).Width(100).Title("Telpon");
+        columns.Bound(d => d.Email).Width(100);
+    })
+    
+    .ToolBar(tools => tools.Pdf())
+    .Pdf(pdf => pdf
+        .FileName("Kendo UI Grid Export.pdf")
+        .ProxyURL(Url.Action("Pdf_Export_Save", "Pengguna"))
+    )
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Read(read => read.Action("Index", "Pengguna"))
+        .PageSize(2)
+    )
+    .Scrollable()
+    .Pageable()
+)
+

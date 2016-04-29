@@ -1,0 +1,71 @@
+﻿@model PagedList.IPagedList<CloudClinic.Models.DataModel.Diagnosis>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Daftar Diagnosis / Rekam Medis";
+}
+
+<h2>Daftar Diagnosis Pasien</h2>
+
+<p>Halaman ini ditujukan untuk USER dokter : <a href="~/Manage/Index">@User.Identity.Name</a>.</p>
+<p>Halaman ini menunjukan daftar diagnosis / rekam medis pasien di Klinik Gigi Waluyo.</p>
+
+@if (User.IsInRole("Dokter"))
+{
+    <p>
+        @Html.ActionLink("Tambah Diagnosis Pasien", "Create")
+    </p>
+}
+@using (Html.BeginForm("Index", "Diagnosis", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Find" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            User Name
+        </th>
+        <th>
+            @Html.ActionLink("Tgl. Datang", "Index", new { Sorting_Order = ViewBag.DateSortParm, Filter_Value = ViewBag.FilterValue })
+        </th>
+        <th>
+            Anamnesa
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pasien.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TglDatang)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amnanesa)
+        </td>
+        <td>
+                 @Html.ActionLink("Billing Jasa", "Create", "BillingJasa") |
+                 @Html.ActionLink("Billing Obat", "Create", "BillingObat") |
+                 @Html.ActionLink("Details", "Details", new { id = item.DiagnosisId }) |
+                 @if (User.IsInRole("Dokter"))
+                    {
+                     @Html.ActionLink("Edit", "Edit", new { id = item.DiagnosisId })
+                     <a>|</a>
+                     @Html.ActionLink("Delete", "Delete", new { id = item.DiagnosisId })
+                    }
+        </td>
+    </tr>
+}
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue })) 

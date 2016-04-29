@@ -1,4 +1,6 @@
-﻿@model IEnumerable<CloudClinic.Models.JenisTindakan>
+﻿@model PagedList.IPagedList<CloudClinic.Models.JenisTindakan>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "Daftar Jenis Tindakan";
@@ -8,13 +10,24 @@
 @if (User.IsInRole("Admin"))
 {
 <p>
-    @Html.ActionLink("Tambah Jenis Tindakan", "Create")
+    @Html.ActionLink("Tambah Jenis Tindakan", "Create") |
+    @Html.ActionLink("Daftar Tindakan","Index","Tindakan")
 </p>
+}
+@using (Html.BeginForm("Index", "JenisTindakan", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Cari" />
+    </p>
 }
 <table class="table">
     <tr>
         <th>
-            Nama Tindakan
+            ID
+        </th>
+        <th>
+            @Html.ActionLink("Jenis Tindakan", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
         </th>
         <th></th>
     </tr>
@@ -22,17 +35,27 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.namaUnik)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.NamaTindakan)
         </td>
-@if (User.IsInRole("Admin"))
-{
+        @if (User.IsInRole("Admin"))
+        {
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.JenisTindakanId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.JenisTindakanId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
-}
+        }
     </tr>
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+
+ 
+

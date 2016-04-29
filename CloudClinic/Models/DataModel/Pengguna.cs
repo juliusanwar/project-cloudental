@@ -22,10 +22,10 @@ namespace CloudClinic.Models
         public string Nama { get; set; }
 
         [Required]
-        public string Kota { get; set; }
+        public string Alamat { get; set; }
 
         [Required]
-        public string Alamat { get; set; }
+        public string Kota { get; set; }
 
         [Required]
         public string Telp { get; set; }
@@ -33,8 +33,13 @@ namespace CloudClinic.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        public virtual ICollection<Transaction> Transactions { get; set; }
+        public string namaUnik
+        {
+            get { return "KGW" + PenggunaId.ToString("D4"); }
+        }
+
+        //public virtual ICollection<Transaction> Transactions { get; set; }
         //public virtual ICollection<RekamMedis> RekamMedisis { get; set; }
-        public virtual ICollection<Reservation> Reservations { get; set; }
+        public virtual ICollection<Jadwal> Jadwal { get; set; }
     }
 }

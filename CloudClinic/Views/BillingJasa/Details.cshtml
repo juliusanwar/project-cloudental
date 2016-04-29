@@ -1,4 +1,4 @@
-﻿@model CloudClinic.Models.BillingJasa
+﻿@model CloudClinic.Models.DataModel.BillingJasa
 
 @{
     ViewBag.Title = "Details";
@@ -11,33 +11,55 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Tindakan.Nama)
+            @Html.DisplayNameFor(model => model.Diagnosis.Amnanesa)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Tindakan.Nama)
+            @Html.DisplayFor(model => model.Diagnosis.Amnanesa)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Transaction.Amnanesa)
+            @Html.DisplayNameFor(model => model.Tindakan.NamaTindakan)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Transaction.Amnanesa)
+            @Html.DisplayFor(model => model.Tindakan.NamaTindakan)
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model => model.Total)
+            @Html.DisplayNameFor(model => model.PasienId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Total)
+            @Html.DisplayFor(model => model.PasienId)
         </dd>
 
-        
+        <dt>
+            @Html.DisplayNameFor(model => model.Gigi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gigi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Harga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Harga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TglDatang)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TglDatang)
+        </dd>
 
     </dl>
 </div>
-
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.BilJasaId }) |
     @Html.ActionLink("Back to List", "Index")

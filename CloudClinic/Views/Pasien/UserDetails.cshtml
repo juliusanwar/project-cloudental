@@ -1,0 +1,29 @@
+﻿@model CloudClinic.Models.Pasien
+@{
+    ViewBag.Title = "UserDetails";
+}
+
+<h2>UserDetails</h2>
+
+@using(Html.BeginForm()) 
+{
+    <div>
+        <fieldset>
+            <legend>User Details</legend>
+            <p>
+                <label for="UserId">Pasien ID:</label>
+                @Html.EditorFor(model => model.PasienId)
+                <input type="button" id="GetUser" value="Populate User Details" onclick='populateUserDetails()' />
+            </p>
+            <p>
+                <label for="LastName">Nama:</label>
+                @Html.EditorFor(model => model.Nama)
+            </p>
+            <p>
+                <label for="FirstName">Gender:</label>
+                @Html.EditorFor(model => model.Gender)
+            </p>
+        </fieldset>
+
+    </div>
+}

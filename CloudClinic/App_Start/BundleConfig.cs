@@ -32,6 +32,30 @@ namespace CloudClinic
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/kendo").Include(
+            "~/Scripts/kendo/2014.3.1411/kendo.all.min.js",
+            // "~/Scripts/kendo/kendo.timezones.min.js", // uncomment if using the Scheduler
+            "~/Scripts/kendo/2014.3.1411/kendo.aspnetmvc.min.js"));
+
+            bundles.Add(new StyleBundle("~/Content/kendo/2014.3.1411/css").Include(
+                        "~/Content/kendo/2014.3.1411/kendo.common-bootstrap.min.css",
+                        "~/Content/kendo/2014.3.1411/kendo.bootstrap.min.css"));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/form").Include(
+            "~/Scripts/common/form.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/datetime").Include(
+            "~/Scripts/moment*",
+            "~/Scripts/bootstrap-datetimepicker*",
+            "~/Scripts/common/datetimepicker-init.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/Content/datetime").Include(
+                      "~/Content/bootstrap-datetimepicker*"));
         }
     }
 }

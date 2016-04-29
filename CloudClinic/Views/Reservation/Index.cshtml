@@ -1,26 +1,27 @@
 ﻿@model IEnumerable<CloudClinic.Models.Reservation>
 
 @{
-    ViewBag.Title = "Daftar Reservasi";
+    ViewBag.Title = "List";
 }
 
-<h2>Daftar Reservasi</h2>
+<h2>Daftar Reservasi Online Cloudental</h2>
+
 <p>
-    @Html.ActionLink("Tambah Reservasi", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            Pilihan Jadwal
+            ID
         </th>
         <th>
-            Pasien
+            @Html.DisplayNameFor(model => model.Jadwal.PilihanJadwal)
         </th>
         <th>
-            Dokter
+            @Html.DisplayNameFor(model => model.Pasien.UserName)
         </th>
         <th>
-            Tgl. Reservasi
+            @Html.DisplayNameFor(model => model.TglReservasi)
         </th>
         <th></th>
     </tr>
@@ -28,27 +29,41 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.namaUnik)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Jadwal.PilihanJadwal)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Pasien.UserName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Pengguna.UserName)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.TglReservasi)
         </td>
-@if (User.IsInRole("Admin"))
-{
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ReservationId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ReservationId }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.ReservationId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ReservationId }) |*@
             @Html.ActionLink("Delete", "Delete", new { id = item.ReservationId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
-}
     </tr>
 }
 
 </table>
+
+@*@{
+    ViewBag.Title = "Daftar Reservasi";
+}
+
+<h2>Daftar Reservasi</h2>
+
+<div>
+    <table id="grid"></table>
+    <div id="pager"></div>
+</div>
+
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.9.1.min.js"></script>
+<script src="~/Scripts/i18n/grid.locale-en.js"></script>
+<script src="~/Scripts/Reservation.js"></script>*@

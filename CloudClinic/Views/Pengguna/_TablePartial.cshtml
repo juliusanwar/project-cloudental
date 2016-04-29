@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CloudClinic.Models.Pengguna>
+
+<table class="table table-striped" id="myTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aturan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nama)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Kota)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Alamat)
+        </th>
+        <th>
+            Telpon
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aturan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nama)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Alamat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.PenggunaId }) |
+                @Ajax.ActionLink("Delete", "DeleteAjax", new { id = item.PenggunaId }, new AjaxOptions
+       {
+           UpdateTargetId = "myTable",
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET",
+           Confirm = "Apakah anda yakin untuk mendelete data ini?"
+       })
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.CategoryId },
+                    new { onclick="return confirm('Apakah anda yakin untuk mendelete data ?');" })*@
+            </td>
+        </tr>
+    }
+
+</table>

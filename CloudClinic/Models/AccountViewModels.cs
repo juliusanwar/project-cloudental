@@ -85,9 +85,8 @@ namespace CloudClinic.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "User name")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -100,10 +99,10 @@ namespace CloudClinic.Models
 
     public class RegisterViewModel
     {
+        
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "User name")]
+        public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -115,6 +114,13 @@ namespace CloudClinic.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Please enter a valid email address")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        //public virtual Pasien Pasien { get; set; }
     }
 
     public class ResetPasswordViewModel

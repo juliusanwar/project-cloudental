@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Setup Barang";
+}
+
+<h2>Setup Barang</h2>
+
+@(Html.Kendo().Grid<CloudClinic.Models.DataModel.Barang>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.NamaBarang);
+        columns.Bound(p => p.JenisBarang);
+        columns.Bound(p => p.Harga).Width(140);
+        columns.Bound(p => p.Stok).Width(140);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(160);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .HtmlAttributes(new { style = "height:430px;" })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Events(events => events.Error("error_handler"))
+        .Model(model => model.Id(p => p.BarangId))
+        .Create(update => update.Action("EditingPopup_Create", "Barang"))
+            .Read(read => read.Action("EditingPopup_Read", "Barang"))
+            .Update(update => update.Action("EditingPopup_Update", "Barang"))
+            .Destroy(update => update.Action("EditingPopup_Destroy", "Barang"))
+    )
+)
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>

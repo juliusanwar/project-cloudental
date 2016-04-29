@@ -1,4 +1,7 @@
-﻿@model IEnumerable<CloudClinic.Models.Pasien>
+﻿@model PagedList.IPagedList<CloudClinic.Models.Pasien>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
 
 @{
     ViewBag.Title = "Daftar Pasien";
@@ -11,43 +14,59 @@
     <p>
         @Html.ActionLink("Tambah Pasien", "Create")
     </p>
+        
 }
-
+@using (Html.BeginForm("Index", "Pasien", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Find" />
+    </p>
+}
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.UserName)
+            ID
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nama)
+            @Html.ActionLink("User Name", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+        </th>
+        <th>
+            Nama
         </th>
         <th>
             Tgl. Lahir
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gender)
+            Gender
         </th>
         <th>
             Gol. Darah
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Alamat)
+        @*<th>
+            Alamat
         </th>
         <th>
             Telpon
         </th>
         <th>
-            Tgl. Registrasi
-        </th>
+            Email
+        </th>*@
         <th>
-            Riwayat Sakit
+            @Html.ActionLink("Tgl. Registrasi", "Index", new { Sorting_Order = ViewBag.SortingDate , Filter_Value = ViewBag.FilterValue})
         </th>
+        @*<th>
+            Riwayat Sakit
+        </th>*@
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.namaUnik)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
@@ -63,29 +82,35 @@
         <td>
             @Html.DisplayFor(modelItem => item.GolDarah)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Alamat)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Telp)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>*@
+        <td>
             @Html.DisplayFor(modelItem => item.TglRegistrasi)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.RiwayatSakit)
-        </td>
+        </td>*@
 
-@if (User.IsInRole("Admin"))
-{
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PasienId }) |
             @Html.ActionLink("Details", "Details", new { id=item.PasienId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.PasienId },
-            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.PasienId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })*@
+            
         </td>
-}
     </tr>
 }
 
 </table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue })) 

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
+using PagedList;
 
 namespace CloudClinic.Controllers
 {
@@ -15,11 +16,50 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
+        
+
         [Authorize(Roles = "Admin,Dokter")]
         // GET: JenisTindakans
-        public ActionResult Index()
+        public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
         {
-            return View(db.JenisTindakans.ToList());
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "NamaJenis" : "";
+
+            if (Search_Data != null)
+            {
+                Page_No = 1;
+            }
+            else
+            {
+                Search_Data = Filter_Value;
+            }
+
+            ViewBag.FilterValue = Search_Data;
+
+            var jenis = from j in db.JenisTindakan select j;
+
+            if (!String.IsNullOrEmpty(Search_Data))
+            {
+                jenis = jenis.Where(j => j.NamaTindakan.ToUpper().Contains(Search_Data.ToUpper()));
+                //|| p.Nama.ToUpper().Contains(Search_Data.ToUpper()));
+            }
+
+            switch (Sorting_Order)
+            {
+                case "NamaJenis":
+                    jenis = jenis.OrderByDescending(j => j.NamaTindakan);
+                    break;
+                default:
+                    jenis = jenis.OrderBy(j => j.NamaTindakan);
+                    break;
+            }
+
+            int Size_Of_Page = 5;
+            int No_Of_Page = (Page_No ?? 1);
+
+
+
+            return View(jenis.ToPagedList(No_Of_Page, Size_Of_Page));
         }
 
         [Authorize(Roles = "Admin,Dokter")]
@@ -30,7 +70,7 @@ namespace CloudClinic.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JenisTindakan jenisTindakan = db.JenisTindakans.Find(id);
+            JenisTindakan jenisTindakan = db.JenisTindakan.Find(id);
             if (jenisTindakan == null)
             {
                 return HttpNotFound();
@@ -55,9 +95,9 @@ namespace CloudClinic.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.JenisTindakans.Add(jenisTindakan);
+                db.JenisTindakan.Add(jenisTindakan);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Pesan = "Berhasil menambahkan Jenis Kategori Tindakan baru!";
             }
 
             return View(jenisTindakan);
@@ -72,7 +112,7 @@ namespace CloudClinic.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            JenisTindakan jenisTindakan = db.JenisTindakans.Find(id);
+            JenisTindakan jenisTindakan = db.JenisTindakan.Find(id);
             if (jenisTindakan == null)
             {
                 return HttpNotFound();
@@ -101,8 +141,8 @@ namespace CloudClinic.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
-            JenisTindakan jenisTindakan = db.JenisTindakans.Find(id);
-            db.JenisTindakans.Remove(jenisTindakan);
+            JenisTindakan jenisTindakan = db.JenisTindakan.Find(id);
+            db.JenisTindakan.Remove(jenisTindakan);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

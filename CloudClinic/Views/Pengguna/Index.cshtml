@@ -1,18 +1,27 @@
 ﻿@model IEnumerable<CloudClinic.Models.Pengguna>
 
 @{
-    ViewBag.Title = "Daftar Dokter";
+    ViewBag.Title = "Daftar Pengguna";
 }
 
-<h2>Daftar Dokter</h2>
-@if (User.IsInRole("Admin"))
-{
+<h2>Daftar Pengguna</h2>
+
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Tambah Baru", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Pengguna", FormMethod.Get))
+{
+    <p>
+        Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+        <input type="submit" value="Find" />
+    </p>
 }
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.namaUnik)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.UserName)
         </th>
@@ -40,6 +49,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.namaUnik)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
@@ -60,16 +72,76 @@
         <td>
             @Html.DisplayFor(modelItem => item.Email)
         </td>
-@if (User.IsInRole("Admin"))
-{
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.PenggunaId }) |
             @Html.ActionLink("Details", "Details", new { id=item.PenggunaId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.PenggunaId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
-}
-    </tr>
-}
 
+
+    </tr>
+    
+
+}
 </table>
+
+
+@*@(Html.Kendo().Grid((IEnumerable<CloudClinic.Models.Pengguna>)ViewBag.Pengguna)
+.Name("grid")
+.Columns(columns =>
+{
+    columns.Bound(d => d.namaUnik).Width(50).Title("ID");
+    columns.Bound(d => d.UserName).Width(80).Title("User Name");
+    //columns.Bound(d => d.Password).Width(80);
+    columns.Bound(d => d.Nama).Width(100);
+    columns.Bound(d => d.Alamat).Width(120);
+    columns.Bound(d => d.Kota).Width(120);
+    columns.Bound(d => d.Telp).Width(100).Title("Telpon");
+    columns.Bound(d => d.Email).Width(100);
+    //columns.Command(command => { command.Edit(); command.Destroy(); }).Width(160);
+})
+        //.ToolBar(toolbar => toolbar.Create())
+
+        .Editable(editable => editable.Mode(GridEditMode.PopUp))
+        .Pageable()
+        .Sortable()
+        .Scrollable()
+        .HtmlAttributes(new { style = "height:430px;" })
+        //.ToolBar(tools => tools.Pdf())
+        //.Pdf(pdf => pdf
+        //.FileName("Daftar Pengguna Cloudental.pdf")
+        //    .ProxyURL(Url.Action("savePDF", "Pengguna"))
+        //    )
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .PageSize(5)
+                    .Events(events => events.Error("error_handler"))
+                    .Model(model => model.Id(p => p.PenggunaId))
+                        .Create(update => update.Action("Create", "Pengguna"))
+                        .Read(read => read.Action("Index", "Pengguna"))
+                        .Update(update => update.Action("EditingPopup_Update", "Pengguna"))
+                        .Destroy(update => update.Action("Delete", "Pengguna"))
+
+                            )
+)
+    
+<script type="text/javascript">
+    //$(function () {
+    //    // Notice that the Name() of the grid is used to get its client-side instance
+    //    var grid = $("#grid").data("kendoGrid");
+    //});
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+</script>*@

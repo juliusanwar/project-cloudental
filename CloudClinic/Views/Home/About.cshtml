@@ -1,10 +1,40 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "Tentang";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Website CloudClinic membantu klinik untuk melakukan reservasi secara online melalui browser.</p>
-<p>CloudClinic dapat melakukan reservasi dengan USERNAME yang diberikan pada saat registrasi di klinik.</p>
-<p>CloudClinic bekerja sama dengan klinik dokter pribadi untuk membuat sebuah sistem informasi yang mendukung alur bisnis di klinik ini.
-    Setiap klinik mempunyai banyak dokter dan pasien maka dari itu sistem ini akan memberikan batasan kepada pengguna untuk menggunakan sistem dengan baik.</p>
+<script type='text/javascript'
+        src='http://jqueryjs.googlecode.com/files/jquery-1.3.2.min.js'>
+</script>
+<script type="text/javascript">
+    var imgs = [
+        'Content/images/smile.jpg',
+        'Content/images/dental.jpg',
+        'Content/images/waluyo.gif',
+        'Content/images/dentis.jpg',
+        'Content/images/family.png'];
+    var cnt = imgs.length;
+
+    $(function () {
+        setInterval(Slider, 5000);
+    });
+
+    function Slider() {
+        $('#imageSlide').fadeOut("slow", function () {
+            $(this).attr('src', imgs[(imgs.length++) % cnt]).fadeIn("slow");
+        });
+    }
+</script>
+
+
+
+<h2>@ViewBag.Title</h2>
+
+<p>Website Cloudental membantu klinik gigi Waluyo untuk melakukan reservasi secara online melalui browser.</p>
+<p>Cloudental dapat melakukan reservasi dengan USERNAME yang diberikan pada saat registrasi di klinik.</p>
+<p>Cloudental mempunyai dokter gigi untuk menindak langsung pasien yang berobat di klinik gigi Waluyo.</p>
+<br />
+<br />
+<div>
+    <img id="imageSlide" alt="" src="" />
+</div>
+

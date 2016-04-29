@@ -1,0 +1,194 @@
+﻿@*@model CloudClinic.Models.PasienBillings
+@{
+    ViewBag.Title = "Displaying Data In Nested Grid View In MVC5";
+    WebGrid grid = new WebGrid(source: Model, canSort: false);
+}
+
+@{
+    ViewBag.Title = "PasienDetails";
+}
+
+<style>
+    /*Here I will add some css for looks good*/
+    .tabContainer {
+        max-height: 400px;
+        overflow: auto;
+        width: 80%;
+    }
+
+    .tableData {
+        border-left: solid 1px #D8C3C3;
+        border-top: solid 1px #D8C3C3;
+        width: 100%;
+    }
+
+        .tableData tr {
+        }
+
+        .tableData td, .tableData th {
+            border-right: solid 1px #D8C3C3;
+            border-bottom: solid 1px #D8C3C3;
+            text-align: left;
+            padding: 5px;
+        }
+
+        .tableData td {
+        }
+
+        .tableData th {
+            background-color: #FAFAFA;
+            padding: 7px 5px;
+            border-bottom-color: #9C9C9C;
+        }
+
+    .odd {
+        background-color: #f3f3f3;
+    }
+
+    .even {
+        background-color: #ffffff;
+    }
+
+    tr.sub {
+        display: none;
+    }
+
+    .CX {
+        width: 35px;
+    }
+
+        .CX span {
+            font-family: fantasy;
+            font-size: 15px;
+            display: block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+        }
+</style>
+
+<h2>PasienDetails</h2>
+
+<div id="main" style="padding: 25px; background-color: yellow;">
+    @grid.GetHtml(
+                htmlAttributes: new { id = "gridT", width = "900px", style = "background-color:skyblue; color:blue; font-size:14pt; font-family:TimesNewRoman;" },
+                columns: grid.Columns(
+                        grid.Column("Pasien.PasienId", "Project ID"),
+                        grid.Column("Pasien.Nama", "Nama Pasien"),
+                        grid.Column("Pasien.RiwayatSakit", "Riwayat Sakit"),
+
+                        grid.Column(format: (item) =>
+                        {
+                            WebGrid subGrid = new WebGrid(source: item.Diagnosis);
+                            return subGrid.GetHtml(
+                                htmlAttributes: new { id = "nestedT", style = "background-color:red; color:white; font-size:12pt; font-family:verdana;" },
+                                columns: subGrid.Columns(
+                                        subGrid.Column("DiagnosisId", "Rekam ID"),
+                                        subGrid.Column("Anamnesa", "Anamnesa"),
+                                        subGrid.Column("TglDatang", "Tgl. Datang")
+                                    )
+                                );
+                        })
+                    )
+                )
+</div>
+
+@*<h2>Part7 - Nested Tabuler Data using AngularJS</h2>
+<div ng-controller="PartController">
+    <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Pasien ID</th>
+                <th>Username</th>
+                <th>Nama</th>
+                <th>Kota</th>
+                <th>Riwayat Sakit</th>
+            </tr>
+        </thead>
+        <tbody ng-repeat="a in O.Diagnosis">
+            <tr ng-class-even="'even'" ng-class-odd="'odd'">
+                <td class="CX"><span>+</span></td>
+                <td>{{O.Pasien.namaUnik}}</td>
+                <td>{{O.Pasien.UserName}}</td>
+                <td>{{O.Pasien.Nama}}</td>
+                <td>{{O.Pasien.Kota}}</td>
+                <td>{{O.Pasien.RiwayatSakit}}</td>
+            </tr>
+            <tr class="sub">
+                <td></td>
+                <td colspan="5">
+                    <table class="tableData" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <th>Diagnosis ID</th>                            
+                            <th>Anamnesa</th>
+                            <th>Tgl. Datang</th>
+                        </tr>
+                        <tr ng-repeat="a in O.Diagnosis" ng-class-even="'even'" ng-class-odd="'odd'">
+                            <td>{{a.namaUnik}}</td>
+                            <td>{{a.Anamnesa}}</td>
+                            <td>{{a.TglDatang.slice(6,-2) | date:'dd-MM-yyyy'}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var size = $("#main #gridT > thead > tr >th").size();
+            $("#main #gridT > thead > tr >th").last().remove();
+            $("#main #gridT > thead > tr").prepend("<th></th>");
+            $("#main #gridT > tbody > tr").each(function (i, el) {
+                $(this).prepend(
+                        $("<td></td>")
+                        .addClass("expandRecord")
+                        .addClass("recordHoverEffect")
+                        .attr('title', "Show Hide Details")
+                    );
+
+
+                var table = $("table", this).parent().html();
+
+                $(this).after("<tr><td></td><td style='padding:5px; margin:0px;' colspan='" + (size - 1) + "'>" + table + "</td></tr>");
+                $("table", this).parent().remove();
+
+                $(".recordHoverEffect", this).live("click", function () {
+                    $(this).parent().closest("tr").next().slideToggle(100);
+                    $(this).toggleClass("expandRecord collapseRecord");
+                });
+            });
+
+
+            $("#main #gridT > tbody > tr td.expandRecord").each(function (i, el) {
+                $(this).toggleClass("expandRecord collapseRecord");
+                $(this).parent().closest("tr").next().slideToggle(100);
+            });
+
+        });
+    </script>
+}
+
+@section Scripts{
+    <script src="~/Scripts/AngularController/PartController.js"></script>
+    <script>
+        $(function () {
+            $('body').on('click', '.CX span', function () {
+                //When Click On + sign
+                if ($(this).text() == '+') {
+                    $(this).text('-');
+                }
+                else {
+                    $(this).text('+');
+                }
+                $(this).closest('tr') // row of + sign
+                .next('tr') // next row of + sign
+                .toggle(); // if show then hide else show
+
+            });
+        });
+    </script>
+}*@

@@ -1,10 +1,11 @@
 ﻿@model CloudClinic.Models.Reservation
 
+
 @{
-    ViewBag.Title = "Tambah Reservasi";
+    ViewBag.Title = "Tambah";
 }
 
-<h2>Reservation Online di CloudClinic</h2>
+<h2>Tambah Reservasi</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,38 +13,44 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Reservation</h4>
+        <h4>Reservasi Online Cloudental</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @*<div id="demoContent">
+            @Html.Partial("IndexContent")
+        </div>*@
+
         <div class="form-group">
-            @Html.LabelFor(model => model.PasienId, "Username", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PasienId, "User Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("PasienId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PasienId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TglReservasi,"Tgl. Reservasi", htmlAttributes: new { @class = "control-label col-md-2" })
+        
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.TglReservasi, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @(Html.Kendo().DatePickerFor(model => model.TglReservasi))
+                @Html.EditorFor(model => model.TglReservasi, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TglReservasi, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JadwalId, "Jadwal Praktek", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PilihanJadwal, "Pilihan Jadwal", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("JadwalId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.JadwalId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PenggunaId, "Dokter/Perawat", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("PenggunaId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PenggunaId, "", new { @class = "text-danger" })
+                @*<ol id="selectable">
+                    <li class="ui-widget-content">08.00 - 08.30</li>
+                    <li class="ui-widget-content">08.30 - 09.00</li>
+                    <li class="ui-widget-content">09.00 - 09.30</li>
+                    <li class="ui-widget-content">09.30 - 10.00</li>
+                    <li class="ui-widget-content">10.00 - 10.30</li>
+                    <li class="ui-widget-content">10.30 - 11.00</li>
+                    <li class="ui-widget-content">11.00 - 11.30</li>
+                </ol>*@
             </div>
         </div>
 
@@ -58,6 +65,11 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript">
+
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

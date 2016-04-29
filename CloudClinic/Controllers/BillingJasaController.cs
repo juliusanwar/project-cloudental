@@ -7,26 +7,24 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
+using CloudClinic.Models.DataModel;
 
 namespace CloudClinic.Controllers
 {
-    
     public class BillingJasaController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
-        
+        [Authorize(Roles = "Dokter")]
         // GET: BillingJasa
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
         public ActionResult Index()
         {
-            var billingJasa = db.BillingJasa.Include(b => b.Tindakan).Include(b => b.Transaction);
+            var billingJasa = db.BillingJasa.Include(b => b.Diagnosis).Include(b => b.Tindakan);
             return View(billingJasa.ToList());
         }
 
-        
+        [Authorize(Roles = "Dokter")]
         // GET: BillingJasa/Details/5
-        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,13 +39,26 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
+        public JsonResult GetHarga(int TindakanId)
+        {
+            var harga = from r in db.Tindakan
+                        where r.TindakanId == TindakanId
+                        select new
+                        {
+                            id = r.TindakanId,
+                            label = r.Harga,
+                            value = r.Harga
+                        };
+            return Json(harga.Single(), JsonRequestBehavior.AllowGet);
+        }
 
+        [Authorize(Roles = "Dokter")]
         // GET: BillingJasa/Create
-        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
-            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "Nama");
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa");
+            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
+            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa");
+            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "NamaTindakan");
             return View();
         }
 
@@ -56,28 +67,28 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BilJasaId,TransactionId,TindakanId,Total")] BillingJasa billingJasa)
+        public ActionResult Create([Bind(Include = "BilJasaId,PasienId,DiagnosisId,Gigi,TindakanId,Harga,TglDatang")] BillingJasa billingJasa)
         {
             if (ModelState.IsValid)
             {
-                var total = (from t in db.Tindakan
-                             where t.TindakanId == billingJasa.TindakanId
-                             select t).SingleOrDefault();
-                billingJasa.Total = total.Harga;
-
                 db.BillingJasa.Add(billingJasa);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                ViewBag.Pesan = "Berhasil menambahkan pemeriksaan pasien!";
+            }
+            else
+            {
+                ViewBag.Pesan = "Pemeriksaan pasien berhasil dibatalkan!";
             }
 
-            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "Nama", billingJasa.TindakanId);
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa", billingJasa.TransactionId);
+            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", billingJasa.PasienId);
+            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa", billingJasa.DiagnosisId);
+            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "NamaTindakan", billingJasa.TindakanId);
             return View(billingJasa);
         }
 
-
+        [Authorize(Roles = "Dokter")]
         // GET: BillingJasa/Edit/5
-        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,8 +100,8 @@ namespace CloudClinic.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "Nama", billingJasa.TindakanId);
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa", billingJasa.TransactionId);
+            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa", billingJasa.DiagnosisId);
+            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "NamaTindakan", billingJasa.TindakanId);
             return View(billingJasa);
         }
 
@@ -99,7 +110,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BilJasaId,TransactionId,TindakanId")] BillingJasa billingJasa)
+        public ActionResult Edit([Bind(Include = "BilJasaId,PasienId,DiagnosisId,Gigi,TindakanId,Harga,TglDatang")] BillingJasa billingJasa)
         {
             if (ModelState.IsValid)
             {
@@ -107,25 +118,40 @@ namespace CloudClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "Nama", billingJasa.TindakanId);
-            ViewBag.TransactionId = new SelectList(db.Transaction, "TransactionId", "Amnanesa", billingJasa.TransactionId);
+            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa", billingJasa.DiagnosisId);
+            ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "NamaTindakan", billingJasa.TindakanId);
             return View(billingJasa);
         }
 
-
+        [Authorize(Roles = "Dokter")]
         // GET: BillingJasa/Delete/5
-        [Authorize(Roles = "Admin,Dokter")]
         public ActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             BillingJasa billingJasa = db.BillingJasa.Find(id);
-            db.BillingJasa.Remove(billingJasa);
+            if (billingJasa == null)
+            {
+                return HttpNotFound();
+            }
+            return View(billingJasa);
+        }
+
+        // POST: BillingJasa/Delete/5
+        [Authorize(Roles = "Dokter")]
+        public ActionResult DeleteJasa(int? id)
+        {
+            BillingJasa jasa = db.BillingJasa.Find(id);
+            db.BillingJasa.Remove(jasa);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        // POST: BillingJasa/Delete/5
+        // POST: Barang/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             try
             {
@@ -138,8 +164,6 @@ namespace CloudClinic.Controllers
                 return View();
             }
         }
-
-
 
         protected override void Dispose(bool disposing)
         {

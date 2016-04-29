@@ -1,0 +1,44 @@
+﻿@model CloudClinic.Models.BillingJasa
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BillingJasa</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tindakan.Nama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tindakan.Nama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Transaction.Amnanesa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Transaction.Amnanesa)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        
+
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BilJasaId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

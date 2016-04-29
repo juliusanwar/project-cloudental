@@ -15,6 +15,12 @@ namespace CloudClinic.Models
         [Display(Name="Nama Tindakan")]
         public string NamaTindakan { get; set; }
 
+        public string namaUnik
+        {
+            get { return "JT" + JenisTindakanId.ToString("D2"); }
+        }
+
         public virtual ICollection<Tindakan> Tindakan { get; set; }
+        //public virtual ICollection<BillingJasa> BillingJasas { get; set; }
     }
 }

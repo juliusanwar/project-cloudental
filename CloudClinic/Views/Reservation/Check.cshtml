@@ -1,0 +1,72 @@
+﻿@*<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Check If Name Already Exists</title>
+ 
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+    <style type="text/css">
+        .green
+        {
+            color: Green;
+        }
+        .red
+        {
+            color: Red;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#btnCheck").click(function() {
+                var name = $("#txtUsername").val();
+                var status = $("#divStatus");
+                status.html("Checking....").removeClass();
+                $.post("/Reservation/CheckName", { username: pasien },
+                    function(data) {
+                        if (data == "true") {
+                            status.html(name + " is available!").addClass("green");
+                        } else {
+                            status.html(name + " is not available!").addClass("red");
+                        }
+                    });
+            });
+        });
+    </script>
+</head>
+<body>
+    Enter a Username:
+    <br />
+    <input type="text" id="txtUsername" />
+    <input type="button" id="btnCheck" value="Check!" />
+    <div id="divStatus" />
+</body>
+</html>*@
+
+Email:&nbsp;<input type="text" id="txtEmail" /><br /><br />
+Name:&nbsp;<input type="text" id="txtName" />   
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#txtEmail").first().focus();
+
+        $("#txtEmail").change(function () {
+            var emailId = $(this).val();
+            //$("#txtName").val(emailId);
+            $.ajax({
+                url: '@(Url.Action("GetUserName"))',
+                type: 'POST',
+                data: JSON.stringify({ emailId: emailId }),
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    if (data != "" || data != null) {
+                        $("#txtName").val(data);
+                    }
+                    else {
+                        alert("Our system does not recognize this email. Please try again.");
+                        $("#txtEmail").focus();
+                    }
+                }
+            });
+        });
+    });
+</script>

@@ -52,7 +52,8 @@
             @Html.ActionLink("Edit", "Edit", new { id=item.TransactionId }) |
             @Html.ActionLink("Details", "Details", new { id=item.TransactionId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.TransactionId },
-            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" }) |
+            @Html.ActionLink("Create","BillingJasa", "Pilih", new { id = item.PasienId })
         </td>
 }
     </tr>

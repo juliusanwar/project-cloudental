@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudClinic.Models.DataModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace CloudClinic.Models
         [Key]
         public int TindakanId { get; set; }
         [Required]
-        public string Nama { get; set; }
+        public string NamaTindakan { get; set; }
         [Required]
         public int JenisTindakanId { get; set; }
         [Required]
@@ -20,7 +21,14 @@ namespace CloudClinic.Models
 
         public string Diagnosa { get; set; }
 
+        public string namaUnik
+        {
+            get { return "T" + JenisTindakanId.ToString("D2") + TindakanId.ToString("D3"); }
+        }
+
         public virtual JenisTindakan JenisTindakan { get; set; }
+
+        public virtual ICollection<BillingJasa> BillingJasas { get; set; }
 
     }
 }

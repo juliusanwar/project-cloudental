@@ -1,20 +1,32 @@
 ﻿@model IEnumerable<CloudClinic.Models.Jadwal>
 
 @{
-    ViewBag.Title = "Jadwal CloudClinic";
+    ViewBag.Title = "Jadwal Cloudental";
 }
 
-<h2>Jadwal CloudClinic</h2>
+<h2>Jadwal Cloudental</h2>
 @if (User.IsInRole("Dokter,Admin"))
 {
 <p>
     @Html.ActionLink("Tambah Jadwal", "Create")
 </p>
 }
-<table class="table">
+<p>
+    @Html.ActionLink("New", "Create", new { Controller = "Jadwal" }, new { @class = "btn btn-primary" })
+</p>
+@*<table class="table">
     <tr>
         <th>
-            Pilihan Jadwal
+            Dokter
+        </th>
+        <th>
+            Hari
+        </th>
+        <th>
+            Sesi
+        </th>
+        <th>
+            Ruang
         </th>
         <th></th>
     </tr>
@@ -22,17 +34,70 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.PilihanJadwal)
+            @Html.DisplayFor(modelItem => item.Pengguna.Nama)
         </td>
-@if (User.IsInRole("Dokter,Admin"))
-{
+        <td>
+            @Html.DisplayFor(modelItem => item.Hari)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sesi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ruang)
+        </td>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.JadwalId }) |
             @Html.ActionLink("Delete", "Delete", new { id = item.JadwalId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
-}
+
     </tr>
 }
 
-</table>
+</table>*@
+
+
+
+    @{
+        foreach (var item in Model.Select(a => a.Hari).Distinct())
+        {
+            <h3>Jadwal : @item</h3>
+            <div>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Dokter
+                        </th>
+                        <th>
+                            Sesi
+                        </th>
+                        <th>
+                            Ruang
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var i in Model.Where(a => a.Hari.Equals(@item)))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.Pengguna.Nama)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.Sesi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.Ruang)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { Controller = "Jadwal", id = i.PenggunaId }, new { @class = "btn btn-default btn-xs" })
+                                @Html.ActionLink("Delete", "Jadwal",
+                                new { id = i.PenggunaId },
+                                new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Are you sure?');" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+    }

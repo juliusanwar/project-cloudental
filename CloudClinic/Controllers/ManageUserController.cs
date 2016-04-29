@@ -15,7 +15,7 @@ using System.Text;
 
 namespace CloudClinic.Controllers
 {
-    [Authorize(Roles = "Admin,Dokter")]
+    //[Authorize(Roles = "Admin,Dokter")]
     public class ManageUserController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -286,6 +286,8 @@ namespace CloudClinic.Controllers
             IEnumerable<RoleViewModel> model = GetAllRoles();
             return PartialView("_PartialListRole", model);
         }
+
+        
 
 
     }

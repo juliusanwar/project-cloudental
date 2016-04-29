@@ -16,16 +16,70 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.PilihanJadwal,"Jadwal", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PenggunaId,"Dokter", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PilihanJadwal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PilihanJadwal, "", new { @class = "text-danger" })
+                @Html.DropDownList("PenggunaId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PenggunaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Hari, "Hari", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.RadioButtonFor(m => m.Hari, "Senin", new { id = "Senin" })
+                <label for"Senin">Senin</label>
+                @Html.RadioButtonFor(m => m.Hari, "Selasa", new { id = "Selasa" })
+                <label for"Selasa">Selasa</label>
+                @Html.RadioButtonFor(m => m.Hari, "Rabu", new { id = "Rabu" })
+                <label for"Rabu">Rabu</label>
+                @Html.RadioButtonFor(m => m.Hari, "Kamis", new { id = "Kamis" })
+                <label for"Kamis">Kamis</label>
+                @Html.RadioButtonFor(m => m.Hari, "Jumat", new { id = "Jumat" })
+                <label for"Jumat">Jumat</label>
+
+                @*@Html.EditorFor(model => model.Hari, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.Hari, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sesi, "Sesi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.RadioButtonFor(m => m.Sesi, "Sesi 1 : 08:00 - 08:30", new { id = "Sesi1" })
+                <label for"Sesi1">Sesi 1 : 08:00 - 08:30</label>
+                @Html.RadioButtonFor(m => m.Sesi, "Sesi 2 : 08:30 - 09:00", new { id = "Sesi2" })
+                <label for"Sesi1">Sesi 2 : 08:30 - 09:00</label>
+                @Html.RadioButtonFor(m => m.Sesi, "Sesi 3 : 09:00 - 10:00", new { id = "Sesi3" })
+                <label for"Sesi1">Sesi 3 : 09:00 - 10:00</label>
+                @Html.RadioButtonFor(m => m.Sesi, "Sesi 4 : 10:00 - 11:30", new { id = "Sesi4" })
+                <label for"Sesi1">Sesi 4 : 10:00 - 11:30</label>
+                @Html.RadioButtonFor(m => m.Sesi, "Sesi 5 : 11:30 - 12:00", new { id = "Sesi5" })
+                <label for"Sesi1">Sesi 5 : 11:30 - 12:00</label>
+
+                @*@Html.EditorFor(model => model.Sesi, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.Sesi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Ruang, "Ruang", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.RadioButtonFor(m => m.Ruang, "Ruang 1", new { id = "Ruang1" })
+                <label for"Ruang1">Ruang 1</label>
+                @Html.RadioButtonFor(m => m.Ruang, "Ruang 2", new { id = "Ruang2" })
+                <label for"Ruang2">Ruang 2</label>
+
+                @*@Html.EditorFor(model => model.Ruang, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.Ruang, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Tambah" class="btn btn-default" />
             </div>
         </div>
     </div>

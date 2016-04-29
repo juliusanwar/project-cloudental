@@ -5,6 +5,24 @@
 }
 
 <h2>Tambah Jenis Tindakan</h2>
+<div class="form-group">
+    @if (ViewBag.Error == null)
+    {
+        <div class="alert alert-info">@ViewBag.Pesan</div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <ul>
+                @foreach (var err in ViewBag.Error)
+                {
+                    <li>@err</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
 
 
 @using (Html.BeginForm()) 
@@ -29,6 +47,7 @@
             </div>
         </div>
     </div>
+    
 }
 
 <div>

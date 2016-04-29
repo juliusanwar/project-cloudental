@@ -1,51 +1,614 @@
-﻿@model CloudClinic.Models.BillingJasa
+﻿@model CloudClinic.Models.DataModel.BillingJasa
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Pemeriksaan";
 }
 
 <h2>Create</h2>
+<script type="text/javascript" src="~/Scripts/jquery-1.7.1.js"></script>
+<script type="text/javascript">
+    function updateTextArea() {
+        var allVals = [];
+        $('#mydiv :checked').each(function () {
+            allVals.push($(this).val());
+        });
+        $('#txtValue').val(allVals)
+    }
+    $(function () {
+        $('#mydiv input').click(updateTextArea);
+        updateTextArea();
+    });
+</script>
+<script type="text/javascript">
+    function FillPrice() {
+        var TindakanId = $('#TindakanId').val();
+        $.ajax({
+            url: '@Url.Action("GetHarga")',
+            dataType: "JSON",
+            data: { ProductId: ProductId },
+            contentType: "application/json; charset=utf-8",
+            success: function (harga) {
+                $('#txtHarga').val(price.value);
+            }
+        });  
+    }
+</script>
+@*<script src="Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript"> 
+    function CheckAll() {
+        var allVals = [];
+        $('#mydiv :checkbox').each(function () {     
+            //loop all checkbox in dvMain div                
+            allVals.push($(this).attr('checked', true));                    
+            //This will check the current checkbox             
+        });
+        $('#txtValue').val(allVals)
+    }
+    
+    function UnCheckAll() {            
+        $('#mydiv :checkbox').each(function () {
+            //loop all checkbox in dvMain div                 
+            $(this).attr('checked', false);                   
+            //This will uncheck the current checkbox             
+        });
+    }
+</script>*@
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>BillingJasa</h4>
+        <h4>Pemeriksaan Pasien / Transaksi Jasa</h4>
+        <p>Halaman ini menyertakan form khusus untuk pemeriksaan di dalam sistem Klinik Gigi Waluyo Yogyakarta.</p>
+        @*<p>@Html.ActionLink("Batalkan Pemeriksaan!", "Index","Home")</p>*@ 
+        <hr />
+        <div class="form-group">
+            @if (ViewBag.Error == null)
+            {
+                <div class="alert alert-info">@ViewBag.Pesan</div>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    <ul>
+                        @foreach (var err in ViewBag.Error)
+                        {
+                            <li>@err</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            @Html.LabelFor(model => model.TransactionId, "Anamnesa", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TglDatang,"Tgl. Periksa :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TransactionId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.TransactionId, "", new { @class = "text-danger" })
+                @Html.TextBox("date", DateTime.Now.ToShortDateString(), new { @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.TglDatang, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TindakanId, "Tindakan", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("TindakanId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.LabelFor(model => model.PasienId, "User name :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-3">
+                @Html.DropDownList("PasienId", null, htmlAttributes: new { @class = "form-control" })
+                @*@(Html.Kendo().DropDownList()
+          .Name("products")
+          .DataTextField("ProductName")
+          .DataValueField("ProductID")
+          .HtmlAttributes(new { style = "width:250px" })
+          .Filter("contains")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("GetProducts", "Home");
+              })
+              .ServerFiltering(true);
+          })
+                )*@
+                @Html.ValidationMessageFor(model => model.PasienId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DiagnosisId, "Anamnesa :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-3">
+                @Html.DropDownList("DiagnosisId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DiagnosisId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <table cellspacing="0" cellpadding="0" style="margin-left:205px" class="form-group">
+            @Html.LabelFor(model => model.Gigi, "Posisi Gigi :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <tbody id="mydiv">
+                <tr style="margin-bottom:0px">
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="11" id="1" value="Kuadran 1 : 1" />
+                        <label>1</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="12" id="2" value="Kuadran 1 : 2" />
+                        <label>2</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="13" id="3" value="Kuadran 1 : 3" />
+                        <label>3</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="14" id="4" value="Kuadran 1 : 4" />
+                        <label>4</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="15" id="5" value="Kuadran 1 : 5" />
+                        <label>5</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="16" id="6" value="Kuadran 1 : 6" />
+                        <label>6</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="17" id="7" value="Kuadran 1 : 7" />
+                        <label>7</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="18" id="8" value="Kuadran 1 : 8" />
+                        <label>8</label><br />
+                    </td>
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="21" id="1" value="Kuadran 2 : 1" />
+                        <label>1</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="22" id="2" value="Kuadran 2 : 2" />
+                        <label>2</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="23" id="3" value="Kuadran 2 : 3" />
+                        <label>3</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="24" id="4" value="Kuadran 2 : 4" />
+                        <label>4</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="25" id="5" value="Kuadran 2 : 5" />
+                        <label>5</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="26" id="6" value="Kuadran 2 : 6" />
+                        <label>6</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="27" id="7" value="Kuadran 2 : 7" />
+                        <label>7</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="28" id="8" value="Kuadran 2 : 8" />
+                        <label>8</label><br />
+                    </td>
+                    @*<td width="170px" align="left">
+                        <a href="javascript:" onclick="CheckAll()">Check All</a>
+                        <a href="javascript:" onclick="UnCheckAll()">Un Check All</a>
+                    </td>*@  
+                    @*<td width="40px" align="center">
+                        <a href="javascript:" onclick="CheckAll()">Check All</a>
+                        <a href="javascript:" onclick="UnCheckAll()">Un Check All</a>
+                    </td>*@  
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td height="4px" colspan="9"></td>
+                    <td width="2px" style="border-style: solid; border-left-width: 0.05cm; border-right : none; border-top : none; border-bottom : none"></td>
+                    <td colspan="9"></td>
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td width="105px" colspan="3"></td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="1i" id="i" value="Kuadran 1 : I" />
+                        <label>I</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="1ii" id="ii" value="Kuadran 1 : II" />
+                        <label>II</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="1iii" id="iii" value="Kuadran 1 : III" />
+                        <label>III</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="1iv" id="iv" value="Kuadran 1 : IV" />
+                        <label>IV</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="1v" id="v" value="Kuadran 1 : V" />
+                        <label>V</label><br />
+                    
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="2i" id="i" value="Kuadran 2 : I" />
+                        <label>I</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="2ii" id="ii" value="Kuadran 2 : II" />
+                        <label>II</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="2iii" id="iii" value="Kuadran 2 : III" />
+                        <label>III</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="2iv" id="iv" value="Kuadran 2 : IV" />
+                        <label>IV</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="2v" id="v" value="Kuadran 2 : V" />
+                        <label>V</label><br />
+                    </td>
+                    @*<td width="170px" align="left"></td>*@
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td width="105px" colspan="3"></td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td height="8px" colspan="9"></td>
+                    <td width="2px" style="border-style: solid; border-left-width: 0.05cm; border-right : none; border-top : none; border-bottom : none"></td>
+                    <td colspan="9"></td>
+                </tr>
+
+                <tr style="margin-bottom:10px;margin-top:10px">
+                    <td colspan="10" style="border-style: solid; border-left: none; border-right : none; border-top : none; border-bottom-width : 0.05cm"> </td>
+                    <td colspan="9" style="border-style: solid; border-left: none; border-right : none; border-top : none; border-bottom-width : 0.05cm"> </td>
+                </tr>
+
+                <tr style="margin-bottom:0px">
+                    <td height="8px" colspan="9"></td>
+                    <td width="2px" style="border-style: solid; border-left-width: 0.05cm; border-right : none; border-top : none; border-bottom : none"></td>
+                    <td colspan="9"></td>
+                </tr>
+                <tr style="margin-top:2px">
+                    <td width="105px" colspan="3"></td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi susu/Kuadran 1(I).jpg" style="border-width:0px;" />
+                    </td>
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td width="105px" colspan="3"></td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="3i" id="i" value="Kuadran 3 : I" />
+                        <label>I</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="3ii" id="ii" value="Kuadran 3 : II" />
+                        <label>II</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="3iii" id="iii" value="Kuadran 3 : III" />
+                        <label>III</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="3iv" id="iv" value="Kuadran 3 : IV" />
+                        <label>IV</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="3v" id="v" value="Kuadran 3 : V" />
+                        <label>V</label><br />
+
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="4i" id="i" value="Kuadran 4 : I" />
+                        <label>I</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="4ii" id="ii" value="Kuadran 4 : II" />
+                        <label>II</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="4iii" id="iii" value="Kuadran 4 : III" />
+                        <label>III</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="4iv" id="iv" value="Kuadran 4 : IV" />
+                        <label>IV</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="4v" id="v" value="Kuadran 4 : V" />
+                        <label>V</label><br />
+                    </td>
+                    @*<td width="170px" align="left"></td>*@
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td height="4px" colspan="9"></td>
+                    <td width="2px" style="border-style: solid; border-left-width: 0.05cm; border-right : none; border-top : none; border-bottom : none"></td>
+                    <td colspan="9"></td>
+                </tr>
+                <tr style="margin-bottom:0px">
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                    <td width="40px" align="center">
+                        <img src="~/Content/Picture/Gigi Dewasa/Kuadran 1(1).jpg" style="border-width:0px;" />
+                    </td>
+                </tr>
+
+                <tr style="margin-bottom:0px">
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="31" id="1" value="Kuadran 3 : 1" />
+                        <label>1</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="32" id="2" value="Kuadran 3 : 2" />
+                        <label>2</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="33" id="3" value="Kuadran 3 : 3" />
+                        <label>3</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="34" id="4" value="Kuadran 3 : 4" />
+                        <label>4</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="35" id="5" value="Kuadran 3 : 5" />
+                        <label>5</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="36" id="6" value="Kuadran 3 : 6" />
+                        <label>6</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="37" id="7" value="Kuadran 3 : 7" />
+                        <label>7</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="38" id="8" value="Kuadran 3 : 8" />
+                        <label>8</label><br />
+                    </td>
+                    <td width="5px"></td>
+                    <td width="2px" style="border-style:solid; border-left-width:0.05cm; border-right: none; border-top: none; border-bottom: none"></td>
+                    <td width="3px"></td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="41" id="1" value="Kuadran 4 : 1" />
+                        <label>1</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="42" id="2" value="Kuadran 4 : 2" />
+                        <label>2</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="43" id="3" value="Kuadran 4 : 3" />
+                        <label>3</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="44" id="4" value="Kuadran 4 : 4" />
+                        <label>4</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="45" id="5" value="Kuadran 4 : 5" />
+                        <label>5</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="46" id="6" value="Kuadran 4 : 6" />
+                        <label>6</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="47" id="7" value="Kuadran 4 : 7" />
+                        <label>7</label><br />
+                    </td>
+                    <td width="40px" align="center">
+                        <input type="checkbox" name="48" id="8" value="Kuadran 4 : 8" />
+                        <label>8</label><br />
+                    </td>
+                </tr>
+                
+                @Html.TextAreaFor(model => model.Gigi, new { id = "txtValue" })
+                @Html.ValidationMessageFor(model => model.Gigi, "", new { @class = "text-danger" })
+            </tbody>
+            <caption>Sumber Gambar Gigi : <a href="mailto:info@actual-training.com">Actual Solusi</a></caption>
+        </table>
+        <br />
+        <br />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TindakanId, "Tindakan :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-3">
+                @Html.DropDownList("TindakanId", null, htmlAttributes: new { @class = "form-control", @onchange= "FillPrice()", id= "TindakanId"})
                 @Html.ValidationMessageFor(model => model.TindakanId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Total, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.Total, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Total, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Harga,"Harga :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-2">
+                @Html.EditorFor(model => model.Harga, new { htmlAttributes = new { @class = "form-control", id="txtHarga" } })
+                @Html.ValidationMessageFor(model => model.Harga, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Tambah" class="btn btn-default" />
             </div>
         </div>
     </div>
+    
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
