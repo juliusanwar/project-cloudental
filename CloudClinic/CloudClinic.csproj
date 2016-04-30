@@ -217,7 +217,6 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
-    <Compile Include="Controllers\AppointmentsController.cs" />
     <Compile Include="Controllers\BarangController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -1875,6 +1874,8 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\SearchWindow\SearchWindow.cshtml" />
     <Content Include="Views\Booking\Create.cshtml" />
+    <Content Include="Views\Appointment\Index.cshtml" />
+    <Content Include="Views\Appointment\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

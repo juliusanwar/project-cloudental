@@ -14,53 +14,10 @@
 <p>
     @Html.ActionLink("New", "Create", new { Controller = "Jadwal" }, new { @class = "btn btn-primary" })
 </p>
-@*<table class="table">
-    <tr>
-        <th>
-            Dokter
-        </th>
-        <th>
-            Hari
-        </th>
-        <th>
-            Sesi
-        </th>
-        <th>
-            Ruang
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pengguna.Nama)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Hari)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Sesi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ruang)
-        </td>
-
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.JadwalId }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.JadwalId },
-            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
-        </td>
-
-    </tr>
-}
-
-</table>*@
-
 
 
     @{
-        foreach (var item in Model.Select(a => a.Hari).Distinct())
+        foreach (var item in Model.Select(a => a.TanggalJadwal).Distinct())
         {
             <h3>Jadwal : @item</h3>
             <div>
@@ -75,9 +32,12 @@
                         <th>
                             Ruang
                         </th>
+                        <th>
+                            Appointment ID
+                        </th>
                         <th></th>
                     </tr>
-                    @foreach (var i in Model.Where(a => a.Hari.Equals(@item)))
+                    @foreach (var i in Model.Where(a => a.TanggalJadwal.Equals(@item)))
                     {
                         <tr>
                             <td>
@@ -88,6 +48,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => i.Ruang)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.AppointmentId)
                             </td>
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { Controller = "Jadwal", id = i.PenggunaId }, new { @class = "btn btn-default btn-xs" })

@@ -40,12 +40,36 @@ namespace CloudClinic.Controllers
         // GET: Appointment/Create
         public ActionResult Create()
         {
-            //var JadwalId = db.Appointment.Select(x => x.Jadwal.Hari).Distinct();
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Dokter").Distinct();
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari").Distinct();
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Sesi").Distinct();
+            
+
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Check(string date)
+        {
+            
+
+            var model = new Appointment();
+            model.Jadwal.TanggalJadwal = DateTime.Parse(date);
+            model.IsTimeShowed = true;
+
+            //// Database operation
+            //// contoh : cek slot time sesuai dgn tanggal.
+
+            ////Dbcontext.Jadwals.Where(x => x.Tanggal.Date == selectedDate.Date).ToList()
+
+            var cek = db.Jadwal.Where(x => x.TanggalJadwal == model.Jadwal.TanggalJadwal).ToList();
+
+            //model.IsTimeAvailable == cek;
+
+            //model.IsTime1Available = true;
+            //model.IsTime2Available = false;
+            //model.IsTime3Available = true;
+
+            ModelState.Remove("Date");
+            return View("Index", model);
         }
 
         // POST: Appointment/Create
@@ -53,8 +77,27 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PasienId,JadwalId,PhoneNumber,Time,Keluhan,Timezone,CreatedAt")] Appointment appointment)
+        public ActionResult Create([Bind(Include = "Id,PasienId,JadwalId,PhoneNumber,Keluhan,CreatedAt")] Appointment appointment)
         {
+            appointment.CreatedAt = DateTime.Now;
+
+            if (!ModelState.IsValid)
+            {
+                return View(appointment); // Return view balik (tambah error la)
+            }
+
+            //var date = appointment.Date;
+            //var time = appointment.Time;
+            // Save ke database?
+
+            //if (ModelState.IsValid)
+            //{
+
+            //    ViewBag.Pesan = "Kamu telah berhasil melakukan reservasi dengan tanggal " + date + " dengan waktu sesi " + time;
+            //}
+
+            //return View(model); // Return view success.
+
             if (ModelState.IsValid)
             {
                 db.Appointment.Add(appointment);
@@ -62,9 +105,6 @@ namespace CloudClinic.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Dokter").Distinct();
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari").Distinct();
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Sesi").Distinct();
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
             return View(appointment);
         }

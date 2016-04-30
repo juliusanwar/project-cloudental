@@ -52,7 +52,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "JadwalId,PenggunaId,Hari,Ruang,Sesi")] Jadwal jadwal)
+        public ActionResult Create([Bind(Include = "JadwalId,PenggunaId,TanggalJadwal,Ruang,Sesi")] Jadwal jadwal)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "JadwalId,PenggunaId,Hari,Ruang,Sesi")] Jadwal jadwal)
+        public ActionResult Edit([Bind(Include = "JadwalId,PenggunaId,TanggalJadwal,Ruang,Sesi")] Jadwal jadwal)
         {
             if (ModelState.IsValid)
             {
