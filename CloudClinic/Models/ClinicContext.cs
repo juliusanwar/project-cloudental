@@ -39,9 +39,9 @@ namespace CloudClinic.Models
             //    .WithMany()
             //    .HasForeignKey(a => a.AppointmentId);
 
-            modelBuilder.Entity<Appointment>()
-                .HasRequired(b => b.Jadwal)
-                .WithOptional(b => b.Appointment);
+            modelBuilder.Entity<Jadwal>() // Jadwal
+                .HasOptional<Appointment>(x => x.Appointment) // Punya optional Appointment (Nullable)
+                .WithOptionalPrincipal(x => x.Jadwal); // Dimana Jadwal yang jadi principal dan hold foreign key AppointmentId
 
             modelBuilder.Entity<Diagnosis>()
                     .HasRequired(d => d.Pasien)
