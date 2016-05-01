@@ -1,221 +1,249 @@
 ﻿<ul class="nav nav-list">
     @*<li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-desktop"></i>
-            <span class="menu-text"> Pelaporan </span>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-desktop"></i>
+                <span class="menu-text"> Pelaporan </span>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-caret-right"></i>
-                    List Users CloudClinic
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-                <b class="arrow"></b>
-                <ul class="submenu">
-                    
-                    @if (Request.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
-                        <li>@Html.ActionLink("Dokter", "Index", "Pengguna")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
-                        <li>@Html.ActionLink("Dokter", "Index", "Pengguna")</li>
-                    }
-                </ul>
-            </li>
-        </ul>
-    </li>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                <li class="">
+                    <a href="#" class="dropdown-toggle">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        List Users CloudClinic
+                        <b class="arrow fa fa-angle-down"></b>
+                    </a>
+                    <b class="arrow"></b>
+                    <ul class="submenu">
 
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-ambulance"></i>
-            <span class="menu-text"> List CloudClinic </span>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
+                            <li>@Html.ActionLink("Dokter", "Index", "Pengguna")</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
+                            <li>@Html.ActionLink("Dokter", "Index", "Pengguna")</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </li>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-           
-            @if (Request.IsAuthenticated)
-            {
-                <li>@Html.ActionLink("JenisTindakan", "Index", "JenisTindakan")</li>
-                <li>@Html.ActionLink("Tindakan", "Index", "Tindakan")</li>
-                <li>@Html.ActionLink("JenisObat", "Index", "JenisObat")</li>
-                <li>@Html.ActionLink("Obat", "Index", "Obat")</li>
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-ambulance"></i>
+                <span class="menu-text"> List CloudClinic </span>
 
-            }
-            else
-            {
-                <li>@Html.ActionLink("Tindakan", "Index", "Tindakan")</li>
-                <li>@Html.ActionLink("Obat", "Index", "Obat")</li>
-            }
-        </ul>
-    </li>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
 
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-android"></i>
-            <span class="menu-text"> Setup Reservation </span>
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            
-            @if (Request.IsAuthenticated)
-            {
-                <li>@Html.ActionLink("Reservation", "Index", "Reservation")</li>
-                <li>@Html.ActionLink("Jadwal", "Index", "Jadwal")</li>
-            }
-            else
-            {
-                <li>@Html.ActionLink("Reservation", "Index", "Reservation")</li>
-                <li>@Html.ActionLink("Jadwal Praktek", "Index", "Jadwal")</li>
-            }
-        </ul>
-    </li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("JenisTindakan", "Index", "JenisTindakan")</li>
+                    <li>@Html.ActionLink("Tindakan", "Index", "Tindakan")</li>
+                    <li>@Html.ActionLink("JenisObat", "Index", "JenisObat")</li>
+                    <li>@Html.ActionLink("Obat", "Index", "Obat")</li>
 
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-caret-right"></i>
-            <span class="menu-text"> Setup Transaction </span>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Tindakan", "Index", "Tindakan")</li>
+                    <li>@Html.ActionLink("Obat", "Index", "Obat")</li>
+                }
+            </ul>
+        </li>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            
-            @if (Request.IsAuthenticated)
-            {
-                <li>@Html.ActionLink("Transaksi Pasien", "Index", "Transaction")</li>
-            }
-        </ul>
-    </li>
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-android"></i>
+                <span class="menu-text"> Setup Reservation </span>
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
 
-    <li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-list-alt"></i>
-            <span class="menu-text"> Setup Billing </span>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Reservation", "Index", "Reservation")</li>
+                    <li>@Html.ActionLink("Jadwal", "Index", "Jadwal")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Reservation", "Index", "Reservation")</li>
+                    <li>@Html.ActionLink("Jadwal Praktek", "Index", "Jadwal")</li>
+                }
+            </ul>
+        </li>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-            
-            @if (Request.IsAuthenticated)
-            {
-                <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
-                <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
-            }
-        </ul>
-    </li>*@
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-caret-right"></i>
+                <span class="menu-text"> Setup Transaction </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Transaksi Pasien", "Index", "Transaction")</li>
+                }
+            </ul>
+        </li>
+
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-list-alt"></i>
+                <span class="menu-text"> Setup Billing </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+
+                @if (Request.IsAuthenticated)
+                {
+                    <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
+                    <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
+                }
+            </ul>
+        </li>*@
 
     @*<li class="">
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-ambulance"></i>
-            <span class="menu-text"> CloudClinic </span>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-ambulance"></i>
+                <span class="menu-text"> CloudClinic </span>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-        </ul>
-    </li>*@
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+            </ul>
+        </li>*@
 
-        @if (User.IsInRole("Admin"))
-        {
-            <li class="">
-                <a href="#" class="dropdown-toggle">
-                    <i class="menu-icon fa fa-ambulance"></i>
-                    <span class="menu-text"> Administrator </span>
+    @if (User.IsInRole("Admin"))
+    {
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-ambulance"></i>
+                <span class="menu-text"> Administrator </span>
 
-                    <b class="arrow fa fa-angle-down"></b>
-                </a>
-                <b class="arrow"></b>
-                <ul class="submenu">
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
 
 
-                    <li class="">
-                        <a href="@Url.Action("Index","Pasien")">
-                            <i class="menu-icon fa fa-list-alt"></i>
-                            <span class="menu-text"> Setup Pasien </span>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="@Url.Action("Index","Pasien")">
+                        <i class="menu-icon fa fa-list-alt"></i>
+                        <span class="menu-text"> Setup Pasien </span>
+                    </a>
+                </li>
 
-                    <li class="">
-                        <a href="@Url.Action("Index","Pengguna")">
-                            <i class="menu-icon fa fa-picture-o"></i>
-                            <span class="menu-text"> Setup Pengguna </span>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="@Url.Action("Index","Pengguna")">
+                        <i class="menu-icon fa fa-picture-o"></i>
+                        <span class="menu-text"> Setup Pengguna </span>
+                    </a>
+                </li>
 
-                    <li class="">
-                        <a href="@Url.Action("Index","JenisBarang")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Jenis Barang </span>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="@Url.Action("Index","JenisBarang")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Setup Jenis Barang </span>
+                    </a>
+                </li>
 
-                    <li class="">
-                        <a href="@Url.Action("Index","Barang")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Barang </span>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="@Url.Action("Index","Barang")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Setup Barang </span>
+                    </a>
+                </li>
 
-                    <li class="">
-                        <a href="@Url.Action("Index","JenisTindakan")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Jenis Tindakan </span>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="@Url.Action("Index","JenisTindakan")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Setup Jenis Tindakan </span>
+                    </a>
+                </li>
 
-                    <li class="">
-                        <a href="@Url.Action("Index","Tindakan")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Tindakan </span>
-                        </a>
-                    </li>
+                <li class="">
+                    <a href="@Url.Action("Index","Tindakan")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Setup Tindakan </span>
+                    </a>
+                </li>
 
-                    <li class="">
-                        <a href="@Url.Action("Index","Pembelian")">
-                            <i class="menu-icon fa fa-tag"></i>
-                            <span class="menu-text"> Setup Pembelian </span>
-                        </a>
-                    </li>
-                </ul>
+                <li class="">
+                    <a href="@Url.Action("Index","Pembelian")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Setup Pembelian </span>
+                    </a>
+                </li>
+            </ul>
 
         </li>
-    <li class="">
+        <li class="">
 
-        <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-android"></i>
-            <span class="menu-text"> Setup Manage User </span>
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-android"></i>
+                <span class="menu-text"> Setup Manage User </span>
 
-            <b class="arrow fa fa-angle-down"></b>
-        </a>
-        <b class="arrow"></b>
-        <ul class="submenu">
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
 
-            <li>@Html.ActionLink("Show All Role", "ShowAllRole", "ManageUser")</li>
-            <li>@Html.ActionLink("Show All User", "ShowAllUser", "ManageUser")</li>
-            <li>@Html.ActionLink("Add User To Role", "AddUserToRole", "ManageUser")</li>
-            <li>@Html.ActionLink("Show User With Role", "ShowUserWithRole", "ManageUser")</li>
+                <li>@Html.ActionLink("Show All Role", "ShowAllRole", "ManageUser")</li>
+                <li>@Html.ActionLink("Show All User", "ShowAllUser", "ManageUser")</li>
+                <li>@Html.ActionLink("Add User To Role", "AddUserToRole", "ManageUser")</li>
+                <li>@Html.ActionLink("Show User With Role", "ShowUserWithRole", "ManageUser")</li>
 
-        </ul>
+            </ul>
 
 
-    </li>
-    
-        }
+        </li>
+
+
+        <li class="">
+            <a href="#" class="dropdown-toggle">
+                <i class="menu-icon fa fa-android"></i>
+                <span class="menu-text"> Appointment </span>
+
+                <b class="arrow fa fa-angle-down"></b>
+            </a>
+            <b class="arrow"></b>
+            <ul class="submenu">
+
+                <li class="">
+                    <a href="@Url.Action("Index","Appointment")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Daftar Appointment </span>
+                    </a>
+                </li>
+
+                <li class="">
+                    <a href="@Url.Action("Create","Appointment")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Tambah Appointment </span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+    }
 
     @if (User.IsInRole("Pasien"))
     {
@@ -255,14 +283,11 @@
 
 
         </li>
-    }
-    
-    @if (User.IsInRole("Dokter"))
-    {
+
         <li class="">
             <a href="#" class="dropdown-toggle">
-                <i class="menu-icon fa fa-ambulance"></i>
-                <span class="menu-text"> Klinik </span>
+                <i class="menu-icon fa fa-android"></i>
+                <span class="menu-text"> Appointment </span>
 
                 <b class="arrow fa fa-angle-down"></b>
             </a>
@@ -270,71 +295,210 @@
             <ul class="submenu">
 
                 <li class="">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Setup List Users </span>
-
-                        <b class="arrow fa fa-angle-down"></b>
+                    <a href="@Url.Action("Index","Appointment")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Daftar Appointment </span>
                     </a>
-                    <b class="arrow"></b>
-                    <ul class="submenu">
-
-                        <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
-                        <li>@Html.ActionLink("Petugas Klinik", "Index", "Pengguna")</li>
-                    </ul>
                 </li>
 
                 <li class="">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Setup List Tindakan </span>
-
-                        <b class="arrow fa fa-angle-down"></b>
+                    <a href="@Url.Action("Create","Appointment")">
+                        <i class="menu-icon fa fa-tag"></i>
+                        <span class="menu-text"> Tambah Appointment </span>
                     </a>
-                    <b class="arrow"></b>
-                    <ul class="submenu">
-
-                        <li>@Html.ActionLink("Jenis Tindakan", "Index", "JenisTindakan")</li>
-                        <li>@Html.ActionLink("Tindakan", "Index", "Tindakan")</li>
-                    </ul>
                 </li>
 
-                <li class="">
-                    <a href="#" class="dropdown-toggle">
-                        <i class="menu-icon fa fa-list-alt"></i>
-                        <span class="menu-text"> Setup List Barang </span>
-
-                        <b class="arrow fa fa-angle-down"></b>
-                    </a>
-                    <b class="arrow"></b>
-                    <ul class="submenu">
-
-                        <li>@Html.ActionLink("Jenis Barang", "Index", "JenisBarang")</li>
-                        <li>@Html.ActionLink("Barang", "Index", "Barang")</li>
-                    </ul>
-                </li>
             </ul>
-
         </li>
-    <li class="">
 
+     }
+
+                @if (User.IsInRole("Dokter"))
+                {
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-ambulance"></i>
+                            <span class="menu-text"> Klinik </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+                        <b class="arrow"></b>
+                        <ul class="submenu">
+
+                            <li class="">
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-list-alt"></i>
+                                    <span class="menu-text"> Setup List Users </span>
+
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </a>
+                                <b class="arrow"></b>
+                                <ul class="submenu">
+
+                                    <li>@Html.ActionLink("Pasien", "Index", "Pasien")</li>
+                                    <li>@Html.ActionLink("Petugas Klinik", "Index", "Pengguna")</li>
+                                </ul>
+                            </li>
+
+                            <li class="">
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-list-alt"></i>
+                                    <span class="menu-text"> Setup List Tindakan </span>
+
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </a>
+                                <b class="arrow"></b>
+                                <ul class="submenu">
+
+                                    <li>@Html.ActionLink("Jenis Tindakan", "Index", "JenisTindakan")</li>
+                                    <li>@Html.ActionLink("Tindakan", "Index", "Tindakan")</li>
+                                </ul>
+                            </li>
+
+                            <li class="">
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="menu-icon fa fa-list-alt"></i>
+                                    <span class="menu-text"> Setup List Barang </span>
+
+                                    <b class="arrow fa fa-angle-down"></b>
+                                </a>
+                                <b class="arrow"></b>
+                                <ul class="submenu">
+
+                                    <li>@Html.ActionLink("Jenis Barang", "Index", "JenisBarang")</li>
+                                    <li>@Html.ActionLink("Barang", "Index", "Barang")</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="">
+
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-dashboard"></i>
+                            <span class="menu-text"> Setup Transaksi </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+                        <b class="arrow"></b>
+                        <ul class="submenu">
+
+                            <li>@Html.ActionLink("Diagnosis", "Index", "Diagnosis")</li>
+                            <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
+                            <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
+
+                        </ul>
+
+                    </li>
+
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-android"></i>
+                            <span class="menu-text"> Appointment </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+                        <b class="arrow"></b>
+                        <ul class="submenu">
+
+                            <li class="">
+                                <a href="@Url.Action("Index","Appointment")">
+                                    <i class="menu-icon fa fa-tag"></i>
+                                    <span class="menu-text"> Daftar Appointment </span>
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a href="@Url.Action("Create","Appointment")">
+                                    <i class="menu-icon fa fa-tag"></i>
+                                    <span class="menu-text"> Tambah Appointment </span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-calendar-o"></i>
+                            <span class="menu-text"> Jadwal </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+                        <b class="arrow"></b>
+                        <ul class="submenu">
+
+                            <li class="">
+                                <a href="@Url.Action("Index","Jadwal")">
+                                    <i class="menu-icon fa fa-tag"></i>
+                                    <span class="menu-text"> Jadwal Praktek </span>
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a href="@Url.Action("Create","Jadwal")">
+                                    <i class="menu-icon fa fa-tag"></i>
+                                    <span class="menu-text"> Tambah Jadwal Dokter </span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                }
+
+    <li class="">
         <a href="#" class="dropdown-toggle">
-            <i class="menu-icon fa fa-dashboard"></i>
-            <span class="menu-text"> Setup Transaksi </span>
+            <i class="menu-icon fa fa-android"></i>
+            <span class="menu-text"> Appointment </span>
 
             <b class="arrow fa fa-angle-down"></b>
         </a>
         <b class="arrow"></b>
         <ul class="submenu">
 
-            <li>@Html.ActionLink("Diagnosis", "Index", "Diagnosis")</li>
-            <li>@Html.ActionLink("Billing Jasa", "Index", "BillingJasa")</li>
-            <li>@Html.ActionLink("Billing Obat", "Index", "BillingObat")</li>
+            <li class="">
+                <a href="@Url.Action("Index","Appointment")">
+                    <i class="menu-icon fa fa-tag"></i>
+                    <span class="menu-text"> Daftar Appointment </span>
+                </a>
+            </li>
+
+            <li class="">
+                <a href="@Url.Action("Create","Appointment")">
+                    <i class="menu-icon fa fa-tag"></i>
+                    <span class="menu-text"> Tambah Appointment </span>
+                </a>
+            </li>
 
         </ul>
-
     </li>
-        
-    }
 
-</ul>
+    <li class="">
+        <a href="#" class="dropdown-toggle">
+            <i class="menu-icon fa fa-calendar-o"></i>
+            <span class="menu-text"> Jadwal </span>
+
+            <b class="arrow fa fa-angle-down"></b>
+        </a>
+        <b class="arrow"></b>
+        <ul class="submenu">
+
+            <li class="">
+                <a href="@Url.Action("Index","Jadwal")">
+                    <i class="menu-icon fa fa-tag"></i>
+                    <span class="menu-text"> Jadwal Praktek </span>
+                </a>
+            </li>
+
+            <li class="">
+                <a href="@Url.Action("Create","Jadwal")">
+                    <i class="menu-icon fa fa-tag"></i>
+                    <span class="menu-text"> Tambah Jadwal Dokter </span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+
+            </ul>
