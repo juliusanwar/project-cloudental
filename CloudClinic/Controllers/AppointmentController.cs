@@ -40,8 +40,13 @@ namespace CloudClinic.Controllers
         // GET: Appointment/Create
         public ActionResult Create()
         {
-            
-
+            //Appointment appointment = new Appointment();
+            ////appointment.Jadwal.TanggalJadwal = DateTime.Now;
+            ////appointment.Id = Guid.NewGuid();
+            ////appointment.CreatedAt = DateTime.Now;
+            //appointment.Pasien.UserName = User.Identity.Name;
+            //return View(appointment);
+            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "TanggalJadwal");
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
             return View();
         }
@@ -61,15 +66,15 @@ namespace CloudClinic.Controllers
             ////Dbcontext.Jadwals.Where(x => x.Tanggal.Date == selectedDate.Date).ToList()
 
             var cek = db.Jadwal.Where(x => x.TanggalJadwal == model.Jadwal.TanggalJadwal).ToList();
-
+            
             //model.IsTimeAvailable == cek;
 
             //model.IsTime1Available = true;
             //model.IsTime2Available = false;
             //model.IsTime3Available = true;
 
-            ModelState.Remove("Date");
-            return View("Index", model);
+            ModelState.Remove("TanggalJadwal");
+            return View("Create", cek);
         }
 
         // POST: Appointment/Create
@@ -77,35 +82,33 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PasienId,JadwalId,PhoneNumber,Keluhan,CreatedAt")] Appointment appointment)
+        public ActionResult Create([Bind(Include = "Id,PasienId,JadwalId,PhoneNumber,Keluhan")] Appointment appointment)
         {
-            appointment.CreatedAt = DateTime.Now;
+            
 
-            if (!ModelState.IsValid)
-            {
-                return View(appointment); // Return view balik (tambah error la)
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return View(appointment); // Return view balik (tambah error la)
+            //}
 
             //var date = appointment.Date;
             //var time = appointment.Time;
             // Save ke database?
 
-            //if (ModelState.IsValid)
-            //{
-
-            //    ViewBag.Pesan = "Kamu telah berhasil melakukan reservasi dengan tanggal " + date + " dengan waktu sesi " + time;
-            //}
-
             //return View(model); // Return view success.
 
             if (ModelState.IsValid)
             {
+                appointment.CreatedAt = DateTime.Now;
+
                 db.Appointment.Add(appointment);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
+            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "TanggalJadwal", appointment.JadwalId);
+
             return View(appointment);
         }
 

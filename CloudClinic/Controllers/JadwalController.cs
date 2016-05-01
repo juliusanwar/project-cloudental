@@ -43,6 +43,14 @@ namespace CloudClinic.Controllers
         //[Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
+            //Jadwal jadwal = new Jadwal();
+            ////appointment.Jadwal.TanggalJadwal = DateTime.Now;
+            ////appointment.Id = Guid.NewGuid();
+            ////appointment.CreatedAt = DateTime.Now;
+            //jadwal.Pengguna.UserName = User.Identity.Name;
+            //return View(jadwal);
+
+
             ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama");
             return View();
         }

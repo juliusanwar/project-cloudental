@@ -13,12 +13,14 @@ namespace CloudClinic.Models.DataModel
     public class Appointment
     {
         public static int ReminderTime = 30;
+
+        [Key]
         public int Id { get; set; }
 
         [Required]
         public int PasienId { get; set; }
 
-        
+        [Required]
         public int JadwalId { get; set; }
 
 
@@ -31,8 +33,18 @@ namespace CloudClinic.Models.DataModel
 
         public bool IsTimeShowed { get; set; }
 
-        public bool IsTimeAvailable { get; set; }
+        public bool IsTime1Available { get; set; }
+        public bool IsTime2Available { get; set; }
+        public bool IsTime3Available { get; set; }
+        public bool IsTime4Available { get; set; }
+        public bool IsTime5Available { get; set; }
+        public bool IsTime6Available { get; set; }
+        public bool IsTime7Available { get; set; }
+        public bool IsTime8Available { get; set; }
+        public bool IsTime9Available { get; set; }
+        public bool IsTime10Available { get; set; }
 
+        [Required]
         public string Keluhan { get; set; }
 
         [Display(Name = "Created at")]

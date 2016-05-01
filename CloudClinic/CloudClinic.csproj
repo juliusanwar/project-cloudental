@@ -222,7 +222,6 @@
     </Compile>
     <Compile Include="Controllers\BillingJasaController.cs" />
     <Compile Include="Controllers\BillingObatController.cs" />
-    <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\DiagnosisController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JadwalController.cs" />
@@ -1873,8 +1872,8 @@
     <Content Include="Views\Reservation\IndexContet.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\SearchWindow\SearchWindow.cshtml" />
-    <Content Include="Views\Booking\Create.cshtml" />
     <Content Include="Views\Appointment\Index.cshtml" />
+    <Content Include="Views\Appointment\TestCreate.cshtml" />
     <Content Include="Views\Appointment\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>

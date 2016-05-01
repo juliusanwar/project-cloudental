@@ -4,8 +4,13 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.412/styles/kendo.common.min.css" />
+<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2016.1.412/styles/kendo.default.min.css" />
 
+<script src="http://kendo.cdn.telerik.com/2016.1.412/js/jquery.min.js"></script>
+<script src="http://kendo.cdn.telerik.com/2016.1.412/js/kendo.all.min.js"></script>
+
+<h2>Create</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -15,23 +20,42 @@
         <h4>Appointment</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*@Html.HiddenFor(model => model.Id)*@
         <div class="form-group">
-            @Html.LabelFor(model => model.PasienId, "PasienId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PasienId, "Username :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @*@Html.EditorFor(model => model.PasienId, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.DropDownList("PasienId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PasienId, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.JadwalId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("JadwalId", null, htmlAttributes: new { @class = "form-control" })
+        @*@Html.HiddenFor(model => model.JadwalId)*@
 
-                @*<input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Keluhan, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Keluhan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Keluhan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+                @*@Html.LabelFor(model => model.JadwalId, "Tgl. Jadwal", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    
+                    @*@Html.TextBoxFor(x => x., new { style = "width: 100%" })*@
+                </div>
+                <input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
                 <input id="check" type="button" value="check" />
-                @if (Model.IsTimeShowed)
+                if (Model.IsTimeShowed)
                 {
                     <input type="hidden" value="@Html.AttributeEncode(Model.IsTime1Available)" name="IsTime1Available" id="IsTime1Available">
                     <input type="hidden" value="@Html.AttributeEncode(Model.IsTime2Available)" name="IsTime2Available" id="IsTime2Available">
@@ -58,34 +82,16 @@
                             <input @if (!Model.IsTime8Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time8" value="17:00 - 17:30" /><label for="time8">17:00 - 17:30</label><br />
                             <input @if (!Model.IsTime9Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time9" value="17:30 - 18:00" /><label for="time9">17:30 - 18:00</label><br />
                             <input @if (!Model.IsTime10Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time10" value="18:00 - 18:30" /><label for="time10">18:00 - 18:30</label><br />
+
+
                         </fieldset>
                     </div>
-                }*@
-
-                @*@Html.EditorFor(model => model.JadwalId, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.ValidationMessageFor(model => model.JadwalId, "", new { @class = "text-danger" })
-            </div>
-
-            
-
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-            </div>
+                }            
         </div>
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Keluhan, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Keluhan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Keluhan, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        
+
 
         @Html.HiddenFor(model => model.CreatedAt)
 
@@ -96,11 +102,18 @@
         </div>
     </div>
 }
+    <script>
+            $(document).ready(function () {
+                $("#TanggalJadwal").kendoDatePicker();
 
+                $('#check').on('click', function () {
+                    var date = new Date($("#TanggalJadwal").val());
+                    var dateString = kendo.toString(date, "yyyy-MM-dd");
+                    var url = "@Url.Action("Check", "Create")" + "?date=" + dateString;
+                    $('body').load(url);
+                });
+            });
+    </script>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
