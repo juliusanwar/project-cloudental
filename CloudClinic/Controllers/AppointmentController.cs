@@ -37,44 +37,89 @@ namespace CloudClinic.Controllers
             return View(appointment);
         }
 
-        // GET: Appointment/Create
+        [HttpGet]
         public ActionResult Create()
         {
-            //Appointment appointment = new Appointment();
-            ////appointment.Jadwal.TanggalJadwal = DateTime.Now;
-            ////appointment.Id = Guid.NewGuid();
-            ////appointment.CreatedAt = DateTime.Now;
-            //appointment.Pasien.UserName = User.Identity.Name;
-            //return View(appointment);
             ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "TanggalJadwal");
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
-            return View();
+
+            var model = new AppointmentViewModel();
+            model.IsTimeShowed = false;
+            return View(model);
         }
 
         [HttpGet]
-        public ActionResult Check(string date)
+        public ActionResult Check(string pasienId, string date, string phoneNumber, string keluhan)
         {
-            
+            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "TanggalJadwal");
+            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
 
-            var model = new Appointment();
-            model.Jadwal.TanggalJadwal = DateTime.Parse(date);
-            model.IsTimeShowed = true;
+            DateTime choosenDate;
+            var model = new AppointmentViewModel();
 
-            //// Database operation
-            //// contoh : cek slot time sesuai dgn tanggal.
+            if (!String.IsNullOrEmpty(pasienId))
+            {
+                model.PasienId = pasienId;
+            }
 
-            ////Dbcontext.Jadwals.Where(x => x.Tanggal.Date == selectedDate.Date).ToList()
+            if (DateTime.TryParse(date, out choosenDate))
+            {
+                model.Date = choosenDate;
+                model.IsTimeShowed = true;
 
-            var cek = db.Jadwal.Where(x => x.TanggalJadwal == model.Jadwal.TanggalJadwal).ToList();
-            
-            //model.IsTimeAvailable == cek;
+                using (var ctx = new ClinicContext())
+                {
+                    var availableJadwal = ctx.Jadwal.Where(x => x.TanggalJadwal.Date == choosenDate.Date).ToList();
 
-            //model.IsTime1Available = true;
-            //model.IsTime2Available = false;
-            //model.IsTime3Available = true;
+                    if (availableJadwal.Any())
+                    {
+                        foreach (var jadwal in availableJadwal)
+                        {
+                            switch (jadwal.Sesi)
+                            {
+                                case "Time1":
+                                    model.IsTime1Available = true;
+                                    break;
+                                case "Time2":
+                                    model.IsTime2Available = true;
+                                    break;
+                                case "Time3":
+                                    model.IsTime3Available = true;
+                                    break;
+                                case "Time4":
+                                    model.IsTime4Available = true;
+                                    break;
+                                case "Time5":
+                                    model.IsTime5Available = true;
+                                    break;
+                                case "Time6":
+                                    model.IsTime6Available = true;
+                                    break;
+                                case "Time7":
+                                    model.IsTime7Available = true;
+                                    break;
+                                case "Time8":
+                                    model.IsTime8Available = true;
+                                    break;
+                                case "Time9":
+                                    model.IsTime9Available = true;
+                                    break;
+                                case "Time10":
+                                    model.IsTime10Available = true;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
 
-            ModelState.Remove("TanggalJadwal");
-            return View("Create", cek);
+            model.PhoneNumber = phoneNumber;
+            model.Keluhan = keluhan;
+
+            ModelState.Remove("Date");
+            return View("Create", model);
         }
 
         // POST: Appointment/Create
@@ -82,34 +127,14 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PasienId,JadwalId,PhoneNumber,Keluhan")] Appointment appointment)
+        public ActionResult Create(AppointmentViewModel model)
         {
-            
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(appointment); // Return view balik (tambah error la)
-            //}
-
-            //var date = appointment.Date;
-            //var time = appointment.Time;
-            // Save ke database?
-
-            //return View(model); // Return view success.
-
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                appointment.CreatedAt = DateTime.Now;
-
-                db.Appointment.Add(appointment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(model);
             }
 
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "TanggalJadwal", appointment.JadwalId);
-
-            return View(appointment);
+            return View(model);
         }
 
         // GET: Appointment/Edit/5
@@ -181,5 +206,40 @@ namespace CloudClinic.Controllers
             }
             base.Dispose(disposing);
         }
+    }
+
+    public class AppointmentViewModel
+    {
+        public string PasienId {get;set;}
+
+        public DateTime Date { get; set; }
+
+        public bool IsTimeShowed { get; set; }
+
+        public bool IsTime1Available { get; set; }
+
+        public bool IsTime2Available { get; set; }
+
+        public bool IsTime3Available { get; set; }
+
+        public bool IsTime4Available { get; set; }
+
+        public bool IsTime5Available { get; set; }
+
+        public bool IsTime6Available { get; set; }
+
+        public bool IsTime7Available { get; set; }
+
+        public bool IsTime8Available { get; set; }
+
+        public bool IsTime9Available { get; set; }
+
+        public bool IsTime10Available { get; set; }
+
+        public string Session { get; set; }
+
+        public string PhoneNumber { get; set; }
+
+        public string Keluhan { get; set; }
     }
 }

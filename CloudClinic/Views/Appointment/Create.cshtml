@@ -1,13 +1,34 @@
-﻿@model CloudClinic.Models.DataModel.Appointment
+﻿@model CloudClinic.Controllers.AppointmentViewModel
 
 @{
     ViewBag.Title = "Create";
 }
 
+<link href="~/Content/kendo/2014.3.1411/kendo.common.min.css" rel="stylesheet" />
+<link href="~/Content/kendo/2014.3.1411/kendo.default.min.css" rel="stylesheet" />
+
+<script src="~/Scripts/kendo/2014.3.1411/jquery.min.js"></script>
+<script src="~/Scripts/kendo/2014.3.1411/kendo.all.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#Date").kendoDatePicker();
+
+        $('#check').on('click', function () {
+            var pasienId = $("#PasienId").val();
+            var phoneNumber = $("#PhoneNumber").val();
+            var keluhan = $("#Keluhan").val();
+            var date = new Date($("#Date").val());
+            var dateString = kendo.toString(date, "yyyy-MM-dd");
+            var url = "@Url.Action("Check", "Appointment")" + "?pasienid=" + pasienId + "&date=" + dateString + "&phonenumber=" + phoneNumber + "&keluhan=" + keluhan;
+            $('body').load(url);
+        });
+    });
+</script>
+
 <h2>Create</h2>
 
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Appointment")) 
 {
     @Html.AntiForgeryToken()
     
@@ -15,7 +36,6 @@
         <h4>Appointment</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @*@Html.HiddenFor(model => model.Id)*@
         <div class="form-group">
             @Html.LabelFor(model => model.PasienId, "PasienId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -25,14 +45,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.JadwalId, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Tanggal", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("JadwalId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.Date)
+                <input id="check" type="button" value="Check" />
+            </div>
+        </div>
 
-                @*<input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
-                <input id="check" type="button" value="check" />
-                @if (Model.IsTimeShowed)
-                {
+        @if (Model.IsTimeShowed)
+        {
+            <div class="form-group">
+                @Html.Label("Sesi", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
                     <input type="hidden" value="@Html.AttributeEncode(Model.IsTime1Available)" name="IsTime1Available" id="IsTime1Available">
                     <input type="hidden" value="@Html.AttributeEncode(Model.IsTime2Available)" name="IsTime2Available" id="IsTime2Available">
                     <input type="hidden" value="@Html.AttributeEncode(Model.IsTime3Available)" name="IsTime3Available" id="IsTime3Available">
@@ -46,30 +70,23 @@
 
                     <div id="timeContainer">
                         <fieldset>
-                            <legend>Please select one of the following</legend>
-                            <input @if (!Model.IsTime1Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time1" value="8:00 - 8:30" /><label for="time1">8:00 - 8:30</label><br />
-                            <input @if (!Model.IsTime2Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time2" value="8:30 - 9:00" /><label for="time2">8:30 - 9:00</label><br />
-                            <input @if (!Model.IsTime3Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time3" value="9:00 - 9:30" /><label for="time3">9:00 - 9:30</label><br />
-                            <input @if (!Model.IsTime4Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time4" value="9:30 - 10:00" /><label for="time4">9:30 - 10:00</label><br />
-                            <input @if (!Model.IsTime5Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time5" value="10:00 - 10:30" /><label for="time5">10:00 - 10:30</label><br />
-
-                            <input @if (!Model.IsTime6Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time6" value="16:00 - 16:30" /><label for="time6">16:00 - 16:30</label><br />
-                            <input @if (!Model.IsTime7Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time7" value="16:30 - 17:00" /><label for="time7">16:30 - 17:00</label><br />
-                            <input @if (!Model.IsTime8Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time8" value="17:00 - 17:30" /><label for="time8">17:00 - 17:30</label><br />
-                            <input @if (!Model.IsTime9Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time9" value="17:30 - 18:00" /><label for="time9">17:30 - 18:00</label><br />
-                            <input @if (!Model.IsTime10Available) { <text> disabled</text> } type="radio" name="TanggalJadwal" id="time10" value="18:00 - 18:30" /><label for="time10">18:00 - 18:30</label><br />
+                            <legend>Pilih salah satu sesi</legend>
+                            <input @if (!Model.IsTime1Available) { <text> disabled</text> } type="radio" name="Session" id="time1" value="time1" /><label for="time1">8:00 - 8:30</label><br />
+                            <input @if (!Model.IsTime2Available) { <text> disabled</text> } type="radio" name="Session" id="time2" value="time2" /><label for="time2">8:30 - 9:00</label><br />
+                            <input @if (!Model.IsTime3Available) { <text> disabled</text> } type="radio" name="Session" id="time3" value="time3" /><label for="time3">9:00 - 9:30</label><br />
+                            <input @if (!Model.IsTime4Available) { <text> disabled</text> } type="radio" name="Session" id="time4" value="time4" /><label for="time4">9:30 - 10:00</label><br />
+                            <input @if (!Model.IsTime5Available) { <text> disabled</text> } type="radio" name="Session" id="time5" value="time5" /><label for="time5">10:00 - 10:30</label><br />
+                            <input @if (!Model.IsTime6Available) { <text> disabled</text> } type="radio" name="Session" id="time6" value="time6" /><label for="time6">16:00 - 16:30</label><br />
+                            <input @if (!Model.IsTime7Available) { <text> disabled</text> } type="radio" name="Session" id="time7" value="time7" /><label for="time7">16:30 - 17:00</label><br />
+                            <input @if (!Model.IsTime8Available) { <text> disabled</text> } type="radio" name="Session" id="time8" value="time8" /><label for="time8">17:00 - 17:30</label><br />
+                            <input @if (!Model.IsTime9Available) { <text> disabled</text> } type="radio" name="Session" id="time9" value="time9" /><label for="time9">17:30 - 18:00</label><br />
+                            <input @if (!Model.IsTime10Available) { <text> disabled</text> } type="radio" name="Session" id="time10" value="time10" /><label for="time10">18:00 - 18:30</label><br />
                         </fieldset>
                     </div>
-                }*@
-
-                @*@Html.EditorFor(model => model.JadwalId, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.ValidationMessageFor(model => model.JadwalId, "", new { @class = "text-danger" })
+                </div>
             </div>
-
-            
-
-        </div>
-
+        }
+        
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -86,8 +103,6 @@
                 @Html.ValidationMessageFor(model => model.Keluhan, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        @Html.HiddenFor(model => model.CreatedAt)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
