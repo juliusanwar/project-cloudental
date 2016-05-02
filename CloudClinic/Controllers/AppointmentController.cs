@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
 using CloudClinic.Models.DataModel;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using System.Data.Entity.Core.Objects;
 
 namespace CloudClinic.Controllers
 {
@@ -40,26 +43,21 @@ namespace CloudClinic.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "TanggalJadwal");
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
-
             var model = new AppointmentViewModel();
             model.IsTimeShowed = false;
+            model.Date = DateTime.Now;
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult Check(string pasienId, string date, string phoneNumber, string keluhan)
+        public async Task<ActionResult> Check(string pasienId, string date, string phoneNumber, string keluhan)
         {
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "TanggalJadwal");
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
-
             DateTime choosenDate;
             var model = new AppointmentViewModel();
 
             if (!String.IsNullOrEmpty(pasienId))
             {
-                model.PasienId = pasienId;
+                model.PasienId = Convert.ToInt32(pasienId);
             }
 
             if (DateTime.TryParse(date, out choosenDate))
@@ -69,7 +67,8 @@ namespace CloudClinic.Controllers
 
                 using (var ctx = new ClinicContext())
                 {
-                    var availableJadwal = ctx.Jadwal.Where(x => x.TanggalJadwal.Date == choosenDate.Date).ToList();
+                    var availableJadwal = await ctx.Jadwal.Where(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(choosenDate))
+                                                    .ToListAsync();
 
                     if (availableJadwal.Any())
                     {
@@ -127,14 +126,41 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AppointmentViewModel model)
+        public async Task<ActionResult> Create(AppointmentViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            return View(model);
+            #region Sanity Check
+       
+		    if (model.PasienId == 0)
+            {
+                ModelState.AddModelError("PasienId", "Silahkan masukkan Pasien Id.");
+            }
+
+            if (String.IsNullOrEmpty(model.Session))
+            {
+                ModelState.AddModelError("Session", "Silahkan pilih sesi.");
+            }
+
+            if (String.IsNullOrEmpty(model.PhoneNumber))
+            {
+                ModelState.AddModelError("PhoneNumber", "Silahkan masukkan phone number.");
+            }
+
+            #endregion
+
+            var appointment = this.PopulateAppointmentDataModel(model);
+            
+            using (ClinicContext ctx = new ClinicContext())
+            {
+                ctx.Appointment.Add(appointment);
+                await ctx.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: Appointment/Edit/5
@@ -206,12 +232,33 @@ namespace CloudClinic.Controllers
             }
             base.Dispose(disposing);
         }
+
+        private Appointment PopulateAppointmentDataModel(AppointmentViewModel model)
+        {
+            var appointment = new Appointment();
+            appointment.PasienId = model.PasienId;
+            appointment.PhoneNumber = model.PhoneNumber;
+            appointment.Keluhan = model.Keluhan;
+            appointment.CreatedAt = DateTime.Now;
+
+            using (ClinicContext ctx = new ClinicContext())
+            {
+                var jadwal = ctx.Jadwal.FirstOrDefault(x => x.TanggalJadwal.Date == model.Date.Date
+                                            && x.Sesi.Equals(model.Session, StringComparison.OrdinalIgnoreCase));
+                appointment.JadwalId = jadwal.JadwalId;
+                appointment.Jadwal = jadwal;
+            }
+
+            return appointment;
+        }
     }
 
     public class AppointmentViewModel
     {
-        public string PasienId {get;set;}
+        [Required]
+        public int PasienId {get;set;}
 
+        [Required]
         public DateTime Date { get; set; }
 
         public bool IsTimeShowed { get; set; }
@@ -236,10 +283,13 @@ namespace CloudClinic.Controllers
 
         public bool IsTime10Available { get; set; }
 
+        [Required]
         public string Session { get; set; }
 
+        [Required]
         public string PhoneNumber { get; set; }
 
+        [Required]
         public string Keluhan { get; set; }
     }
 }

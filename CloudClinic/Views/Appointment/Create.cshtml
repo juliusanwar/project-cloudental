@@ -39,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PasienId, "PasienId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("PasienId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.TextBoxFor(x => x.PasienId, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.PasienId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,8 +49,11 @@
             <div class="col-md-10">
                 @Html.TextBoxFor(x => x.Date)
                 <input id="check" type="button" value="Check" />
+                @Html.ValidationMessageFor(x => x.Date, null, new { @class = "text-danger" })
             </div>
         </div>
+
+        <input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
 
         @if (Model.IsTimeShowed)
         {
@@ -83,6 +86,7 @@
                             <input @if (!Model.IsTime10Available) { <text> disabled</text> } type="radio" name="Session" id="time10" value="time10" /><label for="time10">18:00 - 18:30</label><br />
                         </fieldset>
                     </div>
+                    @Html.ValidationMessageFor(x => x.Session, null, new { @class = "text-danger" })
                 </div>
             </div>
         }
