@@ -40,32 +40,32 @@
             @Html.LabelFor(model => model.Sesi, "Sesi", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 1 : 08:00 - 08:30", new { id = "Sesi1" })
-                <label for"Sesi1">Sesi 1 : 08:00 - 08:30</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 2 : 08:30 - 09:00", new { id = "Sesi2" })
-                <label for"Sesi2">Sesi 2 : 08:30 - 09:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 3 : 09:00 - 09:30", new { id = "Sesi3" })
-                <label for"Sesi3">Sesi 3 : 09:00 - 09:30</label><br />
+                @Html.RadioButtonFor(m => m.Sesi, "time1", new { id = "time1" })
+                <label for"time1">Sesi 1 : 08:00 - 08:30</label>
+                @Html.RadioButtonFor(m => m.Sesi, "time2", new { id = "time2" })
+                <label for"time1">Sesi 2 : 08:30 - 09:00</label>
+                @Html.RadioButtonFor(m => m.Sesi, "time3", new { id = "time3" })
+                <label for"time3">Sesi 3 : 09:00 - 09:30</label><br />
                 
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 4 : 09:30 - 10:00", new { id = "Sesi4" })
-                <label for"Sesi4">Sesi 4 : 09:30 - 10:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 5 : 10:00 - 10:30", new { id = "Sesi5" })
-                <label for"Sesi5">Sesi 5 : 10:00 - 10:30</label><br /><br />
+                @Html.RadioButtonFor(m => m.Sesi, "time4", new { id = "time4" })
+                <label for"time4">Sesi 4 : 09:30 - 10:00</label>
+                @Html.RadioButtonFor(m => m.Sesi, "time5", new { id = "time5" })
+                <label for"time5">Sesi 5 : 10:00 - 10:30</label><br /><br />
 
                 <button class="col-md-5" disabled>Break Time (10:31 - 15.59)</button><br /><br /><br />
 
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 6 : 16:00 - 16:30", new { id = "Sesi6" })
-                <label for"Sesi6">Sesi 6 : 16:00 - 16:30</label>
+                @Html.RadioButtonFor(m => m.Sesi, "time6", new { id = "time6" })
+                <label for"time6">Sesi 6 : 16:00 - 16:30</label>
 
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 7 : 16:30 - 17:00", new { id = "Sesi7" })
-                <label for"Sesi7">Sesi 7 : 16:30 - 17:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 8 : 17:00 - 17:30", new { id = "Sesi8" })
-                <label for"Sesi8">Sesi 8 : 17:00 - 17:30</label><br />
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 9 : 17:30 - 18:00", new { id = "Sesi9" })
-                <label for"Sesi9">Sesi 9 : 17:30 - 18:00</label>
+                @Html.RadioButtonFor(m => m.Sesi, "time7", new { id = "time7" })
+                <label for"time7">Sesi 7 : 16:30 - 17:00</label>
+                @Html.RadioButtonFor(m => m.Sesi, "time8", new { id = "time8" })
+                <label for"time8">Sesi 8 : 17:00 - 17:30</label><br />
+                @Html.RadioButtonFor(m => m.Sesi, "time9", new { id = "time9" })
+                <label for"time9">Sesi 9 : 17:30 - 18:00</label>
 
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 10 : 18:00 - 18:30", new { id = "Sesi10" })
-                <label for"Sesi10">Sesi 10 : 18:00 - 18:30</label>
+                @Html.RadioButtonFor(m => m.Sesi, "time10", new { id = "time10" })
+                <label for"time10">Sesi 10 : 18:00 - 18:30</label>
 
                 @*@Html.EditorFor(model => model.Sesi, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Sesi, "", new { @class = "text-danger" })

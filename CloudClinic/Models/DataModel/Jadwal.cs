@@ -9,7 +9,7 @@ namespace CloudClinic.Models
 {
     //public enum Hari { Senin, Selasa, Rabu, Kamis, Jumat};
     public enum Ruang { Ruang1, Ruang2 };
-    public enum Sesi { Sesi1, Sesi2, Sesi3, Sesi4, Sesi5 };
+    public enum Sesi { time1, time2, time3, time4, time5, time6, time7, time8, time9, time10 };
 
     public class Jadwal
     {
