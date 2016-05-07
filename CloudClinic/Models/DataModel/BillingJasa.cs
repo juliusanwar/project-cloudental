@@ -14,8 +14,10 @@ namespace CloudClinic.Models.DataModel
         [Key]
         public int BilJasaId { get; set; }
 
-        [Required]
-        public int PasienId { get; set; }
+        //[Required]
+        //public int PasienId { get; set; }
+
+        //public int PenggunaId { get; set; }
 
         [Required]
         public int DiagnosisId { get; set; }
@@ -35,7 +37,7 @@ namespace CloudClinic.Models.DataModel
 
         public string namaUnik
         {
-            get { return "BJ" + PasienId.ToString("D4"); }
+            get { return "BJ" + BilJasaId.ToString("D4"); }
         }
 
         public BillingJasa()
@@ -46,7 +48,7 @@ namespace CloudClinic.Models.DataModel
         
         public virtual Tindakan Tindakan { get; set; }
         public virtual Diagnosis Diagnosis { get; set; }
-        public virtual Pasien Pasien { get; set; }
-        
+        //public virtual Pasien Pasien { get; set; }
+        //public virtual Pengguna Pengguna { get; set; }
     }
 }

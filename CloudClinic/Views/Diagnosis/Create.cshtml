@@ -30,6 +30,18 @@
             </div>
         </div>
 
+        @Html.HiddenFor(model => model.PenggunaId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PenggunaId, "Dokter :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.TextBox("text", User.Identity.Name, new { @readonly = "readonly"})
+                
+                @Html.ValidationMessageFor(model => model.TglDatang, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.Amnanesa,"Hasil Anamnesa :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

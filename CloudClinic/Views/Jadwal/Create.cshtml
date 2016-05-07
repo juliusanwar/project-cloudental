@@ -12,21 +12,21 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Jadwal</h4>
+        <h4>Halaman ini ditujukan untuk dokter menambahkan jadwal reservasi klinik</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.PenggunaId,"Dokter", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.EditorFor(model => model.Pengguna.UserName, new { htmlAttributes = new { @class = "form-control" } })*@
 
-                @Html.DropDownList("PenggunaId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.PenggunaId, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.JadwalId)
+        @Html.HiddenFor(model => model.PenggunaId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.PenggunaId,"Dokter :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-2">
+                <text class="form-control">@User.Identity.Name</text>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TanggalJadwal, "Tgl. Jadwal", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TanggalJadwal, "Tgl. Jadwal :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
                 @Html.Kendo().DatePickerFor(model => model.TanggalJadwal)
@@ -37,7 +37,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Sesi, "Sesi", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Sesi, "Sesi :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
                 @Html.RadioButtonFor(m => m.Sesi, "time1", new { id = "time1" })
@@ -73,7 +73,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Ruang, "Ruang", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Ruang, "Ruang :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
                 @Html.RadioButtonFor(m => m.Ruang, "Ruang 1", new { id = "Ruang1" })
@@ -90,6 +90,24 @@
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Tambah" class="btn btn-default" />
             </div>
+        </div>
+
+        <div class="form-group">
+            @if (ViewBag.Error == null)
+            {
+                <div class="alert alert-info">@ViewBag.Pesan</div>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    <ul>
+                        @foreach (var err in ViewBag.Error)
+                    {
+                            <li>@err</li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 }

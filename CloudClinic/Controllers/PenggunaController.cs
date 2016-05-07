@@ -101,8 +101,9 @@ namespace CloudClinic.Controllers
                     //insert new dokter
                     var newPengguna = new Pengguna
                     {
-                        PenggunaId = pengguna.PenggunaId,
+                        PenggunaId = pengguna.PenggunaId,                        
                         UserName = user.UserName,
+                        Aturan = pengguna.Aturan,
                         Nama = pengguna.Nama,
                         Kota = pengguna.Kota,
                         Alamat = pengguna.Alamat,

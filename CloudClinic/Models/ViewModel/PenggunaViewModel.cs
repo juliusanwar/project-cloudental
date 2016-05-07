@@ -27,6 +27,8 @@ namespace CloudClinic.Models.ViewModel
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         public string Repassword { get; set; }
 
+        public string Aturan { get; set; }
+
         [Required]
         public string Nama { get; set; }
         [Required]

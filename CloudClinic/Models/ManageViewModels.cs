@@ -6,8 +6,18 @@ using CloudClinic.Models.DataModel;
 
 namespace CloudClinic.Models
 {
+    public class PatientViewModel
+    {
+        public int PasienId { get; set; }        
+        public bool HasPassword { get; set; }
+    }
+
+
     public class IndexViewModel
     {
+        public int PenggunaId { get; set; }
+        public int PasienId { get; set; }
+        public IList<Pengguna> Pengguna { get; set; }
         public IList<Pasien> Patients { get; set; }
         public bool HasPassword { get; set; }
         public IList<UserLoginInfo> Logins { get; set; }

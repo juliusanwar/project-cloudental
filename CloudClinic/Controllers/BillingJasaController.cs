@@ -54,12 +54,24 @@ namespace CloudClinic.Controllers
 
         [Authorize(Roles = "Dokter")]
         // GET: BillingJasa/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id, int? price)
         {
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
-            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa");
+
+            var diag = from d in db.Diagnosis
+                       where d.DiagnosisId == id
+                       select d.DiagnosisId;
+
+           
+            var model = new BillingJasa
+            {                
+                DiagnosisId = diag.FirstOrDefault()
+            };
+
+
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
+            //ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa");
             ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "NamaTindakan");
-            return View();
+            return View(model);
         }
 
         // POST: BillingJasa/Create
@@ -67,22 +79,23 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BilJasaId,PasienId,DiagnosisId,Gigi,TindakanId,Harga,TglDatang")] BillingJasa billingJasa)
+        public ActionResult Create([Bind(Include = "BilJasaId,PasienId,DiagnosisId,Gigi,TindakanId,TglDatang")] BillingJasa billingJasa)
         {
             if (ModelState.IsValid)
             {
                 db.BillingJasa.Add(billingJasa);
                 db.SaveChanges();
                 //return RedirectToAction("Index");
-                ViewBag.Pesan = "Berhasil menambahkan pemeriksaan pasien!";
+                //ViewBag.Pesan = "Berhasil menambahkan pemeriksaan pasien!";
+                return RedirectToAction("Details", new { id = billingJasa.BilJasaId });
             }
             else
             {
-                ViewBag.Pesan = "Pemeriksaan pasien berhasil dibatalkan!";
+                ViewBag.Pesan = "Gagal menambahkan pemeriksaan pasien!";
             }
 
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", billingJasa.PasienId);
-            ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa", billingJasa.DiagnosisId);
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", billingJasa.PasienId);
+            //ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa", billingJasa.DiagnosisId);
             ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "NamaTindakan", billingJasa.TindakanId);
             return View(billingJasa);
         }

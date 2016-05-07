@@ -17,7 +17,10 @@
             ID
         </th>
         <th>
-            Username
+            Dokter
+        </th>
+        <th>
+            Pasien
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Diagnosis.Amnanesa)
@@ -43,7 +46,10 @@
             @Html.DisplayFor(modelItem => item.namaUnik)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Pasien.UserName)
+            @Html.DisplayFor(modelItem => item.Diagnosis.Pengguna.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Diagnosis.Pasien.UserName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Diagnosis.Amnanesa)
@@ -55,7 +61,7 @@
             @Html.DisplayFor(modelItem => item.Gigi)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Harga)
+            @Html.DisplayFor(modelItem => item.Tindakan.Harga)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.TglDatang)

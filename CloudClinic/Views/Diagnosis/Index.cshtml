@@ -51,8 +51,8 @@
             @Html.DisplayFor(modelItem => item.Amnanesa)
         </td>
         <td>
-                 @Html.ActionLink("Billing Jasa", "Create", "BillingJasa") |
-                 @Html.ActionLink("Billing Obat", "Create", "BillingObat") |
+            <a href="@Url.Action("Create", "BillingJasa", new { id = item.DiagnosisId})">Billing Jasa</a> |
+            <a href="@Url.Action("Create", "BillingObat", new { id = item.DiagnosisId})">Billing Obat</a> |
                  @Html.ActionLink("Details", "Details", new { id = item.DiagnosisId }) |
                  @if (User.IsInRole("Dokter"))
                     {

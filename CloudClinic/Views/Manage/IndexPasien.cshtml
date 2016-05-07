@@ -1,0 +1,37 @@
+﻿@model CloudClinic.Models.PatientViewModel
+@{
+    ViewBag.Title = "Manage";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>Change your account settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Password:</dt>
+        <dd>
+            [
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Change your password", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Create", "SetPassword")
+            }
+            ]
+        </dd>
+        <dt>Details User Login:</dt>
+        <dd>
+            [
+                <a href="@Url.Action("Details", "Pasien", new { id = Model.PasienId })">
+                    Check Details User Profile
+                </a>
+            ]
+        </dd>
+    </dl>
+
+
+</div>

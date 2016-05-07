@@ -102,9 +102,18 @@ namespace CloudClinic.Controllers
         // GET: Diagnosis/Create
         public ActionResult Create()
         {
+            var user = from p in db.Pengguna
+                       where p.UserName == User.Identity.Name
+                       select p.PenggunaId;
+
+            var model = new Diagnosis
+            {
+                PenggunaId = user.FirstOrDefault()
+            };
+
             //ViewBag.PasienId = GetUserName();
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
-            return View();
+            return View(model);
         }
 
         // POST: Diagnosis/Create
@@ -112,7 +121,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DiagnosisId,PasienId,TglDatang,Amnanesa")] Diagnosis diagnosis)
+        public ActionResult Create([Bind(Include = "DiagnosisId,PasienId,PenggunaId,TglDatang,Amnanesa")] Diagnosis diagnosis)
         {
             if (ModelState.IsValid)
             {
@@ -148,7 +157,7 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DiagnosisId,PasienId,TglDatang,Amnanesa")] Diagnosis diagnosis)
+        public ActionResult Edit([Bind(Include = "DiagnosisId,PasienId,PenggunaId,TglDatang,Amnanesa")] Diagnosis diagnosis)
         {
             if (ModelState.IsValid)
             {

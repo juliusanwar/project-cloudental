@@ -15,6 +15,7 @@ namespace CloudClinic.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ClinicContext db = new ClinicContext();
 
         public ManageController()
         {
@@ -50,6 +51,34 @@ namespace CloudClinic.Controllers
             }
         }
 
+        public ActionResult IndexPasien(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : "";
+
+            var userId = User.Identity.GetUserId();
+
+            //var user = from u in db.Pengguna
+            //           where u.UserName == User.Identity.Name
+            //           select u.PenggunaId;
+            var users = from u in db.Pasien
+                        where u.UserName == User.Identity.Name
+                        select u.PasienId;
+
+            var model = new PatientViewModel
+            {
+                PasienId = users.FirstOrDefault(),
+                //PasienId = users.First(),
+                HasPassword = HasPassword()
+                //PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                //TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+                //Logins = await UserManager.GetLoginsAsync(userId),
+                //BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+            };
+            return View(model);
+        }
+
         //
         // GET: /Manage/Index
         public async Task<ActionResult> Index(ManageMessageId? message)
@@ -64,8 +93,18 @@ namespace CloudClinic.Controllers
                 : "";
 
             var userId = User.Identity.GetUserId();
+
+            var user = from u in db.Pengguna
+                       where u.UserName == User.Identity.Name
+                       select u.PenggunaId;
+            //var users = from u in db.Pasien
+            //           where u.UserName == User.Identity.Name
+            //           select u.PasienId;
+
             var model = new IndexViewModel
             {
+                PenggunaId = user.First(),
+                //PasienId = users.First(),
                 HasPassword = HasPassword(),
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),

@@ -10,32 +10,48 @@
     <h4>BillingJasa</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.Diagnosis.Amnanesa)
+            Billing Jasa ID :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.namaUnik)
+        </dd>
+        <dt>
+            Diagnosis ID :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Diagnosis.namaUnik)
+        </dd>
+
+        <dt>
+            Dokter :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Diagnosis.Pengguna.Nama)
+        </dd>
+
+        <dt>
+            Pasien :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Diagnosis.Pasien.Nama)
+        </dd>
+
+        <dt>
+            Diagnosis Pasien :
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Diagnosis.Amnanesa)
         </dd>
-
+                     
         <dt>
-            @Html.DisplayNameFor(model => model.Tindakan.NamaTindakan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tindakan.NamaTindakan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PasienId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PasienId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gigi)
+            Posisi Gigi :
         </dt>
 
         <dd>
@@ -43,15 +59,23 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Harga)
+            Tindakan yang diberikan :
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Harga)
+            @Html.DisplayFor(model => model.Tindakan.NamaTindakan)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.TglDatang)
+            Harga :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tindakan.Harga)
+        </dd>
+
+        <dt>
+            Tgl. Pemeriksaan :
         </dt>
 
         <dd>

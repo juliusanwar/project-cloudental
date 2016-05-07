@@ -30,14 +30,6 @@ namespace CloudClinic.Models
             // Disable FOREIGN KEY Constraints
             //---------------------------------
 
-            //modelBuilder.Entity<PersonPhoto>()
-            //    .HasRequired(p => p.PhotoOf)
-            //    .WithOptional(p => p.Photo);
-
-            //modelBuilder.Entity<Jadwal>()
-            //    .HasRequired(a => a.Appointment)
-            //    .WithMany()
-            //    .HasForeignKey(a => a.AppointmentId);
 
             modelBuilder.Entity<Jadwal>() // Jadwal
                 .HasOptional<Appointment>(x => x.Appointment) // Punya optional Appointment (Nullable)
@@ -48,20 +40,7 @@ namespace CloudClinic.Models
                     .WithMany(w => w.Diagnosis)
                     .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<Diagnosis>()
-            //    .HasMany(t => t.Pasien)
-            //    .WithMany(t => t.Diagnosis);
-
-            //modelBuilder.Entity<Diagnosis>()
-            //    .HasRequired(c => c.Pasien)
-                
-            //    .WithMany()
-                //.WillCascadeOnDelete(false);
-
-            //modelBuilder.Entity<Pasien>()
-            //    .HasRequired(s => s.Patient)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(false);
+            
         }
     }
 }

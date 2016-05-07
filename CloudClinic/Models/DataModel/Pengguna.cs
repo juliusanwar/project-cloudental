@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudClinic.Models.DataModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,8 +39,8 @@ namespace CloudClinic.Models
             get { return "KGW" + PenggunaId.ToString("D4"); }
         }
 
-        //public virtual ICollection<Transaction> Transactions { get; set; }
-        //public virtual ICollection<RekamMedis> RekamMedisis { get; set; }
+        public virtual ICollection<Diagnosis> Diagnosis { get; set; }
+        //public virtual ICollection<BillingJasa> BillingJasa { get; set; }
         public virtual ICollection<Jadwal> Jadwal { get; set; }
     }
 }

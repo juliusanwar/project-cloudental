@@ -7,6 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using CloudClinic.Models;
+using CloudClinic.Models.ViewModel;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Threading.Tasks;
 
 namespace CloudClinic.Controllers
 {
@@ -38,40 +43,108 @@ namespace CloudClinic.Controllers
             return View(jadwal);
         }
 
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        private UserManager<ApplicationUser> manager;
+        public JadwalController()
+        {
+            manager = new UserManager<ApplicationUser>(
+                new UserStore<ApplicationUser>(db));
+        }
+
 
         // GET: Jadwal/Create
         //[Authorize(Roles = "Admin,Dokter")]
         public ActionResult Create()
         {
-            //Jadwal jadwal = new Jadwal();
-            ////appointment.Jadwal.TanggalJadwal = DateTime.Now;
-            ////appointment.Id = Guid.NewGuid();
-            ////appointment.CreatedAt = DateTime.Now;
-            //jadwal.Pengguna.UserName = User.Identity.Name;
-            //return View(jadwal);
+            var user = from p in db.Pengguna
+                       where p.UserName == User.Identity.Name
+                       select p.PenggunaId;
+
+            var model = new Jadwal
+            {
+                PenggunaId = user.First()
+            };
 
 
-            ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama");
-            return View();
+            //ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama");
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Jadwal jadwal)
+        {
+                if (ModelState.IsValid)
+                {
+                    //insert new pasien
+                    var newJadwal = new Jadwal
+                    {
+                        JadwalId = jadwal.JadwalId,
+                        PenggunaId = jadwal.PenggunaId,
+                        TanggalJadwal = jadwal.TanggalJadwal,
+                        Sesi = jadwal.Sesi,
+                        Ruang = jadwal.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+
+                    //RedirectToAction("Index");
+                    ViewBag.Pesan = "Berhasil menambahkan jadwal baru!";
+
+                }
+                else
+                {
+                    ViewBag.Error = "Jadwal tidak berhasil dimasukkan!!!";
+                }
+            ModelState.Clear();
+            return View(jadwal);
         }
 
         // POST: Jadwal/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "JadwalId,PenggunaId,TanggalJadwal,Ruang,Sesi")] Jadwal jadwal)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Jadwal.Add(jadwal);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama", jadwal.PenggunaId);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "JadwalId,PenggunaId,TanggalJadwal,Ruang,Sesi")] Jadwal jadwal)
+        //{
+            
+        //    if (ModelState.IsValid)
+        //    {
+        //        string currentUserId = User.Identity.Name;
+        //        var currentUser = from c in db.Pengguna
+        //                          where c.PenggunaId == User.Identity.GetUserId<int>()
+        //                          select c;
+        //        //jadwal.Pengguna.UserName = currentUser;
+        //        var newJadwal = new Jadwal
+        //        {
+        //            JadwalId = jadwal.JadwalId,
+        //            PenggunaId = jadwal.PenggunaId,
+        //            TanggalJadwal = jadwal.TanggalJadwal,
+        //            Sesi = jadwal.Sesi,
+        //            Ruang = jadwal.Ruang
+        //        };
 
-            return View(jadwal);
-        }
+
+        //        db.Jadwal.Add(jadwal);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    //ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama", jadwal.PenggunaId);
+
+        //    return View(jadwal);
+        //}
 
 
         // GET: Jadwal/Edit/5
@@ -89,6 +162,8 @@ namespace CloudClinic.Controllers
             }
             return View(jadwal);
         }
+
+        
 
         // POST: Jadwal/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

@@ -236,7 +236,6 @@
     <Compile Include="Controllers\SampleController.cs" />
     <Compile Include="Controllers\SearchWindowController.cs" />
     <Compile Include="Controllers\TindakanController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -257,6 +256,10 @@
     <Compile Include="Helpers\ShowCodeHelpers.cs" />
     <Compile Include="Helpers\TimePickerCfg.cs" />
     <Compile Include="Helpers\TimePickerTag.cs" />
+    <Compile Include="Migrations\201605041916035_Initial.cs" />
+    <Compile Include="Migrations\201605041916035_Initial.Designer.cs">
+      <DependentUpon>201605041916035_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppointmentViewModel.cs" />
@@ -284,12 +287,11 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PasienSearchModel.cs" />
     <Compile Include="Models\PenggunaService.cs" />
-    <Compile Include="Models\Repository\UserRepository.cs" />
-    <Compile Include="Models\Repository\IUserRepository.cs" />
     <Compile Include="Models\SaveInvoiceInXml.cs" />
     <Compile Include="Models\Searcher.cs" />
     <Compile Include="Models\SortHelper.cs" />
     <Compile Include="Models\ViewModel\BillingJasaViewModel.cs" />
+    <Compile Include="Models\ViewModel\JadwalViewModel.cs" />
     <Compile Include="Models\ViewModel\PasienViewModel.cs" />
     <Compile Include="Models\ViewModel\PenggunaViewModel.cs" />
     <Compile Include="Models\ViewModel\TransactionViewModel.cs" />
@@ -1875,6 +1877,7 @@
     <Content Include="Views\Appointment\Index.cshtml" />
     <Content Include="Views\Appointment\TestCreate.cshtml" />
     <Content Include="Views\Appointment\Create.cshtml" />
+    <Content Include="Views\Manage\IndexPasien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1890,6 +1893,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605041916035_Initial.resx">
+      <DependentUpon>201605041916035_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Report\BarangReport.rdlc" />
     <EmbeddedResource Include="Report\PembelianReport.rdlc" />
   </ItemGroup>

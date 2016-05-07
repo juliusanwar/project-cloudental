@@ -28,40 +28,40 @@ namespace CloudClinic.Migrations
             //    );
             //
 
-                context.Pasien.AddOrUpdate(
-                    p => p.PasienId,
-                    new Pasien()
-                    {
-                        PasienId = 5,
-                        UserName = "hendry",
-                        Nama = "Hendry Anwar",
-                        TglLhr = DateTime.Parse("26-11-1990"),
-                        Gender = "Pria",
-                        GolDarah = "O",
-                        Alamat = "Jalan Kopral Toya",
-                        Kota = "Prabumulih",
-                        Telp = "08981000277",
-                        TglRegistrasi = DateTime.Now,
-                        Email = "hendry.anwar@live.com",
-                        RiwayatSakit = "sakit gigi geraham"
-                    },
+            context.Pasien.AddOrUpdate(
+                p => p.PasienId,
+                new Pasien()
+                {
+                    PasienId = 5,
+                    UserName = "hendry",
+                    Nama = "Hendry Anwar",
+                    TglLhr = DateTime.Parse("26-11-1990"),
+                    Gender = "Pria",
+                    GolDarah = "O",
+                    Alamat = "Jalan Kopral Toya",
+                    Kota = "Prabumulih",
+                    Telp = "08981000277",
+                    TglRegistrasi = DateTime.Now,
+                    Email = "hendry.anwar@live.com",
+                    RiwayatSakit = "sakit gigi geraham"
+                },
 
-                    new Pasien()
-                    {
-                        PasienId = 6,
-                        UserName = "erick",
-                        Nama = "Erick Kurniawan",
-                        TglLhr = DateTime.Parse("12-11-1985"),
-                        Gender = "Pria",
-                        GolDarah = "AB",
-                        Alamat = "Jalan Mangkubumi",
-                        Kota = "Yogyakarta",
-                        Telp = "08981000277",
-                        TglRegistrasi = DateTime.Now,
-                        Email = "erickkurniawan@live.com",
-                        RiwayatSakit = "sakit gigi susu"
-                    }
-                );
+                new Pasien()
+                {
+                    PasienId = 6,
+                    UserName = "erick",
+                    Nama = "Erick Kurniawan",
+                    TglLhr = DateTime.Parse("12-11-1985"),
+                    Gender = "Pria",
+                    GolDarah = "AB",
+                    Alamat = "Jalan Mangkubumi",
+                    Kota = "Yogyakarta",
+                    Telp = "08981000277",
+                    TglRegistrasi = DateTime.Now,
+                    Email = "erickkurniawan@live.com",
+                    RiwayatSakit = "sakit gigi susu"
+                }
+            );
 
             context.Pengguna.AddOrUpdate(
                     d => d.PenggunaId,
