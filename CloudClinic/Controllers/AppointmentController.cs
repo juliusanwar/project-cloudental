@@ -14,6 +14,7 @@ using System.Data.Entity.Core.Objects;
 
 namespace CloudClinic.Controllers
 {
+    [Authorize]
     public class AppointmentController : Controller
     {
         private ClinicContext db = new ClinicContext();

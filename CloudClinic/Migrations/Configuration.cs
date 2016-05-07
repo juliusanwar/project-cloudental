@@ -1,5 +1,7 @@
 namespace CloudClinic.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
     using System;
     using System.Data.Entity;
@@ -28,6 +30,35 @@ namespace CloudClinic.Migrations
             //    );
             //
 
+            // Adding default role.
+            var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+            var roleManager = new ApplicationRoleManager(roleStore);
+            var adminRole = new IdentityRole()
+            {
+                Name = "Administrator"
+            };
+
+            roleManager.CreateAsync(adminRole);
+
+            var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+            var userManager = new ApplicationUserManager(userStore);
+            var adminUser = new ApplicationUser()
+            {
+                Email = "admin.admin.com",
+                EmailConfirmed = true,
+                UserName = "admin"
+            };
+
+            userManager.Create(adminUser, "password");
+
+            //adminUser.Roles.Add(new IdentityUserRole()
+            //    {
+            //        RoleId = adminRole.Id,
+            //        UserId = adminUser.Id
+            //    });
+
+            //userManager.Update(adminUser);
+
             context.Pasien.AddOrUpdate(
                 p => p.PasienId,
                 new Pasien()
@@ -35,7 +66,7 @@ namespace CloudClinic.Migrations
                     PasienId = 5,
                     UserName = "hendry",
                     Nama = "Hendry Anwar",
-                    TglLhr = DateTime.Parse("26-11-1990"),
+                    TglLhr = new DateTime(1990, 11, 26),
                     Gender = "Pria",
                     GolDarah = "O",
                     Alamat = "Jalan Kopral Toya",
@@ -51,7 +82,7 @@ namespace CloudClinic.Migrations
                     PasienId = 6,
                     UserName = "erick",
                     Nama = "Erick Kurniawan",
-                    TglLhr = DateTime.Parse("12-11-1985"),
+                    TglLhr = new DateTime(2000, 11, 20),
                     Gender = "Pria",
                     GolDarah = "AB",
                     Alamat = "Jalan Mangkubumi",
@@ -94,7 +125,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 11,
                         PenggunaId = 4,
-                        TanggalJadwal = DateTime.Parse("05-05-2016"),
+                        TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 1",
                         Sesi = "Sesi 1 : 08:00 - 08:30"
                     },
@@ -103,7 +134,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 12,
                         PenggunaId = 4,
-                        TanggalJadwal = DateTime.Parse("05-05-2016"),
+                        TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 1",
                         Sesi = "Sesi 2 : 08:30 - 09:00"
                     },
@@ -112,7 +143,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 13,
                         PenggunaId = 4,
-                        TanggalJadwal = DateTime.Parse("05-05-2016"),
+                        TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 1",
                         Sesi = "Sesi 3 : 09:00 - 09:30"
                     },
@@ -121,7 +152,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 14,
                         PenggunaId = 5,
-                        TanggalJadwal = DateTime.Parse("06-05-2016"),
+                        TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 2",
                         Sesi = "Sesi 1 : 08:00 - 08:30"
                     },
@@ -130,12 +161,13 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 15,
                         PenggunaId = 5,
-                        TanggalJadwal = DateTime.Parse("06-05-2016"),
+                        TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 2",
                         Sesi = "Sesi 2 : 08:30 - 09:00"
                     }
                 );
 
+            context.SaveChanges();
         }
     }
 }
