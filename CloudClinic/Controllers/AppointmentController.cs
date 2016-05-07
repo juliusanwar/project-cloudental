@@ -51,15 +51,10 @@ namespace CloudClinic.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Check(string pasienId, string date, string phoneNumber, string keluhan)
+        public async Task<ActionResult> Check(string date, string phoneNumber, string keluhan)
         {
             DateTime choosenDate;
             var model = new AppointmentViewModel();
-
-            if (!String.IsNullOrEmpty(pasienId))
-            {
-                model.PasienId = Convert.ToInt32(pasienId);
-            }
 
             if (DateTime.TryParse(date, out choosenDate))
             {
@@ -135,20 +130,17 @@ namespace CloudClinic.Controllers
             }
 
             #region Sanity Check
-       
-		    if (model.PasienId == 0)
-            {
-                ModelState.AddModelError("PasienId", "Silahkan masukkan Pasien Id.");
-            }
 
             if (String.IsNullOrEmpty(model.Session))
             {
                 ModelState.AddModelError("Session", "Silahkan pilih sesi.");
+                return View(model);
             }
 
             if (String.IsNullOrEmpty(model.PhoneNumber))
             {
                 ModelState.AddModelError("PhoneNumber", "Silahkan masukkan phone number.");
+                return View(model);
             }
 
             #endregion
@@ -157,8 +149,14 @@ namespace CloudClinic.Controllers
             
             using (ClinicContext ctx = new ClinicContext())
             {
-                ctx.Appointment.Add(appointment);
-                await ctx.SaveChangesAsync();
+                var pasien = ctx.Pasien.FirstOrDefault(x => x.UserName.Equals(this.User.Identity.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (pasien != null)
+                {
+                    appointment.PasienId = pasien.PasienId;
+                    ctx.Appointment.Add(appointment);
+                    await ctx.SaveChangesAsync();
+                }
             }
 
             return RedirectToAction("Index");
@@ -244,7 +242,7 @@ namespace CloudClinic.Controllers
 
             using (ClinicContext ctx = new ClinicContext())
             {
-                var jadwal = ctx.Jadwal.FirstOrDefault(x => x.TanggalJadwal.Date == model.Date.Date
+                var jadwal = ctx.Jadwal.FirstOrDefault(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(model.Date)
                                             && x.Sesi.Equals(model.Session, StringComparison.OrdinalIgnoreCase));
                 appointment.JadwalId = jadwal.JadwalId;
                 appointment.Jadwal = jadwal;

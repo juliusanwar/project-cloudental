@@ -35,13 +35,14 @@ namespace CloudClinic.Migrations
             var roleManager = new ApplicationRoleManager(roleStore);
             var adminRole = new IdentityRole()
             {
-                Name = "Administrator"
+                Name = "Admin"
             };
 
             roleManager.CreateAsync(adminRole);
 
             var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
             var userManager = new ApplicationUserManager(userStore);
+            
             var adminUser = new ApplicationUser()
             {
                 Email = "admin.admin.com",
@@ -49,15 +50,29 @@ namespace CloudClinic.Migrations
                 UserName = "admin"
             };
 
+            var hendryUser = new ApplicationUser()
+            {
+                Email = "hendry@hendry.com",
+                EmailConfirmed = true,
+                UserName = "hendry"
+            };
+
             userManager.Create(adminUser, "password");
+            userManager.Create(hendryUser, "password");
 
-            //adminUser.Roles.Add(new IdentityUserRole()
-            //    {
-            //        RoleId = adminRole.Id,
-            //        UserId = adminUser.Id
-            //    });
+            adminUser.Roles.Add(new IdentityUserRole()
+                {
+                    RoleId = adminRole.Id,
+                    UserId = adminUser.Id
+                });
 
-            //userManager.Update(adminUser);
+            hendryUser.Roles.Add(new IdentityUserRole()
+                {
+                    RoleId = adminRole.Id,
+                    UserId = hendryUser.Id
+                });
+
+            userManager.Update(adminUser);
 
             context.Pasien.AddOrUpdate(
                 p => p.PasienId,
@@ -127,7 +142,7 @@ namespace CloudClinic.Migrations
                         PenggunaId = 4,
                         TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 1",
-                        Sesi = "Sesi 1 : 08:00 - 08:30"
+                        Sesi = "Time1",
                     },
 
                     new Jadwal()
@@ -136,7 +151,7 @@ namespace CloudClinic.Migrations
                         PenggunaId = 4,
                         TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 1",
-                        Sesi = "Sesi 2 : 08:30 - 09:00"
+                        Sesi = "Time2"
                     },
 
                     new Jadwal()
@@ -145,7 +160,7 @@ namespace CloudClinic.Migrations
                         PenggunaId = 4,
                         TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 1",
-                        Sesi = "Sesi 3 : 09:00 - 09:30"
+                        Sesi = "Time3"
                     },
 
                     new Jadwal()
@@ -154,7 +169,7 @@ namespace CloudClinic.Migrations
                         PenggunaId = 5,
                         TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 2",
-                        Sesi = "Sesi 1 : 08:00 - 08:30"
+                        Sesi = "Time5"
                     },
 
                     new Jadwal()
@@ -163,7 +178,7 @@ namespace CloudClinic.Migrations
                         PenggunaId = 5,
                         TanggalJadwal = new DateTime(2016, 05, 05),
                         Ruang = "Ruang 2",
-                        Sesi = "Sesi 2 : 08:30 - 09:00"
+                        Sesi = "Time7"
                     }
                 );
 
