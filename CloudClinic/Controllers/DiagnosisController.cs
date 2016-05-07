@@ -27,17 +27,17 @@ namespace CloudClinic.Controllers
         //    return Json(returner, JsonRequestBehavior.AllowGet);
         //}
 
-        public JsonResult GetPasien()
-        {
-            return Json(db.Pasien, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GetPasien()
+        //{
+        //    return Json(db.Pasien, JsonRequestBehavior.AllowGet);
+        //}
 
         //public MultiSelectList GetUserName()
         //{
         //    return new MultiSelectList(db.Pasien.ToList(), "PasienId", "UserName");
         //}
 
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: Diagnosis
         public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
         {
@@ -120,6 +120,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Dokter")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "DiagnosisId,PasienId,PenggunaId,TglDatang,Amnanesa")] Diagnosis diagnosis)
         {
@@ -156,6 +157,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Dokter")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "DiagnosisId,PasienId,PenggunaId,TglDatang,Amnanesa")] Diagnosis diagnosis)
         {
@@ -187,6 +189,7 @@ namespace CloudClinic.Controllers
 
         // POST: Diagnosis/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Dokter")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {

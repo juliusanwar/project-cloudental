@@ -5,12 +5,12 @@
 }
 
 <h2>Daftar Pemeriksaan</h2>
-@if (User.IsInRole("Dokter"))
+@*@if (User.IsInRole("Dokter"))
 {
     <p>
         @Html.ActionLink("Tambah Baru", "Create")
     </p>
-}
+}*@
 <table class="table">
     <tr>
         <th>
@@ -69,7 +69,7 @@
 @if (User.IsInRole("Dokter"))
 {
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.BilJasaId }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.BilJasaId }) |*@
             @Html.ActionLink("Details", "Details", new { id=item.BilJasaId }) |
             @Html.ActionLink("Delete", "DeleteJasa", new { id = item.BilJasaId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })

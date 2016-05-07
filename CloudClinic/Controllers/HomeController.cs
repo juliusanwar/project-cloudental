@@ -31,19 +31,5 @@ namespace CloudClinic.Controllers
 
             return View();
         }
-
-        
-
-        //public JsonResult Default(LookupFilter filter)
-        //{
-        //    return GetData(new PeopleLookup(), filter);
-        //}
-
-        //private JsonResult GetData(AbstractLookup lookup, LookupFilter filter)
-        //{
-        //    lookup.CurrentFilter = filter;
-
-        //    return Json(lookup.GetData());
-        //}
     }
 }

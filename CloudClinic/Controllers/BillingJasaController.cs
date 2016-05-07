@@ -39,18 +39,18 @@ namespace CloudClinic.Controllers
             return View(billingJasa);
         }
 
-        public JsonResult GetHarga(int TindakanId)
-        {
-            var harga = from r in db.Tindakan
-                        where r.TindakanId == TindakanId
-                        select new
-                        {
-                            id = r.TindakanId,
-                            label = r.Harga,
-                            value = r.Harga
-                        };
-            return Json(harga.Single(), JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GetHarga(int TindakanId)
+        //{
+        //    var harga = from r in db.Tindakan
+        //                where r.TindakanId == TindakanId
+        //                select new
+        //                {
+        //                    id = r.TindakanId,
+        //                    label = r.Harga,
+        //                    value = r.Harga
+        //                };
+        //    return Json(harga.Single(), JsonRequestBehavior.AllowGet);
+        //}
 
         [Authorize(Roles = "Dokter")]
         // GET: BillingJasa/Create
@@ -78,6 +78,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Dokter")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BilJasaId,PasienId,DiagnosisId,Gigi,TindakanId,TglDatang")] BillingJasa billingJasa)
         {
@@ -122,6 +123,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Dokter")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BilJasaId,PasienId,DiagnosisId,Gigi,TindakanId,Harga,TglDatang")] BillingJasa billingJasa)
         {
@@ -164,6 +166,7 @@ namespace CloudClinic.Controllers
 
         // POST: Barang/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Dokter")]
         public ActionResult DeleteConfirmed(int id)
         {
             try

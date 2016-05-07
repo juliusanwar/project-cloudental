@@ -232,9 +232,6 @@
     <Compile Include="Controllers\PasienController.cs" />
     <Compile Include="Controllers\PembelianController.cs" />
     <Compile Include="Controllers\PenggunaController.cs" />
-    <Compile Include="Controllers\ReservationController.cs" />
-    <Compile Include="Controllers\SampleController.cs" />
-    <Compile Include="Controllers\SearchWindowController.cs" />
     <Compile Include="Controllers\TindakanController.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
@@ -298,42 +295,6 @@
     <Compile Include="Models\ViewModel\MessageBoxViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\Display\FruitDisplay.cs" />
-    <Compile Include="ViewModels\GridArrayRow.cs" />
-    <Compile Include="ViewModels\Input\AjaxCheckboxListDemoInput.cs" />
-    <Compile Include="ViewModels\Input\AjaxDropdownDemoInput.cs" />
-    <Compile Include="ViewModels\Input\ApiParamsInput.cs" />
-    <Compile Include="ViewModels\Input\AttributesDemoInput.cs" />
-    <Compile Include="ViewModels\Input\AutocompleteDemoInput.cs" />
-    <Compile Include="ViewModels\Input\DatePickerDemoInput.cs" />
-    <Compile Include="ViewModels\Input\DeleteConfirmInput.cs" />
-    <Compile Include="ViewModels\Input\DinnerInput.cs" />
-    <Compile Include="ViewModels\Input\FormDemoInput.cs" />
-    <Compile Include="ViewModels\Input\GridDemoCfgInput.cs" />
-    <Compile Include="ViewModels\Input\GridDemoGroupingCfgInput.cs" />
-    <Compile Include="ViewModels\Input\GridDemoSortingCfgInput.cs" />
-    <Compile Include="ViewModels\Input\GridHideColumnsDemoInput.cs" />
-    <Compile Include="ViewModels\Input\ListBindingInput.cs" />
-    <Compile Include="ViewModels\Input\LookupCrudDemoInput.cs" />
-    <Compile Include="ViewModels\Input\LookupDemoCfgInput.cs" />
-    <Compile Include="ViewModels\Input\LookupDemoInput.cs" />
-    <Compile Include="ViewModels\Input\MealInput.cs" />
-    <Compile Include="ViewModels\Input\MeetingInput.cs" />
-    <Compile Include="ViewModels\Input\MultiLookupDemoCfgInput.cs" />
-    <Compile Include="ViewModels\Input\MultiLookupDemoInput.cs" />
-    <Compile Include="ViewModels\Input\PopupConfirmInput.cs" />
-    <Compile Include="ViewModels\Input\RestaurantAddressInput.cs" />
-    <Compile Include="ViewModels\Input\RestaurantInput.cs" />
-    <Compile Include="ViewModels\Input\SayInput.cs" />
-    <Compile Include="ViewModels\Input\Settings\SettingsInput.cs" />
-    <Compile Include="ViewModels\Input\Settings\SettingsVal.cs" />
-    <Compile Include="ViewModels\Input\TreeNodeInput.cs" />
-    <Compile Include="ViewModels\Input\UnobstrusiveInput.cs" />
-    <Compile Include="ViewModels\Input\Wizard\Step1Model.cs" />
-    <Compile Include="ViewModels\Input\Wizard\Step2Model.cs" />
-    <Compile Include="ViewModels\Input\Wizard\WizardConfirmModel.cs" />
-    <Compile Include="ViewModels\Input\Wizard\WizardFinishModel.cs" />
-    <Compile Include="ViewModels\Input\Wizard\WizardModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Choosen\chosen-sprite%402x.png" />
@@ -1785,15 +1746,6 @@
     <Content Include="Views\Pengguna\Index.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="Views\Reservation\Create.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Reservation\Edit.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Reservation\Index.cshtml">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
@@ -1866,14 +1818,11 @@
     <Content Include="Views\Diagnosis\Index.cshtml" />
     <Content Include="Views\BillingJasa\Nota.cshtml" />
     <Content Include="Views\BillingJasa\UserDetails.cshtml" />
-    <Content Include="Views\Reservation\Check.cshtml" />
     <Content Include="Views\BillingObat\Create.cshtml" />
     <Content Include="Views\BillingObat\Details.cshtml" />
     <Content Include="Views\BillingObat\Edit.cshtml" />
     <Content Include="Views\BillingObat\Index.cshtml" />
-    <Content Include="Views\Reservation\IndexContet.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
-    <Content Include="Views\SearchWindow\SearchWindow.cshtml" />
     <Content Include="Views\Appointment\Index.cshtml" />
     <Content Include="Views\Appointment\TestCreate.cshtml" />
     <Content Include="Views\Appointment\Create.cshtml" />
@@ -1881,7 +1830,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Sample\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

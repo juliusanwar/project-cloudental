@@ -90,6 +90,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "JenisTindakanId,NamaTindakan")] JenisTindakan jenisTindakan)
         {
@@ -124,6 +125,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "JenisTindakanId,NamaTindakan")] JenisTindakan jenisTindakan)
         {
@@ -149,6 +151,7 @@ namespace CloudClinic.Controllers
 
         // POST: JenisTindakans/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             try

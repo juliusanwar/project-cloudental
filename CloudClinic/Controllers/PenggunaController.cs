@@ -24,7 +24,7 @@ namespace CloudClinic.Controllers
         private ClinicContext db = new ClinicContext();
 
 
-        //[Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Pengguna
         public ActionResult Index(string Search_Data)
         {
@@ -49,7 +49,7 @@ namespace CloudClinic.Controllers
             return File(fileContents, contentType, fileName);
         }
 
-        //[Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: Pengguna/Details/5
         public ActionResult Details(int? id)
         {
@@ -65,6 +65,7 @@ namespace CloudClinic.Controllers
             return View(pengguna);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -88,6 +89,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(PenggunaViewModel pengguna)
         {
@@ -142,6 +144,7 @@ namespace CloudClinic.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PenggunaId,UserName,Aturan,Nama,Alamat,Kota,Telp,Email")] Pengguna pengguna)
         {

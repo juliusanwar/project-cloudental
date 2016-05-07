@@ -19,9 +19,9 @@ namespace CloudClinic.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
-        {
-        }
+        //public AccountController()
+        //{
+        //}
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -137,7 +137,7 @@ namespace CloudClinic.Controllers
 
         //
         // GET: /Account/Register
-        //[Authorize(Roles="Admin")]
+        [Authorize(Roles="Admin")]
         public ActionResult Register()
         {
             return View();
@@ -146,7 +146,7 @@ namespace CloudClinic.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -191,7 +191,7 @@ namespace CloudClinic.Controllers
 
         //
         // GET: /Account/ForgotPassword
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult ForgotPassword()
         {
             return View();
@@ -200,7 +200,7 @@ namespace CloudClinic.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {

@@ -1,6 +1,9 @@
 namespace CloudClinic.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using Models;
+    using Models.ViewModel;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -12,6 +15,30 @@ namespace CloudClinic.Migrations
         {
             AutomaticMigrationsEnabled = true;
         }
+
+
+        //protected override void Seed(CloudClinic.Models.ApplicationDbContext context)
+        //{
+        //    if (!context.Roles.Any(r => r.Name == "AppAdmin"))
+        //    {
+        //        var store = new RoleStore<IdentityRole>(context);
+        //        var manager = new RoleManager<IdentityRole>(store);
+        //        var role = new IdentityRole { Name = "AppAdmin" };
+
+        //        manager.Create(role);
+        //    }
+
+        //    if (!context.Users.Any(u => u.UserName == "founder"))
+        //    {
+        //        var store = new UserStore<ApplicationUser>(context);
+        //        var manager = new UserManager<ApplicationUser>(store);
+        //        var user = new ApplicationUser { UserName = "founder" };
+
+        //        manager.Create(user, "ChangeItAsap!");
+        //        manager.AddToRole(user.Id, "AppAdmin");
+        //    }
+        //}
+
 
         protected override void Seed(CloudClinic.Models.ClinicContext context)
         {
@@ -27,6 +54,8 @@ namespace CloudClinic.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            
+
 
             context.Pasien.AddOrUpdate(
                 p => p.PasienId,
@@ -34,6 +63,7 @@ namespace CloudClinic.Migrations
                 {
                     PasienId = 5,
                     UserName = "hendry",
+                    
                     Nama = "Hendry Anwar",
                     TglLhr = DateTime.Parse("26-11-1990"),
                     Gender = "Pria",
@@ -94,7 +124,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 11,
                         PenggunaId = 4,
-                        TanggalJadwal = DateTime.Parse("05-05-2016"),
+                        TanggalJadwal = DateTime.Parse("10-05-2016"),
                         Ruang = "Ruang 1",
                         Sesi = "Sesi 1 : 08:00 - 08:30"
                     },
@@ -103,7 +133,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 12,
                         PenggunaId = 4,
-                        TanggalJadwal = DateTime.Parse("05-05-2016"),
+                        TanggalJadwal = DateTime.Parse("10-05-2016"),
                         Ruang = "Ruang 1",
                         Sesi = "Sesi 2 : 08:30 - 09:00"
                     },
@@ -121,7 +151,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 14,
                         PenggunaId = 5,
-                        TanggalJadwal = DateTime.Parse("06-05-2016"),
+                        TanggalJadwal = DateTime.Parse("11-05-2016"),
                         Ruang = "Ruang 2",
                         Sesi = "Sesi 1 : 08:00 - 08:30"
                     },
@@ -130,7 +160,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 15,
                         PenggunaId = 5,
-                        TanggalJadwal = DateTime.Parse("06-05-2016"),
+                        TanggalJadwal = DateTime.Parse("11-05-2016"),
                         Ruang = "Ruang 2",
                         Sesi = "Sesi 2 : 08:30 - 09:00"
                     }

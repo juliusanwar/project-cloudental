@@ -20,14 +20,14 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
-        //[Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Jadwal
         public ActionResult Index()
         {
             return View(db.Jadwal.ToList());
         }
 
-        //[Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: Jadwal/Details/5
         public ActionResult Details(int? id)
         {
@@ -64,7 +64,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Jadwal/Create
-        //[Authorize(Roles = "Admin,Dokter")]
+        [Authorize(Roles = "Dokter")]
         public ActionResult Create()
         {
             var user = from p in db.Pengguna
@@ -82,6 +82,7 @@ namespace CloudClinic.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Jadwal jadwal)
         {
@@ -119,7 +120,7 @@ namespace CloudClinic.Controllers
         //[ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "JadwalId,PenggunaId,TanggalJadwal,Ruang,Sesi")] Jadwal jadwal)
         //{
-            
+
         //    if (ModelState.IsValid)
         //    {
         //        string currentUserId = User.Identity.Name;
@@ -149,6 +150,8 @@ namespace CloudClinic.Controllers
 
         // GET: Jadwal/Edit/5
         //[Authorize(Roles = "Admin,Dokter")]
+
+        [Authorize(Roles = "Dokter")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -169,6 +172,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Dokter")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "JadwalId,PenggunaId,TanggalJadwal,Ruang,Sesi")] Jadwal jadwal)
         {
@@ -183,7 +187,7 @@ namespace CloudClinic.Controllers
 
 
         // GET: Jadwal/Delete/5
-        //[Authorize(Roles = "Admin,Dokter")]
+        [Authorize(Roles = "Dokter")]
         public ActionResult Delete(int? id)
         {
             Jadwal jadwal = db.Jadwal.Find(id);

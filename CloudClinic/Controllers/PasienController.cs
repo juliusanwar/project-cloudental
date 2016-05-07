@@ -23,7 +23,7 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
-        [Authorize(Roles = "Admin,Dokter,Pasien")]
+        [Authorize(Roles = "Admin,Dokter")]
         // GET: Pasien
         public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
         {
@@ -117,6 +117,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(PasienViewModel pasien)
         {
@@ -181,6 +182,7 @@ namespace CloudClinic.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "PasienId,UserName,Nama,TglLhr,Gender,GolDarah,Alamat,Kota,Telp,TglRegistrasi,RiwayatSakit,Email")] Pasien pasien)
         {
@@ -205,6 +207,7 @@ namespace CloudClinic.Controllers
 
         // POST: Pasien/Delete/5
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             try

@@ -51,6 +51,8 @@ namespace CloudClinic.Controllers
             }
         }
 
+
+        [Authorize(Roles = "Pasien")]
         public ActionResult IndexPasien(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -81,6 +83,7 @@ namespace CloudClinic.Controllers
 
         //
         // GET: /Manage/Index
+        [Authorize(Roles = "Admin,Dokter")]
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
@@ -260,6 +263,7 @@ namespace CloudClinic.Controllers
         //
         // POST: /Manage/ChangePassword
         [HttpPost]
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
