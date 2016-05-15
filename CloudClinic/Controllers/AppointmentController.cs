@@ -11,20 +11,37 @@ using CloudClinic.Models.DataModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using System.Data.Entity.Core.Objects;
+using System.Net.Mail;
+using System.Web.Helpers;
+using System.Net.Http;
+using System.Globalization;
+using System.Threading;
 
 namespace CloudClinic.Controllers
 {
+    
     public class AppointmentController : Controller
     {
         private ClinicContext db = new ClinicContext();
 
+        [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Appointment
         public ActionResult Index()
         {
+            
             var appointment = db.Appointment.Include(a => a.Jadwal).Include(a => a.Pasien);
             return View(appointment.ToList());
         }
 
+        public ActionResult Sent()
+        {
+
+            return View();
+        }
+
+
+
+        [Authorize(Roles = "Pasien")]
         // GET: Appointment/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,6 +57,7 @@ namespace CloudClinic.Controllers
             return View(appointment);
         }
 
+        [Authorize(Roles = "Pasien")]
         [HttpGet]
         public ActionResult Create()
         {
@@ -49,16 +67,13 @@ namespace CloudClinic.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Pasien")]
         [HttpGet]
-        public async Task<ActionResult> Check(string pasienId, string date, string phoneNumber, string keluhan)
+        public async Task<ActionResult> Check(string date, string phoneNumber, string keluhan)
         {
             DateTime choosenDate;
+            
             var model = new AppointmentViewModel();
-
-            if (!String.IsNullOrEmpty(pasienId))
-            {
-                model.PasienId = Convert.ToInt32(pasienId);
-            }
 
             if (DateTime.TryParse(date, out choosenDate))
             {
@@ -66,9 +81,12 @@ namespace CloudClinic.Controllers
                 model.IsTimeShowed = true;
 
                 using (var ctx = new ClinicContext())
-                {
-                    var availableJadwal = await ctx.Jadwal.Where(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(choosenDate))
-                                                    .ToListAsync();
+                {                   
+                    var availableJadwal = await ctx.Jadwal.Where(
+                        x => DbFunctions.TruncateTime
+                        (x.TanggalJadwal) == DbFunctions.TruncateTime(choosenDate)
+                        && x.Appointment == null)
+                        .ToListAsync();
 
                     if (availableJadwal.Any())
                     {
@@ -118,6 +136,7 @@ namespace CloudClinic.Controllers
             model.Keluhan = keluhan;
 
             ModelState.Remove("Date");
+            
             return View("Create", model);
         }
 
@@ -134,20 +153,38 @@ namespace CloudClinic.Controllers
             }
 
             #region Sanity Check
-       
-		    if (model.PasienId == 0)
-            {
-                ModelState.AddModelError("PasienId", "Silahkan masukkan Pasien Id.");
-            }
+
+            //if (model.Date.Date < DateTime.Today)
+            //{
+            //    ModelState.AddModelError("Date", "Silahkan pilih tanggal hari ini atau besok.");
+            //    return View(model);
+            //}
+
+            //if (model.Date.Date > DateTime.Today.AddDays(7))
+            //{
+            //    ModelState.AddModelError("Date", "Pilih tanggal untuk jadwal satu minggu dari sekarang.");
+            //    return View(model);
+            //}
 
             if (String.IsNullOrEmpty(model.Session))
             {
                 ModelState.AddModelError("Session", "Silahkan pilih sesi.");
+                return View(model);
             }
 
             if (String.IsNullOrEmpty(model.PhoneNumber))
             {
                 ModelState.AddModelError("PhoneNumber", "Silahkan masukkan phone number.");
+                return View(model);
+
+
+
+            }
+
+            if (String.IsNullOrEmpty(model.Email))
+            {
+                ModelState.AddModelError("Email", "Silahkan masukkan alamat email anda.");
+                return View(model);
             }
 
             #endregion
@@ -156,11 +193,52 @@ namespace CloudClinic.Controllers
             
             using (ClinicContext ctx = new ClinicContext())
             {
-                ctx.Appointment.Add(appointment);
-                await ctx.SaveChangesAsync();
+                
+
+                var pasien = ctx.Pasien.FirstOrDefault(x => x.UserName.Equals(this.User.Identity.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (pasien != null)
+                {
+                    
+                    appointment.PasienId = pasien.PasienId;
+                    ctx.Appointment.Add(appointment);
+                    await ctx.SaveChangesAsync();
+                        
+                    //return RedirectToAction("Sent");
+                    
+                }
             }
 
-            return RedirectToAction("Index");
+            var emailAdd = from e in db.Pasien
+                           where e.UserName == User.Identity.Name
+                           select e.Email;
+
+            //Configuring webMail class to send emails  
+            //gmail smtp server  
+            WebMail.SmtpServer = "smtp.gmail.com";
+            //gmail port to send emails  
+            WebMail.SmtpPort = 587;
+            WebMail.SmtpUseDefaultCredentials = true;
+            //sending emails with secure protocol  
+            WebMail.EnableSsl = true;
+            //EmailId used to send emails from application  
+            WebMail.UserName = "rovski77@gmail.com";
+            WebMail.Password = "aqkerenz23";
+
+            //Sender email address.  
+            WebMail.From = "rovski77@gmail.com";
+
+            //Send email  
+            WebMail.Send(
+                to: model.Email, 
+                subject: "Booking Appointment at Cloudental with ID number : " + model.PasienId, 
+                body: "Halo Pelanggan Setia Kami di Cloudental. Anda baru saja melakukan reservasi klinik kami pada tanggal :" + model.Date
+                + ", dan sesi : " + model.Session,
+                isBodyHtml: true);
+            ViewBag.Status = "Email Sent Successfully.";
+        
+
+            return RedirectToAction("Sent");
         }
 
         // GET: Appointment/Edit/5
@@ -175,8 +253,8 @@ namespace CloudClinic.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.JadwalId);
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
+            //ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.JadwalId);
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
             return View(appointment);
         }
 
@@ -185,32 +263,51 @@ namespace CloudClinic.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PasienId,JadwalId,PhoneNumber,Time,Keluhan,Timezone,CreatedAt")] Appointment appointment)
+        public async Task<ActionResult> Edit(Appointment model)
         {
-            if (ModelState.IsValid)
+            
+
+            if (!ModelState.IsValid)
             {
-                db.Entry(appointment).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(model);
             }
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.JadwalId);
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
-            return View(appointment);
+                       
+            using (ClinicContext ctx = new ClinicContext())
+            {
+                var pasien = ctx.Pasien.FirstOrDefault(x => x.UserName.Equals(this.User.Identity.Name, StringComparison.OrdinalIgnoreCase));
+
+                if (pasien != null)
+                {
+                    model.PasienId = pasien.PasienId;
+
+                    
+
+                    ctx.Appointment.Add(model);
+                    await ctx.SaveChangesAsync();
+
+
+                }
+            }
+
+            return RedirectToAction("Index");
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(appointment).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
+            //ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.JadwalId);
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
+            //return View(appointment);
         }
 
         // GET: Appointment/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Appointment appointment = db.Appointment.Find(id);
-            if (appointment == null)
-            {
-                return HttpNotFound();
-            }
-            return View(appointment);
+            Appointment app = db.Appointment.Find(id);
+            db.Appointment.Remove(app);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // POST: Appointment/Delete/5
@@ -243,7 +340,7 @@ namespace CloudClinic.Controllers
 
             using (ClinicContext ctx = new ClinicContext())
             {
-                var jadwal = ctx.Jadwal.FirstOrDefault(x => x.TanggalJadwal.Date == model.Date.Date
+                var jadwal = ctx.Jadwal.FirstOrDefault(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(model.Date)
                                             && x.Sesi.Equals(model.Session, StringComparison.OrdinalIgnoreCase));
                 appointment.JadwalId = jadwal.JadwalId;
                 appointment.Jadwal = jadwal;
@@ -259,6 +356,7 @@ namespace CloudClinic.Controllers
         public int PasienId {get;set;}
 
         [Required]
+        [DisplayFormatAttribute(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime Date { get; set; }
 
         public bool IsTimeShowed { get; set; }
@@ -288,6 +386,9 @@ namespace CloudClinic.Controllers
 
         [Required]
         public string PhoneNumber { get; set; }
+
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         public string Keluhan { get; set; }

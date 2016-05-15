@@ -305,6 +305,7 @@
     <Content Include="Choosen\chosen.min.css" />
     <Content Include="Choosen\chosen.proto.js" />
     <Content Include="Choosen\chosen.proto.min.js" />
+    <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\assets\avatars\avatar.png" />
     <Content Include="Content\assets\avatars\avatar1.png" />
     <Content Include="Content\assets\avatars\avatar2.png" />
@@ -1827,6 +1828,11 @@
     <Content Include="Views\Appointment\TestCreate.cshtml" />
     <Content Include="Views\Appointment\Create.cshtml" />
     <Content Include="Views\Manage\IndexPasien.cshtml" />
+    <Content Include="Views\Appointment\Edit.cshtml" />
+    <Content Include="Views\Pasien\DetailsReservasi.cshtml" />
+    <Content Include="Views\Appointment\Details.cshtml" />
+    <Content Include="Views\Appointment\Sent.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\enum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

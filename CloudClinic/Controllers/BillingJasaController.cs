@@ -54,22 +54,18 @@ namespace CloudClinic.Controllers
 
         [Authorize(Roles = "Dokter")]
         // GET: BillingJasa/Create
-        public ActionResult Create(int? id, int? price)
+        public ActionResult Create(int? id)
         {
-
             var diag = from d in db.Diagnosis
                        where d.DiagnosisId == id
                        select d.DiagnosisId;
 
            
             var model = new BillingJasa
-            {                
+            {
                 DiagnosisId = diag.FirstOrDefault()
             };
 
-
-            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
-            //ViewBag.DiagnosisId = new SelectList(db.Diagnosis, "DiagnosisId", "Amnanesa");
             ViewBag.TindakanId = new SelectList(db.Tindakan, "TindakanId", "NamaTindakan");
             return View(model);
         }

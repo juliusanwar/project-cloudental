@@ -1,0 +1,77 @@
+﻿@model CloudClinic.Models.DataModel.Appointment
+
+@{
+    ViewBag.Title = "Details Reservasi";
+}
+
+<h2>Details Reservasi</h2>
+
+<div>
+    <h4>Details Reservasi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Appointment ID :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.namaUnik)
+        </dd>
+
+        <dt>
+            Pasien :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pasien.UserName)
+        </dd>
+
+        <dt>
+            Jadwal ID :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jadwal.namaUnik)
+        </dd>
+
+        <dt>
+            Nama Dokter :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Jadwal.Pengguna.Nama)
+        </dd>
+
+        <dt>
+            Telp :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            Keluhan :
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(model => model.Keluhan)
+        </dd>
+
+        <dt>
+            Dimuat Tgl. :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedAt)
+        </dd>
+
+    </dl>
+</div>
+@if (User.IsInRole("Admin,Dokter"))
+{ 
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+}

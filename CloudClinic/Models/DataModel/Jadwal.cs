@@ -9,7 +9,7 @@ namespace CloudClinic.Models
 {
     //public enum Hari { Senin, Selasa, Rabu, Kamis, Jumat};
     public enum Ruang { Ruang1, Ruang2 };
-    public enum Sesi { time1, time2, time3, time4, time5, time6, time7, time8, time9, time10 };
+    public enum Sesi { Time1, Time2, Time3, Time4, Time5, Time6, Time7, Time8, Time9, Time10 };
 
     public class Jadwal
     {
@@ -33,6 +33,13 @@ namespace CloudClinic.Models
 
         [Required]
         public string Sesi { get; set; }
+
+        //public bool isSelected { get; set; }
+
+        public string namaUnik
+        {
+            get { return "JK" + JadwalId.ToString("D4"); }
+        }
 
         public virtual Pengguna Pengguna { get; set; }
         public virtual Appointment Appointment { get; set; }

@@ -8,8 +8,10 @@ namespace CloudClinic.Models
 {
     public class PatientViewModel
     {
-        public int PasienId { get; set; }        
+        public int PasienId { get; set; }   
         public bool HasPassword { get; set; }
+
+        public virtual Pasien Pasien { get; set; }
     }
 
 

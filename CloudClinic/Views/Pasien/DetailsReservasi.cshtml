@@ -1,0 +1,92 @@
+﻿@model CloudClinic.Models.Pasien
+
+@{
+    ViewBag.Title = "DetailsReservasi";
+}
+
+<h2>DetailsReservasi</h2>
+
+<input type="button" value="Print" onclick="window.print(); return false;" />
+
+<div>
+    <h4>Pasien</h4>
+
+    <hr />
+    <dl class="form-horizontal">
+        <dt>
+            User Name :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+
+        <dt>
+            Nama :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nama)
+        </dd>
+
+        <dt>
+            Tgl. Registrasi :
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TglRegistrasi)
+        </dd>
+
+        <dt>
+            Riwayat Sakit :
+        </dt>
+
+        <dd>
+            @Html.TextAreaFor(model => model.RiwayatSakit, new { @readonly = "readonly" })
+        </dd>
+    </dl>
+    <hr />
+    <dl class="form-horizontal">
+        <dd>
+            <h4>Histori Reservasi</h4>
+            <table class="table">
+                <tr>
+                    <th>Appointment ID</th>
+                    <th>Jadwal ID</th>
+                    <th>Dokter</th>
+                    <th>Tgl. Reservasi</th>
+                    <th>Tgl. Dimuat</th>
+                </tr>
+                @foreach (var item in Model.Appointment)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.namaUnik)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Jadwal.namaUnik)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Jadwal.Pengguna.Nama)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Jadwal.TanggalJadwal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedAt)
+                        </td>
+                        <td>
+                            [
+                            <a href="@Url.Action("Details", "Appointment", new { id = item.Id })">
+                                Cek Detail
+                            </a>
+                            ] |
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </dd>
+    </dl>
+</div>
+

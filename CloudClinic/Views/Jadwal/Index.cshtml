@@ -1,8 +1,21 @@
-﻿@model IEnumerable<CloudClinic.Models.Jadwal>
+﻿@model PagedList.IPagedList<CloudClinic.Models.Jadwal>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Jadwal Cloudental";
 }
+<!-- jQuery UI CSS Reference -->
+<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
+<!-- Required jQuery and jQuery UI Javascript references -->
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
+
+<script type="text/javascript">
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        $('.date-picker').datepicker();
+    })
+</script>
 
 <h2>Jadwal Cloudental</h2>
 @if (User.IsInRole("Dokter,Admin"))
@@ -15,8 +28,64 @@
     @Html.ActionLink("New", "Create", new { Controller = "Jadwal" }, new { @class = "btn btn-primary" })
 </p>
 
+@using (Html.BeginForm("Index", "Jadwal", FormMethod.Get))
+{
+<p>    
+    Search Name: @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+    <input type="submit" value="Cari" />
+</p>
+}
+<table class="table">
+    <tr>
+        <th>
+            Tanggal
+        </th>
+        <th>
+            Dokter
+        </th>
+        <th>
+            Sesi
+        </th>
+        <th>
+            @Html.ActionLink("Ruang", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
+        </th>
+        <th></th>
+    </tr>
 
-    @{
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TanggalJadwal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pengguna.Nama)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sesi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ruang)
+            </td>
+            @if (User.IsInRole("Dokter"))
+            {
+                <td>
+                    @Html.ActionLink("Ubah", "Edit", new { id = item.JadwalId }) |
+                    @Html.ActionLink("Hapus", "Edit", new { id = item.JadwalId },
+            new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, Page_No => Url.Action("Index",
+    new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))
+
+ 
+
+    @*@{
         foreach (var item in Model.Select(a => a.TanggalJadwal).Distinct())
         {
             <h3>Jadwal : @item</h3>
@@ -32,9 +101,7 @@
                         <th>
                             Ruang
                         </th>
-                        <th>
-                            Appointment ID
-                        </th>
+                        
                         <th></th>
                     </tr>
                     @foreach (var i in Model.Where(a => a.TanggalJadwal.Equals(@item)))
@@ -49,13 +116,11 @@
                             <td>
                                 @Html.DisplayFor(modelItem => i.Ruang)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => i.AppointmentId)
-                            </td>
+                            
                             <td>
                                 @Html.ActionLink("Edit", "Edit", new { Controller = "Jadwal", id = i.PenggunaId }, new { @class = "btn btn-default btn-xs" })
-                                @Html.ActionLink("Delete", "Jadwal",
-                                new { id = i.PenggunaId },
+                                @Html.ActionLink("Delete", "Delete",
+                                new { id = i.JadwalId },
                                 new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Are you sure?');" })
                             </td>
                         </tr>
@@ -63,4 +128,4 @@
                 </table>
             </div>
         }
-    }
+    }*@

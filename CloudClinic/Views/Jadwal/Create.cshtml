@@ -1,4 +1,4 @@
-﻿@model CloudClinic.Models.Jadwal
+﻿@model CloudClinic.Controllers.JadwalViewModel
 
 @{
     ViewBag.Title = "Tambah Jadwal";
@@ -7,26 +7,28 @@
 <h2>Tambah Jadwal</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Halaman ini ditujukan untuk dokter menambahkan jadwal reservasi klinik</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+
+
         @Html.HiddenFor(model => model.JadwalId)
         @Html.HiddenFor(model => model.PenggunaId)
         <div class="form-group">
-            @Html.LabelFor(model => model.PenggunaId,"Dokter :", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PenggunaId, "Dokter :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
                 <text class="form-control">@User.Identity.Name</text>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.TanggalJadwal, "Tgl. Jadwal :", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TanggalJadwal, "Tgl. Mulai :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
                 @Html.Kendo().DatePickerFor(model => model.TanggalJadwal)
@@ -37,37 +39,52 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Sesi, "Sesi :", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.TanggalJadwal, "Tgl. Akhir :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
-                @Html.RadioButtonFor(m => m.Sesi, "time1", new { id = "time1" })
-                <label for"time1">Sesi 1 : 08:00 - 08:30</label>
-                @Html.RadioButtonFor(m => m.Sesi, "time2", new { id = "time2" })
-                <label for"time1">Sesi 2 : 08:30 - 09:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "time3", new { id = "time3" })
-                <label for"time3">Sesi 3 : 09:00 - 09:30</label><br />
+                @Html.Kendo().DatePickerFor(model => model.Finish)
+
+                @*@Html.EditorFor(model => model.Hari, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.Finish, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Sesi, "Sesi :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
                 
-                @Html.RadioButtonFor(m => m.Sesi, "time4", new { id = "time4" })
-                <label for"time4">Sesi 4 : 09:30 - 10:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "time5", new { id = "time5" })
-                <label for"time5">Sesi 5 : 10:00 - 10:30</label><br /><br />
 
-                <button class="col-md-5" disabled>Break Time (10:31 - 15.59)</button><br /><br /><br />
+                <fieldset>                    
+                    <legend>Pilih Sesi yang ingin dijadwalkan :</legend>
+                    @if (User.Identity.Name.Equals("andisetiawan"))
+                    {
+                        @Html.CheckBoxFor(model => model.IsTime1Check)<label for="Time1">8:00 - 8:30</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime2Check)<label for="Time2">8:30 - 9:00</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime3Check)<label for="Time3">9:00 - 9:30</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime4Check)<label for="Time4">9:30 - 10:00</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime5Check)<label for="Time5">10:00 - 10:30</label><br />
+                    }
+                    @if (User.Identity.Name.Equals("boudy"))
+                    {
+                        @Html.CheckBoxFor(model => model.IsTime6Check)<label for="Time6">16:00 - 16:30</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime7Check)<label for="Time7">16:30 - 17:00</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime8Check)<label for="Time8">17:30 - 17:30</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime9Check)<label for="Time9">17:30 - 18:00</label><br />
+                        @Html.CheckBoxFor(model => model.IsTime10Check)<label for="Time10">18:00 - 18:30</label><br />
+                    }
+                </fieldset>
 
-                @Html.RadioButtonFor(m => m.Sesi, "time6", new { id = "time6" })
-                <label for"time6">Sesi 6 : 16:00 - 16:30</label>
-
-                @Html.RadioButtonFor(m => m.Sesi, "time7", new { id = "time7" })
-                <label for"time7">Sesi 7 : 16:30 - 17:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "time8", new { id = "time8" })
-                <label for"time8">Sesi 8 : 17:00 - 17:30</label><br />
-                @Html.RadioButtonFor(m => m.Sesi, "time9", new { id = "time9" })
-                <label for"time9">Sesi 9 : 17:30 - 18:00</label>
-
-                @Html.RadioButtonFor(m => m.Sesi, "time10", new { id = "time10" })
-                <label for"time10">Sesi 10 : 18:00 - 18:30</label>
-
-                @*@Html.EditorFor(model => model.Sesi, new { htmlAttributes = new { @class = "form-control" } })*@
+                <input @if (Model.IsTime1Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time1" value="Time1" />
+                <input @if (Model.IsTime2Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time2" value="Time2" />
+                <input @if (Model.IsTime3Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time3" value="Time3" />
+                <input @if (Model.IsTime4Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time4" value="Time4" />
+                <input @if (Model.IsTime5Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time5" value="Time5" />
+                <input @if (Model.IsTime6Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time6" value="Time6" />
+                <input @if (Model.IsTime7Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time7" value="Time7" />
+                <input @if (Model.IsTime8Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time8" value="Time8" />
+                <input @if (Model.IsTime9Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time9" value="Time9" />
+                <input @if (Model.IsTime10Check == true) { <text> checked</text> } type="hidden" name="Sesi" id="Time10" value="Time10" />
+                                   
                 @Html.ValidationMessageFor(model => model.Sesi, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -92,7 +109,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        @*<div class="form-group">
             @if (ViewBag.Error == null)
             {
                 <div class="alert alert-info">@ViewBag.Pesan</div>
@@ -100,15 +117,10 @@
             else
             {
                 <div class="alert alert-warning">
-                    <ul>
-                        @foreach (var err in ViewBag.Error)
-                    {
-                            <li>@err</li>
-                        }
-                    </ul>
+                    @ViewBag.Error
                 </div>
             }
-        </div>
+        </div>*@
     </div>
 }
 

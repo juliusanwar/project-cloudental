@@ -93,6 +93,26 @@ namespace CloudClinic.Controllers
             return View(pasien);
         }
 
+        [Authorize(Roles = "Pasien")]
+        // GET: Pasien/Details/5
+        public ActionResult DetailsReservasi(int? id)
+        {
+            //var user = from u in db.Pasien
+            //           where u.UserName == User.Identity.Name
+            //           select u.PasienId;            
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Pasien pasien = db.Pasien.Find(id);
+            if (pasien == null)
+            {
+                return HttpNotFound();
+            }
+            return View(pasien);
+        }
+
         // GET: Pasien/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()

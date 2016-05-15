@@ -34,27 +34,25 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Sesi, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 1 : 08:00 - 08:30", new { id = "Sesi1" })
-                <label for"Sesi1">Sesi 1 : 08:00 - 08:30</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 2 : 08:30 - 09:00", new { id = "Sesi2" })
-                <label for"Sesi2">Sesi 2 : 08:30 - 09:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 3 : 09:00 - 10:00", new { id = "Sesi3" })
-                <label for"Sesi3">Sesi 3 : 09:00 - 10:00</label><br />
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 4 : 10:00 - 11:30", new { id = "Sesi4" })
-                <label for"Sesi4">Sesi 4 : 10:00 - 11:30</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 5 : 11:30 - 12:00", new { id = "Sesi5" })
-                <label for"Sesi5">Sesi 5 : 11:30 - 12:00</label>
-
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 6 : 16:00 - 16:30", new { id = "Sesi6" })
-                <label for"Sesi6">Sesi 6 : 16:00 - 16:30</label><br />
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 7 : 16:30 - 17:00", new { id = "Sesi7" })
-                <label for"Sesi7">Sesi 7 : 16:30 - 17:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 8 : 17:00 - 17:30", new { id = "Sesi8" })
-                <label for"Sesi8">Sesi 8 : 17:00 - 17:30</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 9 : 17:30 - 18:00", new { id = "Sesi9" })
-                <label for"Sesi9">Sesi 9 : 17:30 - 18:00</label>
-                @Html.RadioButtonFor(m => m.Sesi, "Sesi 10 : 18:00 - 18:30", new { id = "Sesi10" })
-                <label for"Sesi10">Sesi 10 : 18:00 - 18:30</label>
+                <fieldset>
+                    <legend>Pilih Sesi yang ingin dijadwalkan :</legend>
+                    @if (User.Identity.Name.Equals("andisetiawan"))
+                    {
+                        <input type="hidden" name="Sesi" id="Time1" value="Time1" /><label for="Time1">8:00 - 8:30</label><br />
+                        <input type="hidden" name="Sesi" id="Time2" value="Time2" /><label for="Time2">8:30 - 9:00</label><br />
+                        <input type="hidden" name="Sesi" id="Time3" value="Time3" /><label for="Time3">9:00 - 9:30</label><br />
+                        <input type="hidden" name="Sesi" id="Time4" value="Time4" /><label for="Time4">9:30 - 10:00</label><br />
+                        <input type="hidden" name="Sesi" id="Time5" value="Time5" /><label for="Time5">10:00 - 10:30</label><br />
+                    }
+                    @if (User.Identity.Name.Equals("boudy"))
+                    {
+                        <input type="hidden" name="Sesi" id="Time6" value="Time6" /><label for="Time6">16:00 - 16:30</label><br />
+                        <input type="hidden" name="Sesi" id="Time7" value="Time7" /><label for="Time7">16:30 - 17:00</label><br />
+                        <input type="hidden" name="Sesi" id="Time8" value="Time8" /><label for="Time8">17:30 - 17:30</label><br />
+                        <input type="hidden" name="Sesi" id="Time9" value="Time9" /><label for="Time9">17:30 - 18:00</label><br />
+                        <input type="hidden" name="Sesi" id="Time10" value="Time10" /><label for="Time10">18:00 - 18:30</label><br />
+                    }
+                </fieldset>
                 @Html.ValidationMessageFor(model => model.Sesi, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,8 +65,7 @@
                 <label for"Ruang1">Ruang 1</label>
                 @Html.RadioButtonFor(m => m.Ruang, "Ruang 2", new { id = "Ruang2" })
                 <label for"Ruang2">Ruang 2</label>
-
-                @*@Html.EditorFor(model => model.Ruang, new { htmlAttributes = new { @class = "form-control" } })*@
+                                
                 @Html.ValidationMessageFor(model => model.Ruang, "", new { @class = "text-danger" })
             </div>
         </div>

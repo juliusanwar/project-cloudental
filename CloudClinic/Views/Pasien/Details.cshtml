@@ -9,9 +9,12 @@
 
 <div>
     <h4>Pasien</h4>
+    @if (User.IsInRole("Admin"))
+    {
     <p>
         @Html.ActionLink("Back to List", "Index")
     </p>
+    }
     <hr />  
         <dl class="form-horizontal">
             <dt>

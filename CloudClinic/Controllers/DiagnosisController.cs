@@ -100,19 +100,24 @@ namespace CloudClinic.Controllers
 
         [Authorize(Roles = "Dokter")]
         // GET: Diagnosis/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             var user = from p in db.Pengguna
                        where p.UserName == User.Identity.Name
                        select p.PenggunaId;
 
+            var app = from a in db.Appointment
+                      where a.PasienId == id
+                      select a.PasienId;
+
             var model = new Diagnosis
             {
-                PenggunaId = user.FirstOrDefault()
+                PenggunaId = user.FirstOrDefault(),
+                PasienId = app.FirstOrDefault()
             };
 
             //ViewBag.PasienId = GetUserName();
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
             return View(model);
         }
 
@@ -128,11 +133,11 @@ namespace CloudClinic.Controllers
             {
                 db.Diagnosis.Add(diagnosis);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = diagnosis.DiagnosisId });
             }
 
             //ViewBag.PasienId = GetUserName();
-            ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", diagnosis.PasienId);
+            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", diagnosis.PasienId);
             return View(diagnosis);
         }
 

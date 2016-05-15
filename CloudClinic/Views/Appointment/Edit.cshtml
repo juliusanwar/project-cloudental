@@ -1,7 +1,6 @@
-﻿@model CloudClinic.Controllers.AppointmentViewModel
-
+﻿@model CloudClinic.Models.DataModel.Appointment
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
 <link href="~/Content/kendo/2014.3.1411/kendo.common.min.css" rel="stylesheet" />
@@ -25,32 +24,27 @@
     });
 </script>
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
-@using (Html.BeginForm("Create", "Appointment", FormMethod.Post,
-                new { encType = "multipart/form-data", id = "myform", name = "myform" })) 
+@using (Html.BeginForm("Edit", "Appointment"))
 {
-                @Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
+    <div class="form-horizontal">
         <h4>Appointment</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-       
-        <div class="form-group">
+
+        @*<div class="form-group">
             @Html.Label("Tanggal", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @*@Html.Kendo().DatePickerFor(x => x.Date)*@
-                @Html.TextBox("Date", string.Format("{0:yyyy-MM-dd}", Model.Date))
+                @Html.TextBoxFor(x => x.Date)
                 <input id="check" type="button" value="Check" />
-                <div id="divProcessing">
-                    <p>Processing, please wait . . . <img src="~/Content/ajax-loader.gif"></p>
-                </div>
                 @Html.ValidationMessageFor(x => x.Date, null, new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
-        <input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
+        @*<input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
 
         @if (Model.IsTimeShowed)
         {
@@ -86,27 +80,19 @@
                     @Html.ValidationMessageFor(x => x.Session, null, new { @class = "text-danger" })
                 </div>
             </div>
-        }
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber,"No. Telpon :", htmlAttributes: new { @class = "control-label col-md-2" })
+        }*@
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, "Email :", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        </div>*@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Keluhan, "Keluhan :", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Keluhan, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextAreaFor(model => model.Keluhan, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Keluhan, "", new { @class = "text-danger" })
@@ -120,38 +106,3 @@
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-
-<script type="text/javascript">
-
-    $(document).ready(function () {
-
-      // Hide the "busy" Gif at load:
-      $("#divProcessing").hide();
-
-      $('#check').click(function () {
-          // Required hack to get animated gif to run in IE:
-          setTimeout(function () {
-              divProcessing.show();
-          }, 10000);
-          //$('myform').submit();
-      });
-
-      // Handle the form submit event, and make the Ajax request:
-      $("#myform").on("check", function (event) {
-        event.preventDefault();
-
-        // Show the "busy" Gif:
-        $("#divProcessing").show();
-        
-      });
-    });
-</script>
-}
-

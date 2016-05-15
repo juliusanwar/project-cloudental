@@ -23,9 +23,17 @@ namespace CloudClinic.Models.DataModel
 
         public string PhoneNumber { get; set; }
 
+        [EmailAddress]
+        public string Email { get; set; }
+
         public string Keluhan { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public string namaUnik
+        {
+            get { return "APK" + Id.ToString("D4"); }
+        }
 
         public virtual Pasien Pasien { get; set; }
 

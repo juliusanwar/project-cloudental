@@ -12,6 +12,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using PagedList;
 
 namespace CloudClinic.Controllers
 {
@@ -22,9 +24,51 @@ namespace CloudClinic.Controllers
 
         [Authorize(Roles = "Admin,Dokter,Pasien")]
         // GET: Jadwal
-        public ActionResult Index()
+        public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
         {
-            return View(db.Jadwal.ToList());
+            ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "Ruang" : "";
+
+            if (Search_Data != null)
+            {
+                Page_No = 1;
+            }
+            else
+            {
+                Search_Data = Filter_Value;
+            }
+
+            ViewBag.FilterValue = Search_Data;
+
+            var jadwal = from b in db.Jadwal select b;
+
+
+            if (!String.IsNullOrEmpty(Search_Data))
+            {
+                //DateTime dt = DateTime.Parse(Search_Data);
+                jadwal = jadwal.Where(b => b.TanggalJadwal.ToShortDateString().Contains(Search_Data.ToUpper()));
+                //|| p.Nama.ToUpper().Contains(Search_Data.ToUpper()));
+            }
+
+            switch (Sorting_Order)
+            {
+                case "Ruang":
+                    jadwal = jadwal.OrderByDescending(b => b.Ruang);
+                    break;
+                default:
+                    jadwal = jadwal.OrderBy(b => b.Ruang);
+                    break;
+            }
+
+            int Size_Of_Page = 10;
+            int No_Of_Page = (Page_No ?? 1);
+
+
+
+            return View(jadwal.ToPagedList(No_Of_Page, Size_Of_Page));
+
+
+            //return View(db.Jadwal.ToList());
         }
 
         [Authorize(Roles = "Admin,Dokter")]
@@ -43,113 +87,223 @@ namespace CloudClinic.Controllers
             return View(jadwal);
         }
 
-        private ApplicationUserManager _userManager;
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-        private UserManager<ApplicationUser> manager;
-        public JadwalController()
-        {
-            manager = new UserManager<ApplicationUser>(
-                new UserStore<ApplicationUser>(db));
-        }
-
 
         // GET: Jadwal/Create
         [Authorize(Roles = "Dokter")]
         public ActionResult Create()
         {
+            
+
             var user = from p in db.Pengguna
                        where p.UserName == User.Identity.Name
                        select p.PenggunaId;
 
-            var model = new Jadwal
+            var model = new JadwalViewModel
             {
                 PenggunaId = user.First()
             };
-
-
-            //ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama");
+                        
             return View(model);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Jadwal jadwal)
+        public ActionResult Create(JadwalViewModel model)
         {
-                if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            for (DateTime x = model.TanggalJadwal; x <= model.Finish; x = x.AddDays(1))
+            {
+                if(model.IsTime1Check == true)
                 {
-                    //insert new pasien
+                    string sesi = "Time1";
                     var newJadwal = new Jadwal
                     {
-                        JadwalId = jadwal.JadwalId,
-                        PenggunaId = jadwal.PenggunaId,
-                        TanggalJadwal = jadwal.TanggalJadwal,
-                        Sesi = jadwal.Sesi,
-                        Ruang = jadwal.Ruang
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
                     };
 
                     db.Jadwal.Add(newJadwal);
                     db.SaveChanges();
-
-                    //RedirectToAction("Index");
-                    ViewBag.Pesan = "Berhasil menambahkan jadwal baru!";
-
                 }
-                else
+                if (model.IsTime2Check == true)
                 {
-                    ViewBag.Error = "Jadwal tidak berhasil dimasukkan!!!";
+                    string sesi = "Time2";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
                 }
-            ModelState.Clear();
-            return View(jadwal);
+                if (model.IsTime3Check == true)
+                {
+                    string sesi = "Time3";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime4Check == true)
+                {
+                    string sesi = "Time4";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime5Check == true)
+                {
+                    string sesi = "Time5";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime6Check == true)
+                {
+                    string sesi = "Time6";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime6Check == true)
+                {
+                    string sesi = "Time6";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime7Check == true)
+                {
+                    string sesi = "Time7";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime8Check == true)
+                {
+                    string sesi = "Time8";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime9Check == true)
+                {
+                    string sesi = "Time9";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                if (model.IsTime10Check == true)
+                {
+                    string sesi = "Time10";
+                    var newJadwal = new Jadwal
+                    {
+
+                        JadwalId = model.JadwalId,
+                        PenggunaId = model.PenggunaId,
+                        TanggalJadwal = x,
+                        Sesi = sesi,
+                        Ruang = model.Ruang
+                    };
+
+                    db.Jadwal.Add(newJadwal);
+                    db.SaveChanges();
+                }
+                
+                
+                
+
+            }           
+            
+            return RedirectToAction("Index");
         }
 
-        // POST: Jadwal/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "JadwalId,PenggunaId,TanggalJadwal,Ruang,Sesi")] Jadwal jadwal)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        string currentUserId = User.Identity.Name;
-        //        var currentUser = from c in db.Pengguna
-        //                          where c.PenggunaId == User.Identity.GetUserId<int>()
-        //                          select c;
-        //        //jadwal.Pengguna.UserName = currentUser;
-        //        var newJadwal = new Jadwal
-        //        {
-        //            JadwalId = jadwal.JadwalId,
-        //            PenggunaId = jadwal.PenggunaId,
-        //            TanggalJadwal = jadwal.TanggalJadwal,
-        //            Sesi = jadwal.Sesi,
-        //            Ruang = jadwal.Ruang
-        //        };
-
-
-        //        db.Jadwal.Add(jadwal);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    //ViewBag.PenggunaId = new SelectList(db.Pengguna, "PenggunaId", "Nama", jadwal.PenggunaId);
-
-        //    return View(jadwal);
-        //}
-
-
-        // GET: Jadwal/Edit/5
-        //[Authorize(Roles = "Admin,Dokter")]
+       
 
         [Authorize(Roles = "Dokter")]
         public ActionResult Edit(int? id)
@@ -220,5 +374,51 @@ namespace CloudClinic.Controllers
             }
             base.Dispose(disposing);
         }
+    }
+
+    public class JadwalViewModel
+    {
+        [Required]
+        public int JadwalId { get; set; }
+
+        [Required]
+        public int PenggunaId { get; set; }
+
+        public int AppointmentId { get; set; }
+
+        [Required]
+        public DateTime Finish { get; set; }
+
+        [Required]
+        public DateTime TanggalJadwal { get; set; }
+
+        [Required]
+        public string Sesi { get; set; }
+
+        public bool IsTimeShowed { get; set; }
+
+        public bool IsTime1Check{ get; set; }
+
+        public bool IsTime2Check { get; set; }
+
+        public bool IsTime3Check { get; set; }
+
+        public bool IsTime4Check { get; set; }
+
+        public bool IsTime5Check { get; set; }
+
+        public bool IsTime6Check { get; set; }
+
+        public bool IsTime7Check { get; set; }
+
+        public bool IsTime8Check { get; set; }
+
+        public bool IsTime9Check { get; set; }
+
+        public bool IsTime10Check { get; set; }
+
+        [Required]
+        public string Ruang { get; set; }
+
     }
 }
