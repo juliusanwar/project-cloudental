@@ -19,8 +19,6 @@ namespace CloudClinic.Models.DataModel
 
         public int PasienId { get; set; }
 
-        public int JadwalId { get; set; }
-
         public string PhoneNumber { get; set; }
 
         [EmailAddress]

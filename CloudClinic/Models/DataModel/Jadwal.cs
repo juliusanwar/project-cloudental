@@ -20,9 +20,6 @@ namespace CloudClinic.Models
         public int PenggunaId { get; set; }
 
         //[Required]
-        public int AppointmentId { get; set; }
-
-        //[Required]
         //public string Hari { get; set; }
 
         [Required]

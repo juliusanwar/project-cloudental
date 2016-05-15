@@ -201,6 +201,11 @@ namespace CloudClinic.Controllers
                 {
                     
                     appointment.PasienId = pasien.PasienId;
+
+                    var jadwal = ctx.Jadwal.FirstOrDefault(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(model.Date)
+                                            && x.Sesi.Equals(model.Session, StringComparison.OrdinalIgnoreCase));
+                    appointment.Jadwal = jadwal;
+
                     ctx.Appointment.Add(appointment);
                     await ctx.SaveChangesAsync();
                         
@@ -337,15 +342,6 @@ namespace CloudClinic.Controllers
             appointment.PhoneNumber = model.PhoneNumber;
             appointment.Keluhan = model.Keluhan;
             appointment.CreatedAt = DateTime.Now;
-
-            using (ClinicContext ctx = new ClinicContext())
-            {
-                var jadwal = ctx.Jadwal.FirstOrDefault(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(model.Date)
-                                            && x.Sesi.Equals(model.Session, StringComparison.OrdinalIgnoreCase));
-                appointment.JadwalId = jadwal.JadwalId;
-                appointment.Jadwal = jadwal;
-            }
-
             return appointment;
         }
     }
