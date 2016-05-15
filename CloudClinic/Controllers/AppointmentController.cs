@@ -63,8 +63,10 @@ namespace CloudClinic.Controllers
 
                 using (var ctx = new ClinicContext())
                 {
-                    var availableJadwal = await ctx.Jadwal.Where(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(choosenDate))
-                                                    .ToListAsync();
+                    var availableJadwal = await ctx.Jadwal.Where(
+                                            x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(choosenDate)
+                                            && x.Appointment == null)
+                                            .ToListAsync();
 
                     if (availableJadwal.Any())
                     {
@@ -154,6 +156,11 @@ namespace CloudClinic.Controllers
                 if (pasien != null)
                 {
                     appointment.PasienId = pasien.PasienId;
+
+                    var jadwal = ctx.Jadwal.FirstOrDefault(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(model.Date)
+                                            && x.Sesi.Equals(model.Session, StringComparison.OrdinalIgnoreCase));
+                    appointment.Jadwal = jadwal;
+
                     ctx.Appointment.Add(appointment);
                     await ctx.SaveChangesAsync();
                 }
@@ -174,7 +181,7 @@ namespace CloudClinic.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.JadwalId);
+            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.Jadwal.JadwalId);
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
             return View(appointment);
         }
@@ -192,7 +199,7 @@ namespace CloudClinic.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.JadwalId);
+            ViewBag.JadwalId = new SelectList(db.Jadwal, "JadwalId", "Hari", appointment.Jadwal.JadwalId);
             ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName", appointment.PasienId);
             return View(appointment);
         }
@@ -239,15 +246,6 @@ namespace CloudClinic.Controllers
             appointment.PhoneNumber = model.PhoneNumber;
             appointment.Keluhan = model.Keluhan;
             appointment.CreatedAt = DateTime.Now;
-
-            using (ClinicContext ctx = new ClinicContext())
-            {
-                var jadwal = ctx.Jadwal.FirstOrDefault(x => DbFunctions.TruncateTime(x.TanggalJadwal) == DbFunctions.TruncateTime(model.Date)
-                                            && x.Sesi.Equals(model.Session, StringComparison.OrdinalIgnoreCase));
-                appointment.JadwalId = jadwal.JadwalId;
-                appointment.Jadwal = jadwal;
-            }
-
             return appointment;
         }
     }
