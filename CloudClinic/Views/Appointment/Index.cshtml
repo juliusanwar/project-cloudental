@@ -11,13 +11,13 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+@*<table class="table">
     <tr>
         <th>
             Appointment ID
         </th>
         <th>
-            Jadwal ID
+            Tgl. Jadwal
         </th>
         <th>
             Pasien
@@ -25,17 +25,17 @@
         <th>
             Dokter
         </th>
-@if (User.IsInRole("Dokter"))
-{
+        @if (User.IsInRole("Dokter"))
+        {
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            No. Telp
         </th>        
         <th>
             @Html.DisplayNameFor(model => model.Keluhan)
         </th>
-}
+        }
         <th>
-            @Html.DisplayNameFor(model => model.CreatedAt)
+            Dimuat Tgl.
         </th>
         <th></th>
     </tr>
@@ -46,7 +46,7 @@
             @Html.DisplayFor(modelItem => item.namaUnik)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Jadwal.namaUnik)
+            @Html.DisplayFor(modelItem => item.Jadwal.TanggalJadwal.ToShortDateString())
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Pasien.UserName)
@@ -54,7 +54,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Jadwal.Pengguna.Nama)
         </td>
-        @if (User.IsInRole("Admin"))
+        @if (User.IsInRole("Dokter"))
         {
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNumber)
@@ -66,7 +66,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.CreatedAt)
         </td>
-@if (User.IsInRole("Admin"))
+@if (User.IsInRole("Dokter"))
 {
         <td>
             [<a href="@Url.Action("Create", "Diagnosis", new { id = item.PasienId})">Diagnosis</a>] |
@@ -76,7 +76,7 @@
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
         </td>
 }
-@if (User.IsInRole("Pasien"))
+@@if (User.IsInRole("Pasien"))
 {
     <td>
         
@@ -89,4 +89,99 @@
     </tr>
 }
 
-</table>
+</table>*@
+<link href="@Url.Content("~/Content/themes/base/minified/jquery-ui.min.css")" rel="stylesheet" />
+<!-- Required jQuery and jQuery UI Javascript references -->
+<script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.min.js")"></script>
+
+<script type="text/javascript">
+    $(function () {
+        // This will make every element with the class "date-picker" into a DatePicker element
+        $('.date-picker').datepicker();
+    })
+</script>
+
+    @using (Html.BeginForm("Index", "Appointment", FormMethod.Get))
+    {
+        <p>
+            Search By Date: <input type="text" name="searchString" id="date-picker" />
+            <input type="submit" value="Cari" />
+        </p>
+    }
+    @if (User.IsInRole("Dokter"))
+    {
+        <a class="k-button" href="@Url.Action("ShowTommorowRecord", "Appointment")">Cek Besok</a>
+        <a class="k-button" href="@Url.Action("ShowTodayRecord", "Appointment")">Cek Hari Ini</a>
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="@Url.Action("SearchTommorowRecord", "Appointment")">Cek Besok</a>
+        @*<a href="@Url.Action("SearchPerWeekRecord", "Appointment")">Cek Seminggu</a>*@
+    }
+
+
+    @{
+        foreach (var item in Model.Select(a => a.Jadwal.TanggalJadwal).Distinct().OrderByDescending(a => a.Date))
+        {
+            
+            <h3>Jadwal : @item.ToShortDateString()</h3>
+            <div>
+                <table class="table">
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Dokter
+                        </th>
+                        <th>
+                            Pasien
+                        </th>
+                        <th>
+                            Sesi
+                        </th>
+                        <th>
+                            Ruang
+                        </th>
+                        <th>
+                            Dimuat Tgl.
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    @foreach (var i in Model.Where(a => a.Jadwal.TanggalJadwal.Equals(@item)))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.namaUnik)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.Jadwal.Pengguna.Nama)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.Pasien.Nama)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.Jadwal.Sesi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.Jadwal.Ruang)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => i.CreatedAt)
+                            </td>
+
+                            <td>
+                                [<a href="@Url.Action("Create", "Diagnosis", new { id = i.PasienId})">Diagnosis</a>] |
+                                @Html.ActionLink("Edit", "Edit", new { Controller = "Appointment", id = i.Jadwal.PenggunaId }, new { @class = "btn btn-default btn-xs" })
+                                @Html.ActionLink("Delete", "Delete",
+                                new { id = i.Id },
+                                new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Are you sure?');" })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }
+    }

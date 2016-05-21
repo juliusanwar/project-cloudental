@@ -27,7 +27,9 @@ namespace CloudClinic.Controllers
         public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
         {
             ViewBag.CurrentSortOrder = Sorting_Order;
+            ViewBag.SortingSession = String.IsNullOrEmpty(Sorting_Order) ? "Sesi" : "";
             ViewBag.SortingName = String.IsNullOrEmpty(Sorting_Order) ? "Ruang" : "";
+            ViewBag.SortingDate = Sorting_Order == "TanggalJadwal" ? "TglAppointment" : "Date";
 
             if (Search_Data != null)
             {
@@ -52,11 +54,20 @@ namespace CloudClinic.Controllers
 
             switch (Sorting_Order)
             {
+                case "TanggalJadwal":
+                    jadwal = jadwal.OrderByDescending(t => t.TanggalJadwal);
+                    break;
+                case "TglAppointment":
+                    jadwal = jadwal.OrderBy(t => t.TanggalJadwal);
+                    break;
+                case "Sesi":
+                    jadwal = jadwal.OrderBy(b => b.Sesi);
+                    break;
                 case "Ruang":
                     jadwal = jadwal.OrderByDescending(b => b.Ruang);
                     break;
                 default:
-                    jadwal = jadwal.OrderBy(b => b.Ruang);
+                    jadwal = jadwal.OrderBy(b => b.TanggalJadwal);
                     break;
             }
 
@@ -107,7 +118,7 @@ namespace CloudClinic.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Dokter")]
         [ValidateAntiForgeryToken]
         public ActionResult Create(JadwalViewModel model)
         {
@@ -308,11 +319,13 @@ namespace CloudClinic.Controllers
         [Authorize(Roles = "Dokter")]
         public ActionResult Edit(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Jadwal jadwal = db.Jadwal.Find(id);
+
             if (jadwal == null)
             {
                 return HttpNotFound();

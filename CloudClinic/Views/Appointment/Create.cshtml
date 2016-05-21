@@ -12,14 +12,21 @@
 
 <script>
     $(document).ready(function () {
-        $("#Date").kendoDatePicker();
+        $("#divProcessing").hide();
+        $("#Date").kendoDatePicker({ min: new Date() });
+        //$("#Date").attr("disabled", "disabled");
 
         $('#check').on('click', function () {
+            $("#divProcessing").show();
+            setTimeout(function () {
+                divProcessing.show();
+            }, 10000);
             var phoneNumber = $("#PhoneNumber").val();
+            var email = $("#Email").val();
             var keluhan = $("#Keluhan").val();
             var date = new Date($("#Date").val());
             var dateString = kendo.toString(date, "yyyy-MM-dd");
-            var url = "@Url.Action("Check", "Appointment")" + "?date=" + dateString + "&phonenumber=" + phoneNumber + "&keluhan=" + keluhan;
+            var url = "@Url.Action("Check", "Appointment")" + "?date=" + dateString + "&phonenumber=" + phoneNumber + "&email=" + email + "&keluhan=" + keluhan;
             $('body').load(url);
         });
     });
@@ -44,7 +51,7 @@
                 @Html.TextBox("Date", string.Format("{0:yyyy-MM-dd}", Model.Date))
                 <input id="check" type="button" value="Check" />
                 <div id="divProcessing">
-                    <p>Processing, please wait . . . <img src="~/Content/ajax-loader.gif"></p>
+                    <p>Lagi diproses, tunggu sebentar . . . <img src="~/Content/ajax-loader.gif"></p>
                 </div>
                 @Html.ValidationMessageFor(x => x.Date, null, new { @class = "text-danger" })
             </div>
@@ -133,24 +140,22 @@
     $(document).ready(function () {
 
       // Hide the "busy" Gif at load:
-      $("#divProcessing").hide();
+      
 
-      $('#check').click(function () {
-          // Required hack to get animated gif to run in IE:
-          setTimeout(function () {
-              divProcessing.show();
-          }, 10000);
-          //$('myform').submit();
-      });
+      //$('#check').click(function () {
+      //    // Required hack to get animated gif to run in IE:
+          
+      //    //$('myform').submit();
+      //});
 
       // Handle the form submit event, and make the Ajax request:
-      $("#myform").on("check", function (event) {
-        event.preventDefault();
+      //$("#myform").on("check", function (event) {
+      //  event.preventDefault();
 
-        // Show the "busy" Gif:
-        $("#divProcessing").show();
+      //  // Show the "busy" Gif:
         
-      });
+        
+      //});
     });
 </script>
 }

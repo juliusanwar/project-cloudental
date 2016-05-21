@@ -1,4 +1,5 @@
-﻿@model CloudClinic.Models.DataModel.Appointment
+﻿@model CloudClinic.Controllers.AppointmentViewModel
+
 @{
     ViewBag.Title = "Edit";
 }
@@ -14,19 +15,26 @@
         $("#Date").kendoDatePicker();
 
         $('#check').on('click', function () {
+            var id = $("#Id").val();
+            var pid = $("#PasienId").val();
             var phoneNumber = $("#PhoneNumber").val();
+            var email = $("#Email").val();
             var keluhan = $("#Keluhan").val();
             var date = new Date($("#Date").val());
             var dateString = kendo.toString(date, "yyyy-MM-dd");
-            var url = "@Url.Action("Check", "Appointment")" + "?date=" + dateString + "&phonenumber=" + phoneNumber + "&keluhan=" + keluhan;
-            $('body').load(url);
+            var url = "@Url.Action("Checked", "Appointment")" + "?id=" + id + "&pid=" + pid + "&date=" + dateString + "&phonenumber=" + phoneNumber + "&email=" + email + "&keluhan=" + keluhan;
+            $.ajax({
+                url: url, success: function (result) {
+                    $('body').html(result);
+                }
+            });
         });
     });
 </script>
 
 <h2>Edit</h2>
 
-@using (Html.BeginForm("Edit", "Appointment"))
+@using (Html.BeginForm("Edit", "Appointment", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -35,16 +43,33 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        @*<div class="form-group">
-            @Html.Label("Tanggal", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.Label("ID :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(x => x.Date)
+                @Html.EditorFor(model => model.Id)
+                @Html.ValidationMessageFor(x => x.Id, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.Label("Pasien :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PasienId)
+                @Html.ValidationMessageFor(x => x.PasienId, null, new { @class = "text-danger" })
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            @Html.Label("Tanggal :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("Date", string.Format("{0:yyyy-MM-dd}", Model.Date))
                 <input id="check" type="button" value="Check" />
                 @Html.ValidationMessageFor(x => x.Date, null, new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
-        @*<input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
+        <input type="hidden" value="@Html.AttributeEncode(Model.IsTimeShowed)" name="IsTimeShowed" id="IsTimeShowed">
 
         @if (Model.IsTimeShowed)
         {
@@ -64,7 +89,7 @@
 
                     <div id="timeContainer">
                         <fieldset>
-                            <legend>Pilih salah satu sesi</legend>
+                            <legend>Pilih salah satu sesi :</legend>
                             <input @if (!Model.IsTime1Available) { <text> disabled</text> } type="radio" name="Session" id="time1" value="time1" /><label for="time1">8:00 - 8:30</label><br />
                             <input @if (!Model.IsTime2Available) { <text> disabled</text> } type="radio" name="Session" id="time2" value="time2" /><label for="time2">8:30 - 9:00</label><br />
                             <input @if (!Model.IsTime3Available) { <text> disabled</text> } type="radio" name="Session" id="time3" value="time3" /><label for="time3">9:00 - 9:30</label><br />
@@ -80,16 +105,23 @@
                     @Html.ValidationMessageFor(x => x.Session, null, new { @class = "text-danger" })
                 </div>
             </div>
-        }*@
+        }
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNumber,"No. HP :", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Keluhan, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -101,8 +133,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }

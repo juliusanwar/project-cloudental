@@ -17,26 +17,6 @@ namespace CloudClinic.Controllers
     {
         private ClinicContext db = new ClinicContext();
 
-        //[HttpGet]
-        //public JsonResult GetPasien(string term = "")
-        //{
-        //    var returner = (from a in db.Pasien
-        //                    where a.UserName.ToUpper().Contains(term.ToUpper().Trim())
-        //                    select new { id = a.PasienId, label = a.UserName.Trim(), value = a.UserName.Trim() })
-        //           .Take(20);
-        //    return Json(returner, JsonRequestBehavior.AllowGet);
-        //}
-
-        //public JsonResult GetPasien()
-        //{
-        //    return Json(db.Pasien, JsonRequestBehavior.AllowGet);
-        //}
-
-        //public MultiSelectList GetUserName()
-        //{
-        //    return new MultiSelectList(db.Pasien.ToList(), "PasienId", "UserName");
-        //}
-
         [Authorize(Roles = "Admin,Dokter")]
         // GET: Diagnosis
         public ActionResult Index(string Sorting_Order, string Search_Data, string Filter_Value, int? Page_No)
@@ -116,8 +96,6 @@ namespace CloudClinic.Controllers
                 PasienId = app.FirstOrDefault()
             };
 
-            //ViewBag.PasienId = GetUserName();
-            //ViewBag.PasienId = new SelectList(db.Pasien, "PasienId", "UserName");
             return View(model);
         }
 

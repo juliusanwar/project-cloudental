@@ -31,13 +31,34 @@ namespace CloudClinic.Migrations
             //    );
             //
 
+            var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+            var roleManager = new ApplicationRoleManager(roleStore);
+            var adminRole = new IdentityRole()
+            {
+                Name = "Admin"
+            };
+
+            roleManager.CreateAsync(adminRole);
+
+            var userStore = new UserStore<ApplicationUser>(new ApplicationDbContext());
+            var userManager = new ApplicationUserManager(userStore);
+            var adminUser = new ApplicationUser()
+            {
+                Email = "admin.admin.com",
+                EmailConfirmed = true,
+                UserName = "admin"
+            };
+
+            userManager.Create(adminUser, "password");
+
+
             context.Pasien.AddOrUpdate(
                 p => p.PasienId,
                 new Pasien()
                 {
                     PasienId = 5,
                     UserName = "hendry",
-                    
+
                     Nama = "Hendry Anwar",
                     TglLhr = new DateTime(1990, 11, 26),
                     Gender = "Pria",

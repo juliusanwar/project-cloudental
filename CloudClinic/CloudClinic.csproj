@@ -1833,6 +1833,10 @@
     <Content Include="Views\Appointment\Details.cshtml" />
     <Content Include="Views\Appointment\Sent.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\enum.cshtml" />
+    <Content Include="Views\Appointment\ShowTommorowRecord.cshtml" />
+    <Content Include="Views\Appointment\SearchPerWeekRecord.cshtml" />
+    <Content Include="Views\Appointment\SendNotification.cshtml" />
+    <Content Include="Views\Appointment\ShowTodayRecord.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

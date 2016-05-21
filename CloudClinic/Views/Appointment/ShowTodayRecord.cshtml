@@ -1,0 +1,89 @@
+﻿@model IEnumerable<CloudClinic.Models.DataModel.Appointment>
+
+@{
+    ViewBag.Title = "Appointment - Today";
+}
+
+<script src="https://lipis.github.io/bootstrap-sweetalert/lib/sweet-alert.js"></script>
+<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+
+<script type="text/javascript">
+
+</script>
+
+<h2>Halaman Reservasi Hari ini: @DateTime.Today.ToShortDateString()</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            No.
+        </th>
+        <th>
+            ID
+        </th>
+        <th>
+            Tgl. Jadwal
+        </th>
+        <th>
+            Pasien
+        </th>
+        <th>
+            Dokter
+        </th>
+        @if (User.IsInRole("Dokter"))
+            {
+            <th>
+                Email
+            </th>
+        }
+        <th>
+            Dimuat Tgl.
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Model.Count()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.namaUnik)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jadwal.TanggalJadwal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pasien.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jadwal.Pengguna.Nama)
+            </td>
+            @if (User.IsInRole("Dokter"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            @if (User.IsInRole("Dokter"))
+            {
+                <td>
+                    [<a href="@Url.Action("Create", "Diagnosis", new { id = item.PasienId})">Diagnosis</a>] |
+                    <a href="/Appointment/CloseSession/@ViewBag.NextID">Close</a> |
+                    @Html.ActionLink("Tutup Sesi", "CloseSession", new { id = item.Id.Equals(@ViewBag.NextID) },
+                new { onclick = "return confirm('Apakah anda yakin mengirimkan email ?');" }) |
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id },
+                new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" }) |
+                    <mark class="ui-icon-check">✓</mark>
+                </td>
+            }
+        </tr>
+    }
+
+</table>

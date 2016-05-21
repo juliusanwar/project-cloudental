@@ -26,6 +26,10 @@ namespace CloudClinic.Models.DataModel
 
         public string Keluhan { get; set; }
 
+        public bool IsSelectFix { get; set; }
+
+        //public bool IsSelected { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public string namaUnik

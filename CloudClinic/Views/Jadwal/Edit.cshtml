@@ -4,7 +4,7 @@
     ViewBag.Title = "Update Jadwal";
 }
 
-<h2>Update Jadwal</h2>
+<h2>Pergantian Sesi Jadwal</h2>
 
 
 @using (Html.BeginForm())
@@ -18,17 +18,16 @@
         @Html.HiddenFor(model => model.JadwalId)
 
         @Html.HiddenFor(model => model.PenggunaId)
+        @Html.HiddenFor(model => model.TanggalJadwal)
 
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.TanggalJadwal, "Tgl. Jadwal", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
                 @Html.Kendo().DatePickerFor(model => model.TanggalJadwal)
-
-                @*@Html.EditorFor(model => model.Hari, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.TanggalJadwal, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
 
         <div class="form-group">
@@ -38,19 +37,19 @@
                     <legend>Pilih Sesi yang ingin dijadwalkan :</legend>
                     @if (User.Identity.Name.Equals("andisetiawan"))
                     {
-                        <input type="hidden" name="Sesi" id="Time1" value="Time1" /><label for="Time1">8:00 - 8:30</label><br />
-                        <input type="hidden" name="Sesi" id="Time2" value="Time2" /><label for="Time2">8:30 - 9:00</label><br />
-                        <input type="hidden" name="Sesi" id="Time3" value="Time3" /><label for="Time3">9:00 - 9:30</label><br />
-                        <input type="hidden" name="Sesi" id="Time4" value="Time4" /><label for="Time4">9:30 - 10:00</label><br />
-                        <input type="hidden" name="Sesi" id="Time5" value="Time5" /><label for="Time5">10:00 - 10:30</label><br />
+                        <input type="checkbox" name="Sesi" id="Time1" value="Time1" /><label for="Time1">8:00 - 8:30</label><br />
+                        <input type="checkbox" name="Sesi" id="Time2" value="Time2" /><label for="Time2">8:30 - 9:00</label><br />
+                        <input type="checkbox" name="Sesi" id="Time3" value="Time3" /><label for="Time3">9:00 - 9:30</label><br />
+                        <input type="checkbox" name="Sesi" id="Time4" value="Time4" /><label for="Time4">9:30 - 10:00</label><br />
+                        <input type="checkbox" name="Sesi" id="Time5" value="Time5" /><label for="Time5">10:00 - 10:30</label><br />
                     }
                     @if (User.Identity.Name.Equals("boudy"))
                     {
-                        <input type="hidden" name="Sesi" id="Time6" value="Time6" /><label for="Time6">16:00 - 16:30</label><br />
-                        <input type="hidden" name="Sesi" id="Time7" value="Time7" /><label for="Time7">16:30 - 17:00</label><br />
-                        <input type="hidden" name="Sesi" id="Time8" value="Time8" /><label for="Time8">17:30 - 17:30</label><br />
-                        <input type="hidden" name="Sesi" id="Time9" value="Time9" /><label for="Time9">17:30 - 18:00</label><br />
-                        <input type="hidden" name="Sesi" id="Time10" value="Time10" /><label for="Time10">18:00 - 18:30</label><br />
+                        <input type="checkbox" name="Sesi" id="Time6" value="Time6" /><label for="Time6">16:00 - 16:30</label><br />
+                        <input type="checkbox" name="Sesi" id="Time7" value="Time7" /><label for="Time7">16:30 - 17:00</label><br />
+                        <input type="checkbox" name="Sesi" id="Time8" value="Time8" /><label for="Time8">17:30 - 17:30</label><br />
+                        <input type="checkbox" name="Sesi" id="Time9" value="Time9" /><label for="Time9">17:30 - 18:00</label><br />
+                        <input type="checkbox" name="Sesi" id="Time10" value="Time10" /><label for="Time10">18:00 - 18:30</label><br />
                     }
                 </fieldset>
                 @Html.ValidationMessageFor(model => model.Sesi, "", new { @class = "text-danger" })

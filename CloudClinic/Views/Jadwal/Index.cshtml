@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<CloudClinic.Models.Jadwal>
 @using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 
 @{
     ViewBag.Title = "Jadwal Cloudental";
@@ -38,13 +39,13 @@
 <table class="table">
     <tr>
         <th>
-            Tanggal
+            @Html.ActionLink("Tgl. Jadwal", "Index", new { Sorting_Order = ViewBag.SortingDate, Filter_Value = ViewBag.FilterValue })
         </th>
         <th>
             Dokter
         </th>
         <th>
-            Sesi
+            @Html.ActionLink("Sesi", "Index", new { Sorting_Order = ViewBag.SortingSession, Filter_Value = ViewBag.FilterValue })
         </th>
         <th>
             @Html.ActionLink("Ruang", "Index", new { Sorting_Order = ViewBag.SortingName, Filter_Value = ViewBag.FilterValue })
@@ -71,7 +72,7 @@
             {
                 <td>
                     @Html.ActionLink("Ubah", "Edit", new { id = item.JadwalId }) |
-                    @Html.ActionLink("Hapus", "Edit", new { id = item.JadwalId },
+                    @Html.ActionLink("Hapus", "Delete", new { id = item.JadwalId },
             new { onclick = "return confirm('Apakah anda yakin mendelete data ini ?');" })
                 </td>
             }
