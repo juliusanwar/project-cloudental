@@ -615,11 +615,15 @@ namespace CloudClinic.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(AppointmentViewModel model)
         {
-
-            var appointment = this.PopulateEditAppointmentDataModel(model);
-
             using (ClinicContext ctx = new ClinicContext())
             {
+                var appointment = ctx.Appointment.Single(x => x.Id == model.Id);
+                appointment.PasienId = model.PasienId;
+                appointment.Email = model.Email;
+                appointment.PhoneNumber = model.PhoneNumber;
+                appointment.Keluhan = model.Keluhan;
+                appointment.CreatedAt = DateTime.Now;
+
                 var pasien = ctx.Pasien.FirstOrDefault(
                     x => x.UserName.Equals(
                         this.User.Identity.Name,
@@ -637,8 +641,6 @@ namespace CloudClinic.Controllers
 
                     appointment.Jadwal = jadwal;
 
-                    ctx.Entry(appointment).State = EntityState.Modified;
-                    //ctx.Appointment.Add(appointment);
                     await ctx.SaveChangesAsync();
 
                 }
@@ -692,18 +694,6 @@ namespace CloudClinic.Controllers
             appointment.PasienId = model.PasienId;
             appointment.PhoneNumber = model.PhoneNumber;
             appointment.Email = model.Email;
-            appointment.Keluhan = model.Keluhan;
-            appointment.CreatedAt = DateTime.Now;
-            return appointment;
-        }
-
-        private Appointment PopulateEditAppointmentDataModel(AppointmentViewModel model)
-        {
-            var appointment = new Appointment();
-            appointment.Id = model.Id;
-            appointment.PasienId = model.PasienId;
-            appointment.Email = model.Email;
-            appointment.PhoneNumber = model.PhoneNumber;
             appointment.Keluhan = model.Keluhan;
             appointment.CreatedAt = DateTime.Now;
             return appointment;

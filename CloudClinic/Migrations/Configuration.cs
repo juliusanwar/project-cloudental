@@ -119,7 +119,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 11,
                         PenggunaId = 4,
-                        TanggalJadwal = DateTime.Parse("05-05-2016"),
+                        TanggalJadwal = DateTime.Parse("05-22-2016"),
                         Ruang = "Ruang 1",
                         Sesi = "Time1",
                     },
@@ -128,7 +128,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 12,
                         PenggunaId = 4,
-                        TanggalJadwal = DateTime.Parse("05-05-2016"),
+                        TanggalJadwal = DateTime.Parse("05-22-2016"),
                         Ruang = "Ruang 1",
                         Sesi = "Time2"
                     },
@@ -137,7 +137,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 13,
                         PenggunaId = 4,
-                        TanggalJadwal = new DateTime(2016, 05, 05),
+                        TanggalJadwal = new DateTime(2016, 05, 22),
                         Ruang = "Ruang 1",
                         Sesi = "Time3"
                     },
@@ -146,7 +146,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 14,
                         PenggunaId = 5,
-                        TanggalJadwal = DateTime.Parse("06-05-2016"),
+                        TanggalJadwal = DateTime.Parse("06-22-2016"),
                         Ruang = "Ruang 2",
                         Sesi = "Time5"
                     },
@@ -155,7 +155,7 @@ namespace CloudClinic.Migrations
                     {
                         JadwalId = 15,
                         PenggunaId = 5,
-                        TanggalJadwal = DateTime.Parse("06-05-2016"),
+                        TanggalJadwal = DateTime.Parse("06-22-2016"),
                         Ruang = "Ruang 2",
                         Sesi = "Time7"
                     }
